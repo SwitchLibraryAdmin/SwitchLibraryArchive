@@ -6,7 +6,7 @@
   <img src="all_images/SwitchHack.gif" alt="sh gif" width="60%">
 </p>
 
-[![HitCount](https://hits.dwyl.com/YourNewAnonUser/SwitchModGuide.svg?style=flat-square)](http://hits.dwyl.com/YourNewAnonUser/SwitchModGuide)
+[![HitCount](https://hits.dwyl.com/YourNewAnonUser/SwitchModGuide.svg?style=flat-square)](https://hits.dwyl.com/YourNewAnonUser/SwitchModGuide)
 
 <!---<p align="center"> 
   <img src="all_images/Switch_HD_Photo.png" alt="Switch_HD_Photo" width="40%">
@@ -207,9 +207,7 @@ There are many homebrew guides out there. Some are better than others, but all w
 <h2 id="setup"> :floppy_disk: Step 1: Setup SD Card</h2>
 <p> 
 	
-1. <details><summary>:camera: Format SD card to Fat32. I used <a href="http://ridgecrop.co.uk/index.htm?guiformat.htm">this tool</a> <a href=""></a></summary>
-	<img src="all_images/1.png" alt="1" width="40%">
-	</details>
+1. Format SD card to Fat32. Windows' built-in tool won't format cards larger than 32GB to FAT32. Use [Rufus](https://rufus.ie/) (recommended for Windows) or [Raspberry Pi Imager](https://www.raspberrypi.com/software/) (use the 'Erase' / 'FAT32' option; works on Windows, Mac, and Linux) to correctly format your card before starting.
 2. Download payload sending application to desktop or other easily accessible location
    1. For Windows, you can use <a href="https://github.com/eliboa/TegraRcmGUI/releases">TegraRcmGUI</a> 
    2. For Mac and Linux, you can use <a href="https://github.com/nh-server/fusee-interfacee-tk/releases">fusee-interface-tk</a> 
@@ -217,7 +215,7 @@ There are many homebrew guides out there. Some are better than others, but all w
    4.	For ios, you can use <a href="https://github.com/mologie/nxboot/releases">NXBoot</a>
    5.	For all other payload options see <a href="https://wiki.gbatemp.net/wiki/List_of_Switch_payloads">here</a>
 3. Download Software
-   1.	Open <a href="https://www.sdsetup.com/console?switch">sdsetup</a>
+   1.	Open <a href="https://github.com/Team-Neptune/DeepSea">DeepSea</a>
    2.	Select Recommended Defaults
    3.   Under Atmosphere *deselect* the check for sys-ftpd-light
    3.	Under Tesla Overlays check **EdiZon Overlay** and **Status Monitor Overlay**
@@ -231,7 +229,7 @@ There are many homebrew guides out there. Some are better than others, but all w
 		
 	1. <a href="https://github.com/Atmosphere-NX/Atmosphere/releases">Atmosphere</a>
    	2. <a href="https://github.com/CTCaer/hekate/releases">Hekate</a>, just the bootloader folder (save the bin file for the next step)
-   	3. <a href="https://github.com/ITotalJustice/patches/releases">Sigpatches</a>
+   	3. <a href="https://github.com/AK478BB/Sigpatches/releases">Sigpatches</a>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
@@ -661,7 +659,7 @@ In that channel select Pinned Messages and follow the link that says nekoshop Dr
 <h5 class="atx" id="jitz-share">jitz share</h5>
 <p>With jitz share, instead of gaining access to a shared google drive, you will have to save games directly to your drive. The only advantage I see over nekodrive is that you
 don't need to donate before gaining access. All the instructions are clearly
-laid out <a href="https://games.jits.cc/">here</a></p>
+laid out <a href="https://opennx.github.io/">here (OpenNX)</a></p>
 <ul>
 <li>Note: For&nbsp;jitz share you may want to make a new google account. This is quick and easy, and will free up Drive space. The maximum free space is still 15GB so most games will download, but there are a few that are too large.</li>
 </ul>
@@ -938,9 +936,9 @@ If you replaced your user page with NX-Activity-Log then you will have to make a
 
 * A few games have a hidden **LAN mode** that allows you to connect to multiple switch systems within the same network. Many games have **Wireless mode** which connects Switches directly to other Switches.
 
-* To do this with friends on different networks follow [these](http://www.lan-play.com/install-switch) instructions. Because you have custom firmware you can use [ldn_mitm](https://github.com/spacemeowx2/ldn_mitm/releases) to revert the local wireless play to wifi connection.
+* To do this with friends on different networks follow the [switch-lan-play](https://github.com/spacemeowx2/switch-lan-play) instructions. Because you have custom firmware you can use [ldn_mitm](https://github.com/spacemeowx2/ldn_mitm/releases) to revert the local wireless play to wifi connection.
 
-* For a list of games with LAN mode and other resources see [this website](http://www.lan-play.com/games-switch)
+* For a list of games with LAN mode and other resources see the [switch-lan-play repo](https://github.com/spacemeowx2/switch-lan-play)
 
 ### Link a Fake User Account
 
@@ -952,11 +950,7 @@ There are 2 main ways to link a fake user account:
   
 2. (Most Functionality) Linkalho:
   
-  1. Download the latest release of`linkalho-vx.x.x.zip` [here](https://github.com/rdmrocha/linkalho/releases)
-    
-  2. Unzip and place the .nro file in the /switch/linkalho folder of your SDcard.
-    
-  3. Go to the homebrew app menu, run Linkalho, and select **Link all accounts***
+  1. See the [Switchbrew Wiki](https://switchbrew.org/wiki/Main_Page) for current methods to link a fake account.
     
 
 ### Stream your PC games to your Nintendo Switch
@@ -1035,5 +1029,5 @@ Switch hacking communities:
 * Discord: https://discord.gg/C29hYvh
 <p>
 	
-Contact me through <a href="https://www.reddit.com/user/SwitchArchiveAdmin">Reddit</a> or <a href="https://discordapp.com/users/000000000000">Discord</a>	
+Contact me through <a href="https://www.reddit.com/user/SwitchArchiveAdmin">Reddit</a> or <a href="https://discord.com/users/000000000000">Discord</a>	
 <div align="right"><b><a href="#table-of-contents">↥ back to top</a></b></div>
