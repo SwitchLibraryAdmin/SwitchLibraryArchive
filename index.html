@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SwitchHack — Hack Your Nintendo Switch</title>
+  <meta name="description" content="The most in-depth, noob-friendly guide to modding your Nintendo Switch. Open-source, free forever, no ads.">
+  <meta property="og:title" content="SwitchHack — Hack Your Nintendo Switch">
+  <meta property="og:description" content="The most in-depth, noob-friendly guide to modding your Nintendo Switch. Open-source, free forever.">
+  <meta property="og:image" content="https://switchhack.com/images/pixel_hacker.gif">
+  <meta property="og:url" content="https://switchhack.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SwitchHack">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SwitchHack — Hack Your Nintendo Switch">
+  <meta name="twitter:description" content="The most in-depth, noob-friendly guide to modding your Nintendo Switch. Open-source, free forever.">
+  <meta name="twitter:image" content="https://switchhack.com/images/pixel_hacker.gif">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,87 +32,17 @@
       },
     }
   </script>
-  <style>
-    .pixel-art {
-      image-rendering: pixelated;
-    }
-
-    @keyframes glitch {
-      0%   { transform: translate(0); }
-      20%  { transform: translate(-2px, 2px); }
-      40%  { transform: translate(-2px, -2px); }
-      60%  { transform: translate(2px, 2px); }
-      80%  { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-12px); }
-    }
-
-    .glitch-hover {
-      transition: text-shadow 0.1s ease, filter 0.1s ease;
-    }
-
-    .glitch-hover:hover {
-      text-shadow: 0 0 10px rgba(34,211,238,0.8), 0 0 30px rgba(34,211,238,0.4), 0 0 60px rgba(34,211,238,0.15);
-      filter: brightness(1.2);
-    }
-
-    .float-anim {
-      animation: float 4s ease-in-out infinite;
-    }
-
-    /* Thin custom scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="bg-slate-900 text-gray-200 font-sans antialiased">
 
+  <!-- Skip to content (accessibility) -->
+  <a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
+
   <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="font-mono font-bold text-xl tracking-tight text-white glitch-hover">
-        Switch<span class="text-cyan-400">Hack</span>
-      </a>
-
-      <!-- Desktop Links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#hero" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
-        <a href="guide.html" class="text-sm text-gray-400 hover:text-white transition-colors">Guide</a>
-        <a href="#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
-        <a href="intel.html" class="text-sm text-gray-400 hover:text-white transition-colors">Intel</a>
-        <a href="guide.html" class="ml-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-shadow">
-          Get Started
-        </a>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-900/95 backdrop-blur-xl">
-      <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="#hero" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
-        <a href="guide.html" class="text-sm text-gray-400 hover:text-white transition-colors">Guide</a>
-        <a href="#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
-        <a href="intel.html" class="text-sm text-gray-400 hover:text-white transition-colors">Intel</a>
-        <a href="guide.html" class="mt-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-center shadow-lg shadow-cyan-500/25">
-          Get Started
-        </a>
-      </div>
-    </div>
-  </nav>
+  <div id="nav-container"></div>
+  <script src="nav.js"></script>
 
 
   <!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
@@ -229,6 +171,7 @@
               <img
                 src="images/pixel_mario_on_computer.gif"
                 alt="Mario on Computer"
+                loading="lazy"
                 class="pixel-art w-full max-w-md lg:max-w-lg block"
               >
               <!-- Bottom fade into dark -->
@@ -299,6 +242,7 @@
             <img
               src="images/Cyberpunk_city.jpg"
               alt="Cyberpunk City"
+              loading="lazy"
               class="relative pixel-art rounded-2xl shadow-2xl shadow-purple-500/20 w-full max-w-md lg:max-w-lg"
             >
           </div>
@@ -322,7 +266,8 @@
         <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-3xl blur-2xl"></div>
         <img
           src="images/Pokemon_cafe.jpg"
-          alt="Community"
+          alt="Switch modding community"
+          loading="lazy"
           class="relative pixel-art rounded-2xl shadow-2xl shadow-cyan-500/10 w-full"
         >
       </div>
@@ -356,16 +301,6 @@
   </footer>
 
 
-  <!-- ═══════════════════════════════════════════ MOBILE MENU JS ═══════════════════════════════════════════ -->
-  <script>
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-    // Close menu when a link is clicked
-    menu.querySelectorAll('a').forEach(link =>
-      link.addEventListener('click', () => menu.classList.add('hidden'))
-    );
-  </script>
 
 </body>
 </html>
