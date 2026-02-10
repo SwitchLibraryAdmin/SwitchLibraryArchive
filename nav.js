@@ -20,10 +20,10 @@
         Switch<span class="text-cyan-400">Hack</span>
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="${homeHref}" class="${isHome ? active : inactive}">Home</a>
-        <a href="guide.html" class="${isGuide ? active : inactive}">Guide</a>
+        <a href="${homeHref}" class="${isHome ? active : inactive}"${isHome ? ' aria-current="page"' : ''}>Home</a>
+        <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
         <a href="${communityHref}" class="${inactive}">Community</a>
-        <a href="intel.html" class="${isIntel ? active : inactive}">Intel</a>
+        <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="${ctaHref}" class="ml-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-shadow">
           ${ctaText}
         </a>
@@ -36,10 +36,10 @@
     </div>
     <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-900/95 backdrop-blur-xl">
       <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="${homeHref}" class="${isHome ? active : inactive}">Home</a>
-        <a href="guide.html" class="${isGuide ? active : inactive}">Guide</a>
+        <a href="${homeHref}" class="${isHome ? active : inactive}"${isHome ? ' aria-current="page"' : ''}>Home</a>
+        <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
         <a href="${communityHref}" class="${inactive}">Community</a>
-        <a href="intel.html" class="${isIntel ? active : inactive}">Intel</a>
+        <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="${ctaHref}" class="mt-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-center shadow-lg shadow-cyan-500/25">
           ${ctaText}
         </a>
