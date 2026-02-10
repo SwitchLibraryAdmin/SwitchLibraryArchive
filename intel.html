@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwitchHack — The Economics of Digital Access</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    @keyframes glitch {
+      0%   { transform: translate(0); }
+      20%  { transform: translate(-2px, 2px); }
+      40%  { transform: translate(-2px, -2px); }
+      60%  { transform: translate(2px, 2px); }
+      80%  { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    .glitch-hover {
+      transition: text-shadow 0.1s ease, filter 0.1s ease;
+    }
+
+    .glitch-hover:hover {
+      text-shadow: 0 0 10px rgba(34,211,238,0.8), 0 0 30px rgba(34,211,238,0.4), 0 0 60px rgba(34,211,238,0.15);
+      filter: brightness(1.2);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+    .data-grid-bg {
+      background-image:
+        linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    @keyframes glitch-text {
+      0%   { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 2px); }
+      20%  { clip-path: inset(92% 0 1% 0);  transform: translate(1px, -1px); }
+      40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-1px, 2px); }
+      60%  { clip-path: inset(25% 0 58% 0); transform: translate(2px, 1px); }
+      80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-2px, -1px); }
+      100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 2px); }
+    }
+
+    .glitch-title {
+      position: relative;
+    }
+
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-title::before {
+      color: #22d3ee;
+      animation: glitch-text 3s infinite linear alternate-reverse;
+      z-index: -1;
+    }
+
+    .glitch-title::after {
+      color: #ec4899;
+      animation: glitch-text 2s infinite linear alternate;
+      z-index: -1;
+    }
+
+    @keyframes gradient-shift {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .gradient-bar {
+      background: linear-gradient(90deg, #22d3ee, #8b5cf6, #ec4899, #22d3ee);
+      background-size: 200% 100%;
+      animation: gradient-shift 4s linear infinite;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Conic pie charts */
+    .pie-cyan {
+      background: conic-gradient(#22d3ee var(--percent), rgba(255,255,255,0.05) var(--percent));
+    }
+    .pie-pink {
+      background: conic-gradient(#ec4899 var(--percent), rgba(255,255,255,0.05) var(--percent));
+    }
+    .pie-purple {
+      background: conic-gradient(#8b5cf6 var(--percent), rgba(255,255,255,0.05) var(--percent));
+    }
+    .pie-emerald {
+      background: conic-gradient(#10b981 var(--percent), rgba(255,255,255,0.05) var(--percent));
+    }
+
+    /* Neon key finding */
+    @keyframes neon-pulse {
+      0%, 100% { text-shadow: 0 0 10px rgba(34,211,238,0.5), 0 0 40px rgba(34,211,238,0.2); }
+      50%      { text-shadow: 0 0 20px rgba(34,211,238,0.8), 0 0 60px rgba(34,211,238,0.4), 0 0 100px rgba(34,211,238,0.1); }
+    }
+
+    .neon-text {
+      animation: neon-pulse 3s ease-in-out infinite;
+    }
+
+    /* Verified checkmark */
+    .verified-badge {
+      background: linear-gradient(135deg, #22d3ee, #8b5cf6);
+    }
+
+    /* Video play button pulse */
+    @keyframes play-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,211,238,0.4); }
+      50%      { box-shadow: 0 0 0 20px rgba(34,211,238,0); }
+    }
+
+    .play-btn {
+      animation: play-pulse 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-900 text-gray-200 font-sans antialiased">
+
+  <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
+  <nav class="fixed top-0 inset-x-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-mono font-bold text-xl tracking-tight text-white glitch-hover">
+        Switch<span class="text-cyan-400">Hack</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
+        <a href="guide.html" class="text-sm text-gray-400 hover:text-white transition-colors">Guide</a>
+        <a href="index.html#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
+        <a href="intel.html" class="text-sm text-white transition-colors">Intel</a>
+        <a href="guide.html" class="ml-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-shadow">
+          Get Started
+        </a>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-900/95 backdrop-blur-xl">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
+        <a href="guide.html" class="text-sm text-gray-400 hover:text-white transition-colors">Guide</a>
+        <a href="index.html#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
+        <a href="intel.html" class="text-sm text-white transition-colors">Intel</a>
+        <a href="guide.html" class="mt-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-center shadow-lg shadow-cyan-500/25">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════ SECTION 1: THE EU DISPLACEMENT STUDY ═══════════════════════════════════════════ -->
+  <section class="relative pt-32 pb-20 overflow-hidden data-grid-bg">
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-transparent to-slate-900 pointer-events-none"></div>
+    <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="relative max-w-5xl mx-auto px-6">
+      <!-- Section tag -->
+      <div class="flex items-center gap-3 mb-6">
+        <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase">Section 01</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+      </div>
+
+      <!-- Headline -->
+      <div class="text-center mb-12">
+        <p class="font-mono text-cyan-400 text-xs tracking-[0.3em] uppercase mb-4">// Classified Research &mdash; EU Commission, 2017</p>
+        <h1 class="glitch-title text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight" data-text="The &euro;360,000 Secret">
+          The &euro;360,000 Secret
+        </h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+          In 2017, the European Commission spent nearly half a million euros on a landmark study surveying <strong class="text-white">30,000 consumers</strong> across <strong class="text-white">6 EU countries</strong> (UK, Germany, France, Spain, Poland, Sweden). The findings were so inconvenient, the report was quietly shelved&mdash;until it was leaked.
+        </p>
+        <div class="gradient-bar h-0.5 w-48 mx-auto rounded-full"></div>
+      </div>
+
+      <!-- Key Finding — Neon highlight -->
+      <div class="bg-white/5 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-8 mb-8 text-center shadow-[0_0_60px_rgba(34,211,238,0.08)]">
+        <p class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4">// Key Finding</p>
+        <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400 neon-text leading-snug max-w-3xl mx-auto">
+          &ldquo;Unlike movies or books, pirating video games statistically <span class="text-white">increased</span> legal sales.&rdquo;
+        </p>
+        <p class="text-gray-500 text-sm mt-4">The study found zero evidence of sales displacement for games&mdash;and in some models, a positive correlation between piracy and purchases.</p>
+      </div>
+
+      <!-- Context note -->
+      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            <strong class="text-white">Context:</strong> The study found that for films, music, and books, piracy did show a small negative displacement effect. Video games were the exception&mdash;the researchers hypothesized that trying pirated games often led to subsequent purchases, functioning more like a demo than a lost sale.
+            <a href="https://cdn.netzpolitik.org/wp-upload/2017/09/displacement_study.pdf" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline underline-offset-4 ml-1">Read the full study (PDF) &rarr;</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ SECTION 2: PIRATE DEMOGRAPHICS ═══════════════════════════════════════════ -->
+  <section id="demographics" class="py-20 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="flex items-center gap-3 mb-2">
+        <span class="font-mono text-purple-400 text-xs tracking-[0.2em] uppercase">Section 02</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">The Pirate Demographics</h2>
+      <p class="text-gray-400 max-w-3xl mb-10 leading-relaxed">
+        Who actually pirates content? The data paints a picture that challenges common stereotypes.
+      </p>
+
+      <!-- 2x2 Data Widget Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+        <!-- Card A: Under 35 -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-all duration-300">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <p class="font-mono text-cyan-400 text-[10px] tracking-[0.2em] uppercase mb-1">Age Distribution</p>
+              <p class="text-white font-semibold">Under 35</p>
+            </div>
+            <div class="w-20 h-20 rounded-full pie-cyan flex items-center justify-center flex-shrink-0" style="--percent: 64%">
+              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
+                <span class="font-mono text-cyan-400 text-xs font-bold">64%</span>
+              </div>
+            </div>
+          </div>
+          <p class="font-mono text-5xl sm:text-6xl font-black text-cyan-400 mb-2">64<span class="text-2xl">%</span></p>
+          <p class="text-gray-400 text-sm leading-relaxed">of all digital pirates are under the age of 35&mdash;the demographic with the least disposable income and the highest digital literacy.</p>
+        </div>
+
+        <!-- Card B: Gender Split -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-pink-500/30 transition-all duration-300">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <p class="font-mono text-pink-400 text-[10px] tracking-[0.2em] uppercase mb-1">Gender Split</p>
+              <p class="text-white font-semibold">Women</p>
+            </div>
+            <div class="w-20 h-20 rounded-full pie-pink flex items-center justify-center flex-shrink-0" style="--percent: 43%">
+              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
+                <span class="font-mono text-pink-400 text-xs font-bold">43%</span>
+              </div>
+            </div>
+          </div>
+          <p class="font-mono text-5xl sm:text-6xl font-black text-pink-400 mb-2">43<span class="text-2xl">%</span></p>
+          <p class="text-gray-400 text-sm leading-relaxed">of pirates are women. The stereotype of piracy as a male-dominated activity doesn&rsquo;t hold up under scrutiny.</p>
+        </div>
+
+        <!-- Card C: Global Bandwidth -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-300">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <p class="font-mono text-purple-400 text-[10px] tracking-[0.2em] uppercase mb-1">Global Bandwidth</p>
+              <p class="text-white font-semibold">File Sharing Traffic</p>
+            </div>
+            <div class="w-20 h-20 rounded-full pie-purple flex items-center justify-center flex-shrink-0" style="--percent: 24%">
+              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
+                <span class="font-mono text-purple-400 text-xs font-bold">24%</span>
+              </div>
+            </div>
+          </div>
+          <p class="font-mono text-5xl sm:text-6xl font-black text-purple-400 mb-2">24<span class="text-2xl">%</span></p>
+          <p class="text-gray-400 text-sm leading-relaxed">of total global internet bandwidth is consumed by file sharing activity. Nearly a quarter of all internet traffic.</p>
+        </div>
+
+        <!-- Card D: Prevalence -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-all duration-300">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <p class="font-mono text-emerald-400 text-[10px] tracking-[0.2em] uppercase mb-1">Prevalence</p>
+              <p class="text-white font-semibold">Have Pirated At Least Once</p>
+            </div>
+            <div class="w-20 h-20 rounded-full pie-emerald flex items-center justify-center flex-shrink-0" style="--percent: 57%">
+              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
+                <span class="font-mono text-emerald-400 text-xs font-bold">57%</span>
+              </div>
+            </div>
+          </div>
+          <p class="font-mono text-5xl sm:text-6xl font-black text-emerald-400 mb-2">57<span class="text-2xl">%</span></p>
+          <p class="text-gray-400 text-sm leading-relaxed">of all computer users globally have pirated content at least once. It&rsquo;s not a fringe activity&mdash;it&rsquo;s a majority behavior.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ SECTION 3: PIRACY AS MARKETING ═══════════════════════════════════════════ -->
+  <section id="marketing" class="py-20 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="flex items-center gap-3 mb-2">
+        <span class="font-mono text-emerald-400 text-xs tracking-[0.2em] uppercase">Section 03</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-emerald-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">The Gatekeeper Bypass</h2>
+      <p class="text-gray-400 max-w-3xl mb-10 leading-relaxed">
+        Some of the biggest names in entertainment have publicly acknowledged that unauthorized sharing acted as a distribution channel&mdash;one that bypassed traditional gatekeepers and ultimately drove legitimate revenue.
+      </p>
+
+      <!-- Quote Cards -->
+      <div class="space-y-6">
+
+        <!-- Adobe -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-emerald-500/20 transition-all duration-300">
+          <div class="flex items-start gap-5">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <h3 class="text-white font-bold text-lg">Adobe Photoshop</h3>
+                <span class="verified-badge w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" title="Verified Source">
+                  <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="font-mono text-[10px] tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2 py-0.5 uppercase">The Industry Standard</span>
+              </div>
+              <blockquote class="border-l-2 border-emerald-500 pl-4 mb-3">
+                <p class="text-gray-300 leading-relaxed italic">
+                  &ldquo;Photoshop became the industry standard <em>because</em> it was pirated by students who later forced their employers to buy enterprise licenses.&rdquo;
+                </p>
+              </blockquote>
+              <p class="text-gray-500 text-sm leading-relaxed">
+                Adobe&rsquo;s dominance in creative software was built on a generation of students and freelancers who learned on pirated copies. When those users entered the workforce, they brought the software with them&mdash;and their employers paid full enterprise pricing. Adobe later formalized this with the Creative Cloud subscription model, offering steep student discounts to replicate the same pipeline legally.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game of Thrones -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/20 transition-all duration-300">
+          <div class="flex items-start gap-5">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4V2m0 2a2 2 0 00-2 2v1a2 2 0 002 2h0a2 2 0 002-2V6a2 2 0 00-2-2zm0 0V1m10 3V2m0 2a2 2 0 00-2 2v1a2 2 0 002 2h0a2 2 0 002-2V6a2 2 0 00-2-2zm0 0V1m-5 11v4m0 0l-3-3m3 3l3-3"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <h3 class="text-white font-bold text-lg">Game of Thrones</h3>
+                <span class="verified-badge w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" title="Verified Source">
+                  <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="font-mono text-[10px] tracking-wider text-purple-400 bg-purple-500/10 border border-purple-500/20 rounded-md px-2 py-0.5 uppercase">Better Than an Emmy</span>
+              </div>
+              <blockquote class="border-l-2 border-purple-500 pl-4 mb-3">
+                <p class="text-gray-300 leading-relaxed italic">
+                  &ldquo;I have to admit, I think you&rsquo;re right. [Game of Thrones being the most pirated show] is <em>better than an Emmy.</em>&rdquo;
+                </p>
+              </blockquote>
+              <p class="text-gray-400 text-sm mb-2">&mdash; <strong class="text-white">Jeff Bewkes</strong>, CEO of Time Warner (HBO&rsquo;s parent company)</p>
+              <p class="text-gray-500 text-sm leading-relaxed">
+                At the height of its piracy, Game of Thrones was generating more cultural conversation than any other show on television. Time Warner&rsquo;s own CEO acknowledged that the piracy acted as word-of-mouth marketing, driving HBO subscriptions to record highs.
+              </p>
+              <p class="mt-3">
+                <a href="https://www.techdirt.com/2013/08/08/time-warner-ceo-says-having-game-thrones-as-most-pirated-is-better-than-emmy/" target="_blank" class="text-purple-400 hover:text-purple-300 text-xs font-mono underline underline-offset-4">Source: TechDirt &rarr;</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ed Sheeran -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-pink-500/20 transition-all duration-300">
+          <div class="flex items-start gap-5">
+            <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <h3 class="text-white font-bold text-lg">Ed Sheeran</h3>
+                <span class="verified-badge w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" title="Verified Source">
+                  <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="font-mono text-[10px] tracking-wider text-pink-400 bg-pink-500/10 border border-pink-500/20 rounded-md px-2 py-0.5 uppercase">The Breakthrough</span>
+              </div>
+              <blockquote class="border-l-2 border-pink-500 pl-4 mb-3">
+                <p class="text-gray-300 leading-relaxed italic">
+                  &ldquo;Illegal file sharing was what made me. It allowed me to bypass the gatekeepers of the music industry.&rdquo;
+                </p>
+              </blockquote>
+              <p class="text-gray-400 text-sm mb-2">&mdash; <strong class="text-white">Ed Sheeran</strong>, CBS Interview</p>
+              <p class="text-gray-500 text-sm leading-relaxed">
+                Before signing his first record deal, Sheeran&rsquo;s music spread through unauthorized file sharing networks. He has publicly credited this distribution with building his fanbase outside the traditional label system, which ultimately led to one of the most successful music careers of the decade.
+              </p>
+              <p class="mt-3">
+                <a href="https://www.cbsnews.com/news/ed-sheeran-reinventing-pop-music/" target="_blank" class="text-pink-400 hover:text-pink-300 text-xs font-mono underline underline-offset-4">Source: CBS News &rarr;</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ SECTION 4: THE DEVELOPER'S TAKE ═══════════════════════════════════════════ -->
+  <section id="developer" class="py-20 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="flex items-center gap-3 mb-2">
+        <span class="font-mono text-pink-400 text-xs tracking-[0.2em] uppercase">Section 04</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-pink-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">A Developer&rsquo;s Perspective</h2>
+      <p class="text-gray-400 max-w-3xl mb-10 leading-relaxed">
+        Game developer <strong class="text-white">Lachhh</strong> (creator of <em>Just Shapes &amp; Beats</em>) took a radically different approach to piracy&mdash;he addressed his pirates directly, inside the game itself.
+      </p>
+
+      <!-- Quote card -->
+      <div class="bg-white/5 backdrop-blur-xl border border-pink-500/20 rounded-2xl p-8 mb-8 text-center shadow-[0_0_60px_rgba(236,72,153,0.06)]">
+        <p class="font-mono text-pink-400 text-xs tracking-[0.2em] uppercase mb-4">// Developer Statement</p>
+        <p class="text-2xl sm:text-3xl font-bold text-white leading-snug max-w-2xl mx-auto mb-3">
+          &ldquo;I&rsquo;d rather you play the game and not pay, than not play at all.&rdquo;
+        </p>
+        <p class="text-gray-400 text-sm">&mdash; <strong class="text-white">Lachhh</strong>, Just Shapes &amp; Beats in-game piracy screen</p>
+      </div>
+
+      <!-- Video Player -->
+      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+        <div class="flex items-center gap-2 px-6 py-3 bg-black/40 border-b border-white/10">
+          <span class="terminal-dot bg-red-500"></span>
+          <span class="terminal-dot bg-yellow-500"></span>
+          <span class="terminal-dot bg-green-500"></span>
+          <span class="ml-2 text-xs text-gray-500 font-mono">just_shapes_and_beats_piracy_screen.mp4</span>
+        </div>
+        <div class="relative bg-black">
+          <video
+            class="w-full"
+            controls
+            poster="images/Just_Shapes_and_Beats_Piracy_screen_Cover.png"
+            preload="metadata"
+            style="object-position: 50% 100%;"
+          >
+            <source src="files/Just_Shapes_and_Beats_Piracy_Screen.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="px-6 py-4">
+          <p class="text-white font-semibold mb-1">Just Shapes &amp; Beats &mdash; Piracy Screen</p>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Instead of DRM, lawsuits, or guilt-tripping, Lachhh built a custom screen into the pirated version of his game. It plays a short message thanking the player, asks them to consider buying the game if they enjoy it, and then <strong class="text-white">lets them keep playing with no restrictions</strong>. The approach went viral and drove a measurable spike in sales.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ CLOSING ═══════════════════════════════════════════ -->
+  <section class="py-16 border-t border-white/5">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <p class="font-mono text-gray-500 text-xs tracking-[0.2em] uppercase mb-6">// End of Report</p>
+      <p class="text-gray-500 text-sm leading-relaxed max-w-2xl mx-auto">
+        All data, quotes, and findings presented above are sourced from publicly available research, interviews, and reporting. This page is presented for informational and educational purposes only.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════════ -->
+  <footer class="border-t border-white/10 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-bold text-white">Switch<span class="text-cyan-400">Hack</span></span>
+        <span class="text-gray-600 text-sm">&copy; 2026</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-gray-500">
+        <a href="guide.html" class="hover:text-gray-300 transition-colors">Guide</a>
+        <a href="intel.html" class="hover:text-gray-300 transition-colors">Economics</a>
+        <a href="#" class="hover:text-gray-300 transition-colors">Community</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════ MOBILE MENU JS ═══════════════════════════════════════════ -->
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    menu.querySelectorAll('a').forEach(link =>
+      link.addEventListener('click', () => menu.classList.add('hidden'))
+    );
+  </script>
+
+</body>
+</html>
