@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SwitchHack — The Economics of Digital Access</title>
+  <meta name="description" content="Data-driven analysis on piracy economics. Suppressed EU research, real demographics, and quotes from industry leaders.">
+  <meta property="og:title" content="SwitchHack — The Economics of Digital Access">
+  <meta property="og:description" content="Data-driven analysis on piracy economics. Suppressed EU research, real demographics, and industry quotes.">
+  <meta property="og:image" content="https://switchhack.com/images/Cyberpunk_city.jpg">
+  <meta property="og:url" content="https://switchhack.com/intel.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SwitchHack">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SwitchHack — The Economics of Digital Access">
+  <meta name="twitter:description" content="Data-driven analysis on piracy economics. Suppressed EU research, real demographics, and industry quotes.">
+  <meta name="twitter:image" content="https://switchhack.com/images/Cyberpunk_city.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,43 +32,10 @@
       },
     }
   </script>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    @keyframes glitch {
-      0%   { transform: translate(0); }
-      20%  { transform: translate(-2px, 2px); }
-      40%  { transform: translate(-2px, -2px); }
-      60%  { transform: translate(2px, 2px); }
-      80%  { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-
-    .glitch-hover {
-      transition: text-shadow 0.1s ease, filter 0.1s ease;
-    }
-
-    .glitch-hover:hover {
-      text-shadow: 0 0 10px rgba(34,211,238,0.8), 0 0 30px rgba(34,211,238,0.4), 0 0 60px rgba(34,211,238,0.15);
-      filter: brightness(1.2);
-    }
-
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-
     .data-grid-bg {
-      background-image:
-        linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    @keyframes glitch-text {
-      0%   { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 2px); }
-      20%  { clip-path: inset(92% 0 1% 0);  transform: translate(1px, -1px); }
-      40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-1px, 2px); }
-      60%  { clip-path: inset(25% 0 58% 0); transform: translate(2px, 1px); }
-      80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-2px, -1px); }
-      100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 2px); }
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h1v40H0zm40 0v1H0' fill='rgba(34,211,238,0.03)'/%3E%3C/svg%3E");
     }
 
     .glitch-title {
@@ -75,25 +54,21 @@
 
     .glitch-title::before {
       color: #22d3ee;
-      animation: glitch-text 3s infinite linear alternate-reverse;
+      opacity: 0.4;
       z-index: -1;
+      transform: translate(-2px, 1px);
     }
 
     .glitch-title::after {
       color: #ec4899;
-      animation: glitch-text 2s infinite linear alternate;
+      opacity: 0.4;
       z-index: -1;
-    }
-
-    @keyframes gradient-shift {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
+      transform: translate(2px, -1px);
     }
 
     .gradient-bar {
       background: linear-gradient(90deg, #22d3ee, #8b5cf6, #ec4899, #22d3ee);
       background-size: 200% 100%;
-      animation: gradient-shift 4s linear infinite;
     }
 
     .terminal-dot {
@@ -103,28 +78,11 @@
       display: inline-block;
     }
 
-    /* Conic pie charts */
-    .pie-cyan {
-      background: conic-gradient(#22d3ee var(--percent), rgba(255,255,255,0.05) var(--percent));
-    }
-    .pie-pink {
-      background: conic-gradient(#ec4899 var(--percent), rgba(255,255,255,0.05) var(--percent));
-    }
-    .pie-purple {
-      background: conic-gradient(#8b5cf6 var(--percent), rgba(255,255,255,0.05) var(--percent));
-    }
-    .pie-emerald {
-      background: conic-gradient(#10b981 var(--percent), rgba(255,255,255,0.05) var(--percent));
-    }
 
-    /* Neon key finding */
-    @keyframes neon-pulse {
-      0%, 100% { text-shadow: 0 0 10px rgba(34,211,238,0.5), 0 0 40px rgba(34,211,238,0.2); }
-      50%      { text-shadow: 0 0 20px rgba(34,211,238,0.8), 0 0 60px rgba(34,211,238,0.4), 0 0 100px rgba(34,211,238,0.1); }
-    }
 
+    /* Neon key finding — static glow instead of animated */
     .neon-text {
-      animation: neon-pulse 3s ease-in-out infinite;
+      text-shadow: 0 0 15px rgba(34,211,238,0.6), 0 0 40px rgba(34,211,238,0.25);
     }
 
     /* Verified checkmark */
@@ -132,59 +90,27 @@
       background: linear-gradient(135deg, #22d3ee, #8b5cf6);
     }
 
-    /* Video play button pulse */
-    @keyframes play-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(34,211,238,0.4); }
-      50%      { box-shadow: 0 0 0 20px rgba(34,211,238,0); }
-    }
-
-    .play-btn {
-      animation: play-pulse 2s ease-in-out infinite;
+    /* Sections get their own compositing layer */
+    section {
+      contain: layout style;
     }
   </style>
 </head>
 
 <body class="bg-slate-900 text-gray-200 font-sans antialiased">
 
+  <!-- Skip to content (accessibility) -->
+  <a href="#report" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
+
   <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-mono font-bold text-xl tracking-tight text-white glitch-hover">
-        Switch<span class="text-cyan-400">Hack</span>
-      </a>
-      <div class="hidden md:flex items-center gap-8">
-        <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
-        <a href="guide.html" class="text-sm text-gray-400 hover:text-white transition-colors">Guide</a>
-        <a href="index.html#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
-        <a href="intel.html" class="text-sm text-white transition-colors">Intel</a>
-        <a href="guide.html" class="ml-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-shadow">
-          Get Started
-        </a>
-      </div>
-      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-900/95 backdrop-blur-xl">
-      <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
-        <a href="guide.html" class="text-sm text-gray-400 hover:text-white transition-colors">Guide</a>
-        <a href="index.html#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
-        <a href="intel.html" class="text-sm text-white transition-colors">Intel</a>
-        <a href="guide.html" class="mt-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-center shadow-lg shadow-cyan-500/25">
-          Get Started
-        </a>
-      </div>
-    </div>
-  </nav>
+  <div id="nav-container"></div>
+  <script src="nav.js"></script>
 
 
   <!-- ═══════════════════════════════════════════ SECTION 1: THE EU DISPLACEMENT STUDY ═══════════════════════════════════════════ -->
-  <section class="relative pt-32 pb-20 overflow-hidden data-grid-bg">
+  <section id="report" class="relative pt-32 pb-20 overflow-hidden data-grid-bg">
     <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-transparent to-slate-900 pointer-events-none"></div>
-    <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="relative max-w-5xl mx-auto px-6">
       <!-- Section tag -->
@@ -206,7 +132,7 @@
       </div>
 
       <!-- Key Finding — Neon highlight -->
-      <div class="bg-white/5 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-8 mb-8 text-center shadow-[0_0_60px_rgba(34,211,238,0.08)]">
+      <div class="bg-slate-800 border border-cyan-500/30 rounded-2xl p-8 mb-8 text-center">
         <p class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase mb-4">// Key Finding</p>
         <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400 neon-text leading-snug max-w-3xl mx-auto">
           &ldquo;Unlike movies or books, pirating video games statistically <span class="text-white">increased</span> legal sales.&rdquo;
@@ -215,7 +141,7 @@
       </div>
 
       <!-- Context note -->
-      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5">
+      <div class="bg-slate-800 border border-white/10 rounded-2xl p-5">
         <div class="flex items-start gap-3">
           <svg class="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           <p class="text-gray-400 text-sm leading-relaxed">
@@ -245,16 +171,15 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
         <!-- Card A: Under 35 -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-colors duration-200">
           <div class="flex items-start justify-between mb-6">
             <div>
               <p class="font-mono text-cyan-400 text-[10px] tracking-[0.2em] uppercase mb-1">Age Distribution</p>
               <p class="text-white font-semibold">Under 35</p>
             </div>
-            <div class="w-20 h-20 rounded-full pie-cyan flex items-center justify-center flex-shrink-0" style="--percent: 64%">
-              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
-                <span class="font-mono text-cyan-400 text-xs font-bold">64%</span>
-              </div>
+            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
+              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#22d3ee" stroke-width="7" stroke-dasharray="136.9 213.6" stroke-linecap="round"/></svg>
+              <span class="absolute font-mono text-cyan-400 text-xs font-bold">64%</span>
             </div>
           </div>
           <p class="font-mono text-5xl sm:text-6xl font-black text-cyan-400 mb-2">64<span class="text-2xl">%</span></p>
@@ -262,16 +187,15 @@
         </div>
 
         <!-- Card B: Gender Split -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-pink-500/30 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-pink-500/30 transition-colors duration-200">
           <div class="flex items-start justify-between mb-6">
             <div>
               <p class="font-mono text-pink-400 text-[10px] tracking-[0.2em] uppercase mb-1">Gender Split</p>
               <p class="text-white font-semibold">Women</p>
             </div>
-            <div class="w-20 h-20 rounded-full pie-pink flex items-center justify-center flex-shrink-0" style="--percent: 43%">
-              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
-                <span class="font-mono text-pink-400 text-xs font-bold">43%</span>
-              </div>
+            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
+              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#ec4899" stroke-width="7" stroke-dasharray="91.9 213.6" stroke-linecap="round"/></svg>
+              <span class="absolute font-mono text-pink-400 text-xs font-bold">43%</span>
             </div>
           </div>
           <p class="font-mono text-5xl sm:text-6xl font-black text-pink-400 mb-2">43<span class="text-2xl">%</span></p>
@@ -279,16 +203,15 @@
         </div>
 
         <!-- Card C: Global Bandwidth -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-colors duration-200">
           <div class="flex items-start justify-between mb-6">
             <div>
               <p class="font-mono text-purple-400 text-[10px] tracking-[0.2em] uppercase mb-1">Global Bandwidth</p>
               <p class="text-white font-semibold">File Sharing Traffic</p>
             </div>
-            <div class="w-20 h-20 rounded-full pie-purple flex items-center justify-center flex-shrink-0" style="--percent: 24%">
-              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
-                <span class="font-mono text-purple-400 text-xs font-bold">24%</span>
-              </div>
+            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
+              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#8b5cf6" stroke-width="7" stroke-dasharray="51.3 213.6" stroke-linecap="round"/></svg>
+              <span class="absolute font-mono text-purple-400 text-xs font-bold">24%</span>
             </div>
           </div>
           <p class="font-mono text-5xl sm:text-6xl font-black text-purple-400 mb-2">24<span class="text-2xl">%</span></p>
@@ -296,16 +219,15 @@
         </div>
 
         <!-- Card D: Prevalence -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-colors duration-200">
           <div class="flex items-start justify-between mb-6">
             <div>
               <p class="font-mono text-emerald-400 text-[10px] tracking-[0.2em] uppercase mb-1">Prevalence</p>
               <p class="text-white font-semibold">Have Pirated At Least Once</p>
             </div>
-            <div class="w-20 h-20 rounded-full pie-emerald flex items-center justify-center flex-shrink-0" style="--percent: 57%">
-              <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center">
-                <span class="font-mono text-emerald-400 text-xs font-bold">57%</span>
-              </div>
+            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
+              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#10b981" stroke-width="7" stroke-dasharray="121.8 213.6" stroke-linecap="round"/></svg>
+              <span class="absolute font-mono text-emerald-400 text-xs font-bold">57%</span>
             </div>
           </div>
           <p class="font-mono text-5xl sm:text-6xl font-black text-emerald-400 mb-2">57<span class="text-2xl">%</span></p>
@@ -334,7 +256,7 @@
       <div class="space-y-6">
 
         <!-- Adobe -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-emerald-500/20 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-emerald-500/20 transition-colors duration-200">
           <div class="flex items-start gap-5">
             <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
               <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -360,7 +282,7 @@
         </div>
 
         <!-- Game of Thrones -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-purple-500/20 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-purple-500/20 transition-colors duration-200">
           <div class="flex items-start gap-5">
             <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
               <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4V2m0 2a2 2 0 00-2 2v1a2 2 0 002 2h0a2 2 0 002-2V6a2 2 0 00-2-2zm0 0V1m10 3V2m0 2a2 2 0 00-2 2v1a2 2 0 002 2h0a2 2 0 002-2V6a2 2 0 00-2-2zm0 0V1m-5 11v4m0 0l-3-3m3 3l3-3"/></svg>
@@ -390,7 +312,7 @@
         </div>
 
         <!-- Ed Sheeran -->
-        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-pink-500/20 transition-all duration-300">
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-pink-500/20 transition-colors duration-200">
           <div class="flex items-start gap-5">
             <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center flex-shrink-0">
               <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
@@ -438,7 +360,7 @@
       </p>
 
       <!-- Quote card -->
-      <div class="bg-white/5 backdrop-blur-xl border border-pink-500/20 rounded-2xl p-8 mb-8 text-center shadow-[0_0_60px_rgba(236,72,153,0.06)]">
+      <div class="bg-slate-800 border border-pink-500/20 rounded-2xl p-8 mb-8 text-center">
         <p class="font-mono text-pink-400 text-xs tracking-[0.2em] uppercase mb-4">// Developer Statement</p>
         <p class="text-2xl sm:text-3xl font-bold text-white leading-snug max-w-2xl mx-auto mb-3">
           &ldquo;I&rsquo;d rather you play the game and not pay, than not play at all.&rdquo;
@@ -447,7 +369,7 @@
       </div>
 
       <!-- Video Player -->
-      <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+      <div class="bg-slate-800 border border-white/10 rounded-2xl overflow-hidden">
         <div class="flex items-center gap-2 px-6 py-3 bg-black/40 border-b border-white/10">
           <span class="terminal-dot bg-red-500"></span>
           <span class="terminal-dot bg-yellow-500"></span>
@@ -458,8 +380,9 @@
           <video
             class="w-full"
             controls
+            loading="lazy"
             poster="images/Just_Shapes_and_Beats_Piracy_screen_Cover.png"
-            preload="metadata"
+            preload="none"
             style="object-position: 50% 100%;"
           >
             <source src="files/Just_Shapes_and_Beats_Piracy_Screen.mp4" type="video/mp4">
@@ -505,15 +428,6 @@
   </footer>
 
 
-  <!-- ═══════════════════════════════════════════ MOBILE MENU JS ═══════════════════════════════════════════ -->
-  <script>
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-    menu.querySelectorAll('a').forEach(link =>
-      link.addEventListener('click', () => menu.classList.add('hidden'))
-    );
-  </script>
 
 </body>
 </html>

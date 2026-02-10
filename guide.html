@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SwitchHack — Post-CFW Companion Guide</title>
+  <meta name="description" content="Complete post-hack companion guide for Nintendo Switch. Themes, emulation, homebrew apps, game management, and safe online play.">
+  <meta property="og:title" content="SwitchHack — Post-CFW Companion Guide">
+  <meta property="og:description" content="Complete post-hack companion guide for Nintendo Switch. Themes, emulation, homebrew, and more.">
+  <meta property="og:image" content="https://switchhack.com/images/pixel_mario_on_computer.gif">
+  <meta property="og:url" content="https://switchhack.com/guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SwitchHack">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SwitchHack — Post-CFW Companion Guide">
+  <meta name="twitter:description" content="Complete post-hack companion guide for Nintendo Switch. Themes, emulation, homebrew, and more.">
+  <meta name="twitter:image" content="https://switchhack.com/images/pixel_mario_on_computer.gif">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,26 +32,8 @@
       },
     }
   </script>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    .pixel-art { image-rendering: pixelated; }
-
-    @keyframes glitch {
-      0%   { transform: translate(0); }
-      20%  { transform: translate(-2px, 2px); }
-      40%  { transform: translate(-2px, -2px); }
-      60%  { transform: translate(2px, 2px); }
-      80%  { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-    .glitch-hover {
-      transition: text-shadow 0.1s ease, filter 0.1s ease;
-    }
-
-    .glitch-hover:hover {
-      text-shadow: 0 0 10px rgba(34,211,238,0.8), 0 0 30px rgba(34,211,238,0.4), 0 0 60px rgba(34,211,238,0.15);
-      filter: brightness(1.2);
-    }
-
     /* Timeline neon line — continuous rainbow cable */
     .timeline-line {
       background: linear-gradient(to bottom, #ef4444, #10b981, #22d3ee, #8b5cf6, #ec4899);
@@ -70,13 +64,6 @@
     .cmd-group:hover .cmd-dropdown { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .cmd-dropdown::before { content: ''; position: absolute; top: -8px; left: 0; right: 0; height: 8px; }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-
-    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
-
     /* Parallax chapter break */
     .chapter-break { background-attachment: fixed; }
     @media (max-width: 768px) { .chapter-break { background-attachment: scroll; } }
@@ -85,36 +72,12 @@
 
 <body class="bg-slate-900 text-gray-200 font-sans antialiased">
 
+  <!-- Skip to content (accessibility) -->
+  <a href="#themes" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
+
   <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
-  <nav class="fixed top-0 inset-x-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-mono font-bold text-xl tracking-tight text-white glitch-hover">
-        Switch<span class="text-cyan-400">Hack</span>
-      </a>
-      <div class="hidden md:flex items-center gap-8">
-        <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
-        <a href="guide.html" class="text-sm text-white transition-colors">Guide</a>
-        <a href="index.html#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
-        <a href="intel.html" class="text-sm text-gray-400 hover:text-white transition-colors">Intel</a>
-        <a href="#prerequisites" class="ml-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-shadow">
-          Start Reading
-        </a>
-      </div>
-      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
-    </div>
-    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-900/95 backdrop-blur-xl">
-      <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a>
-        <a href="guide.html" class="text-sm text-white transition-colors">Guide</a>
-        <a href="index.html#community" class="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
-        <a href="intel.html" class="text-sm text-gray-400 hover:text-white transition-colors">Intel</a>
-      </div>
-    </div>
-  </nav>
+  <div id="nav-container"></div>
+  <script src="nav.js"></script>
 
 
   <!-- ═══════════════════════════════════════════ HERO BANNER ═══════════════════════════════════════════ -->
@@ -902,12 +865,6 @@
 
   <!-- ═══════════════════════════════════════════ SCRIPTS ═══════════════════════════════════════════ -->
   <script>
-    // Mobile menu
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-    menu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => menu.classList.add('hidden')));
-
     // ScrollSpy for Command Bar
     const cmdLinks = document.querySelectorAll('.cmd-link');
     const spySections = [];
@@ -928,43 +885,17 @@
     updateCommandBar();
   </script>
 
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
+  <!-- Back to top button -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 z-50 hidden w-11 h-11 rounded-full bg-cyan-500/20 border border-cyan-500/30 backdrop-blur-sm text-cyan-400 hover:bg-cyan-500/30 hover:scale-110 transition-all shadow-lg shadow-cyan-500/10" aria-label="Back to top">
+    <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+  </button>
+  <script>
+    const topBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      topBtn.classList.toggle('hidden', window.scrollY < 400);
+    }, { passive: true });
+    topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
 </body>
 </html>
