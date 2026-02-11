@@ -97,6 +97,23 @@
     .risk-warning  { color: #fbbf24; background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.25); }
     .risk-safe     { color: #34d399; background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.25); }
 
+    /* ── threat tooltip ── */
+    .threat-chip { position: relative; cursor: default; }
+    .threat-chip .threat-tip {
+      visibility: hidden; opacity: 0;
+      position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      padding: 6px 10px; border-radius: 6px;
+      background: rgba(15,23,42,.95); border: 1px solid rgba(255,255,255,.12);
+      color: #cbd5e1; font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0;
+      white-space: nowrap; pointer-events: none; z-index: 30;
+      transition: opacity .15s, visibility .15s;
+    }
+    .threat-chip .threat-tip::before {
+      content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent; border-bottom-color: rgba(255,255,255,.12);
+    }
+    .threat-chip:hover .threat-tip { visibility: visible; opacity: 1; }
+
     /* ── glass surface ── */
     .glass {
       background: rgba(255,255,255,.05);
@@ -130,17 +147,17 @@
     <div class="flex justify-between items-end w-full mb-6">
       <div class="flex items-center gap-3">
         <h1 class="text-lg font-bold text-white tracking-tight">Release Feed</h1>
-        <span class="text-[11px] font-mono text-gray-400" id="release-count"></span>
-        <div class="flex items-center gap-2 ml-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/[.07] border border-white/10 text-[10px] font-mono text-gray-400" id="release-count"></span>
+        <div class="flex items-center gap-1.5 ml-2">
           <span class="pulse-dot" id="pulse-dot"></span>
-          <span class="text-[11px] font-mono text-white/30 tracking-wide" id="sync-time">SYNCING</span>
+          <span class="text-[10px] font-mono text-white/25 tracking-wide" id="sync-time">SYNCING</span>
         </div>
       </div>
       <div class="hidden sm:flex items-center gap-4" id="status-hud">
         <!-- skeleton -->
-        <div class="bg-white/[.05] border-l-4 border-l-emerald-500 rounded-sm px-3.5 py-2 w-32 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-20 skel"></div></div>
-        <div class="bg-white/[.05] border-l-4 border-l-blue-500 rounded-sm px-3.5 py-2 w-32 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-20 skel"></div></div>
-        <div class="bg-white/[.05] border-l-4 border-l-purple-500 rounded-sm px-3.5 py-2 w-32 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-20 skel"></div></div>
+        <div class="bg-white/[.05] border-l-4 border-l-emerald-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
+        <div class="bg-white/[.05] border-l-4 border-l-blue-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
+        <div class="bg-white/[.05] border-l-4 border-l-purple-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
       </div>
     </div>
 
@@ -194,7 +211,18 @@
       <aside class="lg:col-span-1 space-y-4 lg:mt-[42px]">
 
         <!-- Update Setup -->
-        <div class="rounded-md bg-slate-800/60 border border-white/10 p-3">
+        <div class="rounded-md bg-slate-800/60 border border-white/10 p-4 space-y-3">
+          <div id="rec-firmware">
+            <div class="text-[10px] font-mono text-gray-500 uppercase tracking-wider mb-1.5">Recommended Firmware</div>
+            <div class="flex items-center gap-2.5">
+              <span class="text-2xl font-bold text-white font-mono tracking-tight skel w-20 h-7" id="rec-fw-ver"></span>
+              <span class="flex items-center gap-1" id="rec-fw-status">
+                <span class="w-2 h-2 rounded-full skel"></span>
+                <span class="text-[10px] font-semibold uppercase skel w-10 h-3"></span>
+              </span>
+            </div>
+            <div class="text-[11px] text-gray-500 mt-1 leading-snug skel w-full h-3" id="rec-fw-reason"></div>
+          </div>
           <a href="guide.html" class="flex items-center justify-center w-full py-2 text-[11px] font-semibold uppercase tracking-wider text-black bg-yellow-400 hover:bg-yellow-300 rounded-md transition-colors">
             Update My Setup →
           </a>
@@ -306,22 +334,35 @@
 
     /* ── render: HUD strip ── */
 
+    function cardStyle(status) {
+      if (status === 'Caution') return { border: 'border-l-amber-500', bg: 'bg-amber-500/[.06]', dot: '#fbbf24', color: 'text-amber-400' };
+      if (status === 'Danger')  return { border: 'border-l-red-500',   bg: 'bg-red-500/[.06]',   dot: '#f87171', color: 'text-red-400' };
+      if (status === 'Beta')    return { border: 'border-l-blue-500',  bg: 'bg-blue-500/[.06]',  dot: '#60a5fa', color: 'text-blue-400' };
+      return { border: 'border-l-emerald-500', bg: 'bg-emerald-500/[.06]', dot: '#34d399', color: 'text-emerald-400' };
+    }
+
     function renderMeta(stats) {
       if (!stats) return;
-      var riskClass = stats.threat_level === 'Danger' ? 'risk-critical' : stats.threat_level === 'Caution' ? 'risk-warning' : 'risk-safe';
       var cards = [
-        { label: 'FIRMWARE',   ver: stats.firmware.version,   border: 'border-l-emerald-500' },
-        { label: 'ATMOSPHERE', ver: stats.atmosphere.version, border: 'border-l-blue-500' },
-        { label: 'HEKATE',     ver: stats.hekate.version,     border: 'border-l-purple-500' }
+        { label: 'FIRMWARE',   ver: stats.firmware.version,   status: stats.firmware.status,   reason: stats.firmware.reason },
+        { label: 'ATMOSPHERE', ver: stats.atmosphere.version, status: stats.atmosphere.status, reason: stats.atmosphere.reason },
+        { label: 'HEKATE',     ver: stats.hekate.version,     status: stats.hekate.status,     reason: stats.hekate.reason }
       ];
       var h = '';
-      // threat level chip
-      h += '<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border text-[11px] font-bold uppercase tracking-wider ' + riskClass + '">';
-      h += '<span class="w-2 h-2 rounded-full" style="background:currentColor"></span>' + stats.threat_level + '</div>';
       cards.forEach(function(c) {
-        h += '<div class="bg-white/[.05] border-l-4 ' + c.border + ' rounded-sm px-3.5 py-2 w-32 h-14 flex flex-col justify-center">';
-        h += '<div class="text-lg font-bold text-white leading-tight tracking-tight">' + c.ver + '</div>';
-        h += '<div class="text-[10px] font-mono font-semibold text-gray-500 uppercase tracking-[.12em]">' + c.label + '</div>';
+        var s = cardStyle(c.status);
+        var tip = c.reason || '';
+        var hasTip = tip && c.status !== 'Stable';
+        h += '<div class="' + s.bg + ' border-l-4 ' + s.border + ' rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center' + (hasTip ? ' threat-chip' : '') + '">';
+        h += '<div class="flex items-center gap-2">';
+        h += '<span class="text-lg font-bold text-white leading-tight tracking-tight">' + c.ver + '</span>';
+        h += '<span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:' + s.dot + '"></span>';
+        h += '</div>';
+        h += '<div class="flex items-center gap-1.5">';
+        h += '<span class="text-[10px] font-mono font-semibold text-gray-500 uppercase tracking-[.12em]">' + c.label + '</span>';
+        h += '<span class="text-[9px] font-semibold uppercase ' + s.color + '">' + c.status + '</span>';
+        h += '</div>';
+        if (hasTip) h += '<span class="threat-tip">' + tip + '</span>';
         h += '</div>';
       });
       statusHud.innerHTML = h;
@@ -330,9 +371,11 @@
 
     /* ── render: sync ── */
 
-    function renderSync(iso) {
-      if (!iso) { syncTime.textContent = 'OFFLINE'; pulseDot.style.background = '#ef4444'; pulseDot.style.animation = 'none'; return; }
-      syncTime.textContent = timeAgo(iso);
+    function renderSync(val) {
+      if (!val) { syncTime.textContent = 'OFFLINE'; pulseDot.style.background = '#ef4444'; pulseDot.style.animation = 'none'; return; }
+      var d = new Date(val);
+      var display = isNaN(d.getTime()) ? val : timeAgo(val);
+      syncTime.textContent = 'Last sync ' + display;
     }
 
 
@@ -343,7 +386,7 @@
         return (activeFilter === 'all' || r.type === activeFilter) &&
                (!searchQuery || r.title.toLowerCase().indexOf(searchQuery) !== -1);
       });
-      releaseCount.textContent = list.length + ' / ' + allReleases.length;
+      releaseCount.textContent = list.length === allReleases.length ? list.length + ' releases' : list.length + ' of ' + allReleases.length;
 
       if (!list.length) { emptyState.classList.remove('hidden'); releasesList.innerHTML = ''; return; }
       emptyState.classList.add('hidden');
@@ -462,6 +505,22 @@
       if (skeletonLoader) skeletonLoader.remove();
       renderMeta(d.dashboard_stats);
       renderSync(d.dashboard_stats ? d.dashboard_stats.lastSync : null);
+      if (d.dashboard_stats) {
+        var recVer = d.dashboard_stats.recommended_firmware;
+        var recReason = d.dashboard_stats.recommended_firmware_reason;
+        var fwVer = document.getElementById('rec-fw-ver');
+        var fwStatus = document.getElementById('rec-fw-status');
+        var fwReason = document.getElementById('rec-fw-reason');
+        if (fwVer && recVer) {
+          fwVer.textContent = recVer;
+          fwVer.className = 'text-2xl font-bold text-white font-mono tracking-tight';
+          fwStatus.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"></span><span class="text-[10px] font-semibold uppercase text-emerald-400">Stable</span>';
+        }
+        if (fwReason && recReason) {
+          fwReason.textContent = recReason;
+          fwReason.className = 'text-[11px] text-gray-500 mt-1 leading-snug';
+        }
+      }
       allReleases = d.articles || [];
       renderReleases();
       renderNews(d.news);
