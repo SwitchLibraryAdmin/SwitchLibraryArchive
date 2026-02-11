@@ -1,0 +1,96 @@
+name: Validate Monitor Data
+
+# The full scraping pipeline (gbatemp_scraper.py → intel_processor.py)
+# runs locally because it requires Chrome + Cloudflare bypass.
+#
+# Local workflow:
+#   cd scrapers
+#   python gbatemp_scraper.py          # produces switch_scrape.json
+#   python intel_processor.py          # produces ../monitor_data.json
+#   cd .. && git add monitor_data.json && git commit && git push
+#
+# This CI workflow validates monitor_data.json on every push.
+
+on:
+  push:
+    paths:
+      - 'monitor_data.json'
+  pull_request:
+    paths:
+      - 'monitor_data.json'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Validate monitor_data.json schema
+      run: |
+        python3 -c "
+        import json, sys
+
+        with open('monitor_data.json') as f:
+            d = json.load(f)
+
+        errors = []
+
+        # dashboard_stats
+        stats = d.get('dashboard_stats')
+        if not stats:
+            errors.append('Missing dashboard_stats')
+        else:
+            for key in ['threat_level', 'firmware', 'atmosphere', 'hekate', 'lastSync']:
+                if key not in stats:
+                    errors.append(f'dashboard_stats missing key: {key}')
+            for nested in ['firmware', 'atmosphere', 'hekate']:
+                obj = stats.get(nested, {})
+                if not isinstance(obj, dict) or 'version' not in obj:
+                    errors.append(f'dashboard_stats.{nested} must have a \"version\" key')
+            if stats.get('threat_level') not in ('Safe', 'Caution', 'Danger'):
+                errors.append(f'Invalid threat_level: {stats.get(\"threat_level\")}')
+
+        # articles
+        articles = d.get('articles', [])
+        if not isinstance(articles, list):
+            errors.append('articles must be a list')
+        for i, a in enumerate(articles):
+            for key in ['title', 'type', 'risk', 'timestamp', 'version', 'region', 'size']:
+                if key not in a:
+                    errors.append(f'articles[{i}] missing key: {key}')
+            if a.get('type') not in ('game', 'update', 'dlc', 'homebrew'):
+                errors.append(f'articles[{i}] invalid type: {a.get(\"type\")}')
+            if a.get('risk') not in ('Safe', 'Caution', 'Danger'):
+                errors.append(f'articles[{i}] invalid risk: {a.get(\"risk\")}')
+
+        # news
+        news = d.get('news', [])
+        if not isinstance(news, list):
+            errors.append('news must be a list')
+        for i, n in enumerate(news):
+            for key in ['headline', 'url', 'timestamp']:
+                if key not in n:
+                    errors.append(f'news[{i}] missing key: {key}')
+
+        # reddit
+        reddit = d.get('reddit', [])
+        if not isinstance(reddit, list):
+            errors.append('reddit must be a list')
+        for i, r in enumerate(reddit):
+            for key in ['title', 'url', 'upvotes']:
+                if key not in r:
+                    errors.append(f'reddit[{i}] missing key: {key}')
+
+        if errors:
+            print('VALIDATION FAILED:')
+            for e in errors:
+                print(f'  - {e}')
+            sys.exit(1)
+
+        print(f'OK: {len(articles)} articles, {len(news)} news, {len(reddit)} reddit')
+        print(f'Threat level: {stats[\"threat_level\"]}')
+        print(f'Firmware: {stats[\"firmware\"][\"version\"]}')
+        "

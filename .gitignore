@@ -11,3 +11,9 @@ Thumbs.db
 
 # Live-server artifacts
 node_modules/
+
+# Private scrapers (not published)
+scrapers/
+
+# Debug artifacts
+debug_claude_response.txt
