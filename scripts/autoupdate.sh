@@ -13,7 +13,7 @@ echo "🧠 Processing with DeepSeek AI..."
 
 # 3. Add to GitHub
 echo "🚀 Shipping to GitHub..."
-/usr/bin/git add monitor_data.json
+/usr/bin/git add data/monitor_data.json
 /usr/bin/git commit -m "Autonomous Intel Update: $(date)"
 /usr/bin/git push origin main
 

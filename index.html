@@ -32,7 +32,7 @@
       },
     }
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <body class="bg-slate-900 text-gray-200 font-sans antialiased">
@@ -42,20 +42,20 @@
 
   <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
   <div id="nav-container"></div>
-  <script src="nav.js"></script>
+  <script src="assets/js/nav.js"></script>
 
 
   <!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
   <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
     <!-- Full-screen Background Image -->
     <div class="absolute inset-0">
-      <img src="images/home_gif_1.gif" alt="Pixel art city background" class="w-full h-full object-cover pixel-art">
+      <img src="assets/images/home_gif_1.gif" alt="Pixel art city background" class="w-full h-full object-cover pixel-art">
       <!-- Dark gradient overlay for readability -->
       <div class="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900"></div>
     </div>
 
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 w-full pt-32 pb-20">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full pt-24 sm:pt-32 pb-12 sm:pb-20">
       <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <!-- Left: Copy -->
         <div class="flex-1 text-center lg:text-left">
@@ -84,7 +84,7 @@
           <div class="relative">
             <div class="absolute -inset-6 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 rounded-3xl blur-3xl"></div>
             <img
-              src="images/pixel_hacker.gif"
+              src="assets/images/pixel_hacker.gif"
               alt="Pixel Hacker"
               class="relative pixel-art rounded-2xl shadow-2xl shadow-cyan-500/20 w-full max-w-lg lg:max-w-2xl float-anim border border-cyan-500/30"
             >
@@ -104,7 +104,7 @@
 
   <!-- ═══════════════════════════════════════════ FEATURES ═══════════════════════════════════════════ -->
   <section id="features" class="relative py-32">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <!-- Section Header -->
       <div class="text-center mb-16">
         <p class="font-mono text-cyan-400 text-sm tracking-widest uppercase mb-3">What You Unlock</p>
@@ -160,7 +160,7 @@
 
   <!-- ═══════════════════════════════════════════ COMPANION GUIDE ═══════════════════════════════════════════ -->
   <section id="companion" class="relative py-32">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
         <!-- Left: Mario GIF -->
@@ -169,7 +169,7 @@
             <div class="absolute -inset-6 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-3xl blur-3xl"></div>
             <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-emerald-500/20">
               <img
-                src="images/pixel_mario_on_computer.gif"
+                src="assets/images/pixel_mario_on_computer.gif"
                 alt="Mario on Computer"
                 loading="lazy"
                 class="pixel-art w-full max-w-md lg:max-w-lg block"
@@ -217,7 +217,7 @@
 
   <!-- ═══════════════════════════════════════════ PIRACY / ECONOMICS ═══════════════════════════════════════════ -->
   <section id="piracy" class="relative py-32">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
         <!-- Left: Text -->
         <div class="flex-1 text-center lg:text-left">
@@ -240,7 +240,7 @@
           <div class="relative">
             <div class="absolute -inset-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl"></div>
             <img
-              src="images/Cyberpunk_city.jpg"
+              src="assets/images/Cyberpunk_city.jpg"
               alt="Cyberpunk City"
               loading="lazy"
               class="relative pixel-art rounded-2xl shadow-2xl shadow-purple-500/20 w-full max-w-md lg:max-w-lg"
@@ -253,10 +253,10 @@
 
 
   <!-- ═══════════════════════════════════════════ COMMUNITY ═══════════════════════════════════════════ -->
-  <section id="community" class="relative py-32">
-    <div class="max-w-7xl mx-auto px-6 text-center">
+  <section class="relative py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
       <p class="font-mono text-cyan-400 text-sm tracking-widest uppercase mb-3">Better Together</p>
-      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">Join the Community.</h2>
+      <h2 id="community" class="text-3xl sm:text-4xl font-bold text-white mb-6 scroll-mt-[120px]">Join the Community.</h2>
       <p class="text-gray-400 max-w-2xl mx-auto leading-relaxed mb-12">
         Connect with thousands of Switch modders. Get help, share your setups, and discover what others are building.
       </p>
@@ -265,7 +265,7 @@
       <div class="relative max-w-4xl mx-auto">
         <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-3xl blur-2xl"></div>
         <img
-          src="images/Pokemon_cafe.jpg"
+          src="assets/images/Pokemon_cafe.jpg"
           alt="Switch modding community"
           loading="lazy"
           class="relative pixel-art rounded-2xl shadow-2xl shadow-cyan-500/10 w-full"
@@ -287,7 +287,7 @@
 
   <!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════════ -->
   <footer class="border-t border-white/10 py-12">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2">
         <span class="font-mono font-bold text-white">Switch<span class="text-cyan-400">Hack</span></span>
         <span class="text-gray-600 text-sm">&copy; 2026</span>

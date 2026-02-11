@@ -6,18 +6,18 @@ name: Validate Monitor Data
 # Local workflow:
 #   cd scrapers
 #   python gbatemp_scraper.py          # produces switch_scrape.json
-#   python intel_processor.py          # produces ../monitor_data.json
-#   cd .. && git add monitor_data.json && git commit && git push
+#   python intel_processor.py          # produces ../data/monitor_data.json
+#   cd .. && git add data/monitor_data.json && git commit && git push
 #
 # This CI workflow validates monitor_data.json on every push.
 
 on:
   push:
     paths:
-      - 'monitor_data.json'
+      - 'data/monitor_data.json'
   pull_request:
     paths:
-      - 'monitor_data.json'
+      - 'data/monitor_data.json'
   workflow_dispatch:
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         python3 -c "
         import json, sys
 
-        with open('monitor_data.json') as f:
+        with open('data/monitor_data.json') as f:
             d = json.load(f)
 
         errors = []

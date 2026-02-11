@@ -32,7 +32,7 @@
       },
     }
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <style>
     .data-grid-bg {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h1v40H0zm40 0v1H0' fill='rgba(34,211,238,0.03)'/%3E%3C/svg%3E");
@@ -104,7 +104,7 @@
 
   <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
   <div id="nav-container"></div>
-  <script src="nav.js"></script>
+  <script src="assets/js/nav.js"></script>
 
 
   <!-- ═══════════════════════════════════════════ SECTION 1: THE EU DISPLACEMENT STUDY ═══════════════════════════════════════════ -->
@@ -112,7 +112,7 @@
     <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-transparent to-slate-900 pointer-events-none"></div>
     <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative max-w-5xl mx-auto px-6">
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
       <!-- Section tag -->
       <div class="flex items-center gap-3 mb-6">
         <span class="font-mono text-cyan-400 text-xs tracking-[0.2em] uppercase">Section 01</span>
@@ -155,8 +155,8 @@
 
 
   <!-- ═══════════════════════════════════════════ SECTION 2: PIRATE DEMOGRAPHICS ═══════════════════════════════════════════ -->
-  <section id="demographics" class="py-20 border-t border-white/5">
-    <div class="max-w-5xl mx-auto px-6">
+  <section id="demographics" class="py-12 sm:py-20 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
 
       <div class="flex items-center gap-3 mb-2">
         <span class="font-mono text-purple-400 text-xs tracking-[0.2em] uppercase">Section 02</span>
@@ -168,7 +168,7 @@
       </p>
 
       <!-- 2x2 Data Widget Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 
         <!-- Card A: Under 35 -->
         <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-colors duration-200">
@@ -240,8 +240,8 @@
 
 
   <!-- ═══════════════════════════════════════════ SECTION 3: PIRACY AS MARKETING ═══════════════════════════════════════════ -->
-  <section id="marketing" class="py-20 border-t border-white/5">
-    <div class="max-w-5xl mx-auto px-6">
+  <section id="marketing" class="py-12 sm:py-20 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
 
       <div class="flex items-center gap-3 mb-2">
         <span class="font-mono text-emerald-400 text-xs tracking-[0.2em] uppercase">Section 03</span>
@@ -347,8 +347,8 @@
 
 
   <!-- ═══════════════════════════════════════════ SECTION 4: THE DEVELOPER'S TAKE ═══════════════════════════════════════════ -->
-  <section id="developer" class="py-20 border-t border-white/5">
-    <div class="max-w-5xl mx-auto px-6">
+  <section id="developer" class="py-12 sm:py-20 border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
 
       <div class="flex items-center gap-3 mb-2">
         <span class="font-mono text-pink-400 text-xs tracking-[0.2em] uppercase">Section 04</span>
@@ -381,11 +381,11 @@
             class="w-full"
             controls
             loading="lazy"
-            poster="images/Just_Shapes_and_Beats_Piracy_screen_Cover.png"
+            poster="assets/images/Just_Shapes_and_Beats_Piracy_screen_Cover.png"
             preload="none"
             style="object-position: 50% 100%;"
           >
-            <source src="files/Just_Shapes_and_Beats_Piracy_Screen.mp4" type="video/mp4">
+            <source src="assets/media/Just_Shapes_and_Beats_Piracy_Screen.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         </div>

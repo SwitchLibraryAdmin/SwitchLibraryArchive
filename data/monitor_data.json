@@ -1,0 +1,451 @@
+{
+  "dashboard_stats": {
+    "threat_level": "Caution",
+    "threat_trend": "Rising",
+    "firmware": {
+      "version": "21.2.0",
+      "status": "Caution",
+      "reason": "Firmware 21.2.0 has official CFW support but users report LayeredFS crashes and potential data corruption, indicating compatibility issues with some homebrew."
+    },
+    "atmosphere": {
+      "version": "1.10.2",
+      "status": "Stable",
+      "reason": "Atmosphere 1.10.2 officially supports firmware 21.2.0, but a user reports LayeredFS causing all games to crash, suggesting potential instability with certain mods."
+    },
+    "hekate": {
+      "version": "6.5.1",
+      "status": "Stable",
+      "reason": "Hekate v6.5.1 officially supports firmware 21.2.0 with faster booting and fixes for silicon errata, indicating stable bootloader support."
+    },
+    "lastSync": "02:26 AM",
+    "recommended_firmware": "20.5.0",
+    "recommended_firmware_reason": "Firmware 21.x has broken homebrew compatibility requiring recompilation, and there are reports of LayeredFS crashes and data corruption on 21.2.0, making 20.5.0 a more stable choice for full homebrew functionality."
+  },
+  "articles": [
+    {
+      "type": "homebrew",
+      "content_type": "Release",
+      "source": "GBAtemp",
+      "title": "Pokemon Z-A Shiny Stash Live Map",
+      "url": "https://gbatemp.net/threads/pokemon-z-a-shiny-stash-live-map.679574/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-08",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Release",
+      "source": "GBAtemp",
+      "title": "The Simpsons Hit & Run Remastered (Homebrew)",
+      "url": "https://gbatemp.net/threads/the-simpsons-hit-run-remastered-homebrew.679519/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Pokéswitch - Simple Pokémon save editor for Switch",
+      "url": "https://gbatemp.net/threads/pokeswitch-simple-pokemon-save-editor-for-switch.677289/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-20",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Metroid Prime 4 Beyond save editing",
+      "url": "https://gbatemp.net/threads/metroid-prime-4-beyond-save-editing.677970/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-12",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
+      "url": "https://gbatemp.net/threads/d3hack-diablo-iii-eternal-collection-4k-1440p-1080p-seasonal-events-challenge-rifts-more-mod-menu-v2-7-6.678660/",
+      "version": "v2.7.6",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-06",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Inazuma Eleven Victory Road Mod 60FPS + 4k Resolution",
+      "url": "https://gbatemp.net/threads/inazuma-eleven-victory-road-mod-60fps-4k-resolution.678451/",
+      "version": "v2.0.1",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-29",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tutorial",
+      "source": "GBAtemp",
+      "title": "Learn to create cheats with breeze (or other cheat engine). No previous knowledge required. Examples with Dave the Diver",
+      "url": "https://gbatemp.net/threads/learn-to-create-cheats-with-breeze-or-other-cheat-engine-no-previous-knowledge-required-examples-with-dave-the-diver.678771/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-10",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tutorial",
+      "source": "GBAtemp",
+      "title": "Fix DK64 Audio Crash on N64 NSO",
+      "url": "https://gbatemp.net/threads/fix-dk64-audio-crash-on-n64-nso.678077/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-15",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Discussion",
+      "source": "GBAtemp",
+      "title": "Preliminary list of updated homebrew apps and tools for FW 21.0.0 | AMS 1.10.0 | Please add your findings!!!",
+      "url": "https://gbatemp.net/threads/preliminary-list-of-updated-homebrew-apps-and-tools-for-fw-21-0-0-ams-1-10-0-please-add-your-findings.677217/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-17",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Question",
+      "source": "GBAtemp",
+      "title": "[Help] LayeredFS Crashing ALL Games on FW 21.2.0 (AMS 1.10.2) - Was working perfectly before update",
+      "url": "https://gbatemp.net/threads/help-layeredfs-crashing-all-games-on-fw-21-2-0-ams-1-10-2-was-working-perfectly-before-update.679403/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-02",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Question",
+      "source": "GBAtemp",
+      "title": "Updated to the latest fw. A system message sometimes blinks when trying to run a game",
+      "url": "https://gbatemp.net/threads/updated-to-the-latest-fw-a-system-message-sometimes-blinks-when-trying-to-run-a-game.679297/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-30",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Question",
+      "source": "GBAtemp",
+      "title": "Switch Lite no battery information and no boot to firmware after hekate usb tools crash.",
+      "url": "https://gbatemp.net/threads/switch-lite-no-battery-information-and-no-boot-to-firmware-after-hekate-usb-tools-crash.679374/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-01",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Question",
+      "source": "GBAtemp",
+      "title": "(Error Code: 2-ARVHA-0000) When opening the 2.00 patched YouTube app on a hard-modded (Banned Switch)",
+      "url": "https://gbatemp.net/threads/error-code-2-arvha-0000-when-opening-the-2-00-patched-youtube-app-on-a-hard-modded-banned-switch.679514/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Solution to Metroid Prime 4 not running on 19.0.1",
+      "url": "https://gbatemp.net/threads/solution-to-metroid-prime-4-not-running-on-19-0-1.679606/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-09",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Switch 2 shell + stick swap",
+      "url": "https://gbatemp.net/threads/switch-2-shell-stick-swap.679521/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Switch 2 DS Dual Screen add-on for February showcase",
+      "url": "https://gbatemp.net/threads/switch-2-ds-dual-screen-add-on-for-february-showcase.678837/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-12",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "NSO Gamecube Controller Bluetooth PC Support",
+      "url": "https://gbatemp.net/threads/nso-gamecube-controller-bluetooth-pc-support.678409/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-28",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo Switch 2: The Current State of Physical Releases",
+      "url": "https://gbatemp.net/threads/nintendo-switch-2-the-current-state-of-physical-releases.678010/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-13",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Digital Eclipse lied about the physical release of Mortal Kombat Kollection for Switch 2",
+      "url": "https://gbatemp.net/threads/digital-eclipse-lied-about-the-physical-release-of-mortal-kombat-kollection-for-switch-2.678035/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-14",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
+      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-09",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo surprise drops a new GameCube title onto the Switch Online library",
+      "url": "https://gbatemp.net/threads/nintendo-surprise-drops-a-new-gamecube-title-onto-the-switch-online-library.677946/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-11",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo Switch Online retro catalog games for December 2025 announced",
+      "url": "https://gbatemp.net/threads/nintendo-switch-online-retro-catalog-games-for-december-2025-announced.677937/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-10",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo Switch Online retro catalog games for November 2025 revealed",
+      "url": "https://gbatemp.net/threads/nintendo-switch-online-retro-catalog-games-for-november-2025-revealed.677553/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-28",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
+      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-04",
+      "risk": "Safe"
+    }
+  ],
+  "news": [
+    {
+      "headline": "Nintendo Switch firmware 21.2.0 released",
+      "source": "GBAtemp",
+      "timestamp": "2026-01-13",
+      "url": "https://gbatemp.net/threads/nintendo-switch-firmware-21-2-0-released.678863/"
+    },
+    {
+      "headline": "Nintendo Switch firmware version 21.0.1 now available",
+      "source": "GBAtemp",
+      "timestamp": "2025-11-25",
+      "url": "https://gbatemp.net/threads/nintendo-switch-firmware-version-21-0-1-now-available.677447/"
+    },
+    {
+      "headline": "SysDVR Version 6.3",
+      "source": "GitHub",
+      "timestamp": "2026-02-10",
+      "url": "https://github.com/exelix11/SysDVR/releases/tag/v6.3"
+    },
+    {
+      "headline": "DBI 865 - Russian version only",
+      "source": "GitHub",
+      "timestamp": "2026-02-06",
+      "url": "https://github.com/rashevskyv/dbi/releases/tag/865ru"
+    },
+    {
+      "headline": "FPSLocker 3.2.4",
+      "source": "GitHub",
+      "timestamp": "2026-01-30",
+      "url": "https://github.com/masagrator/FPSLocker/releases/tag/3.2.4"
+    },
+    {
+      "headline": "hekate v6.5.1 & Nyx v1.9.1",
+      "source": "GitHub",
+      "timestamp": "2026-01-20",
+      "url": "https://github.com/CTCaer/hekate/releases/tag/v6.5.1"
+    },
+    {
+      "headline": "MissionControl 0.14.2",
+      "source": "GitHub",
+      "timestamp": "2026-01-15",
+      "url": "https://github.com/ndeadly/MissionControl/releases/tag/v0.14.2"
+    },
+    {
+      "headline": "Atmosphère 1.10.2",
+      "source": "GitHub",
+      "timestamp": "2026-01-14",
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/releases/tag/1.10.2"
+    },
+    {
+      "headline": "Ultrahand-Overlay Ultrahand Overlay 2.2.7",
+      "source": "GitHub",
+      "timestamp": "2026-01-11",
+      "url": "https://github.com/ppkantorski/Ultrahand-Overlay/releases/tag/v2.2.7"
+    },
+    {
+      "headline": "Sys-patch version v1.5.9",
+      "source": "GitHub",
+      "timestamp": "2025-12-27",
+      "url": "https://github.com/impeeza/sys-patch/releases/tag/v1.5.9"
+    },
+    {
+      "headline": "Goldleaf 1.2.0 - Support and cool things",
+      "source": "GitHub",
+      "timestamp": "2025-12-22",
+      "url": "https://github.com/XorTroll/Goldleaf/releases/tag/1.2.0"
+    },
+    {
+      "headline": "emuiibo 1.1.2 - Support update",
+      "source": "GitHub",
+      "timestamp": "2025-12-22",
+      "url": "https://github.com/XorTroll/emuiibo/releases/tag/1.1.2"
+    },
+    {
+      "headline": "NXMP 0.9.3",
+      "source": "GitHub",
+      "timestamp": "2025-12-17",
+      "url": "https://github.com/proconsule/nxmp/releases/tag/v0.9.3"
+    },
+    {
+      "headline": "JKSV 12/02/2025",
+      "source": "GitHub",
+      "timestamp": "2025-12-02",
+      "url": "https://github.com/J-D-K/JKSV/releases/tag/12/02/2025"
+    }
+  ],
+  "reddit": [
+    {
+      "title": "uLaunch v1.2.3 released (21.2.0 support)",
+      "upvotes": 32,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1qm33mm/ulaunch_v123_released_2120_support/",
+      "timestamp": "2026-01-24",
+      "subreddit": "r/SwitchHacks"
+    },
+    {
+      "title": "Mission Control v0.14.1 released (21.1.0 support)",
+      "upvotes": 30,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1pi4b14/mission_control_v0141_released_2110_support/",
+      "timestamp": "2025-12-09",
+      "subreddit": "r/SwitchHacks"
+    },
+    {
+      "title": "Steam on Ubuntu jammy 22.04 kinda stable",
+      "upvotes": 306,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r0ico1/steam_on_ubuntu_jammy_2204_kinda_stable/",
+      "timestamp": "2026-02-09",
+      "subreddit": "r/SwitchPirates"
+    },
+    {
+      "title": "Another nintendo device defeated by tweezers",
+      "upvotes": 209,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r0sr4i/another_nintendo_device_defeated_by_tweezers/",
+      "timestamp": "2026-02-10",
+      "subreddit": "r/SwitchPirates"
+    },
+    {
+      "title": "Switch mod installation is addictive!",
+      "upvotes": 14,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r0ximx/switch_mod_installation_is_addictive/",
+      "timestamp": "2026-02-10",
+      "subreddit": "r/SwitchPirates"
+    },
+    {
+      "title": "Atmosphere Dev is retiring, good sailing, SciresM.",
+      "upvotes": 794,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qo12cv/atmosphere_dev_is_retiring_good_sailing_sciresm/",
+      "timestamp": "2026-01-27",
+      "subreddit": "r/SwitchPirates"
+    },
+    {
+      "title": "Shhh this thing is way too overpowered",
+      "upvotes": 612,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qv0ahz/shhh_this_thing_is_way_too_overpowered/",
+      "timestamp": "2026-02-03",
+      "subreddit": "r/SwitchPirates"
+    }
+  ]
+}
