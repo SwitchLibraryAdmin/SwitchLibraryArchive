@@ -5,21 +5,21 @@
     "firmware": {
       "version": "21.2.0",
       "status": "Caution",
-      "reason": "Firmware 21.2.0 has official CFW support but users report LayeredFS crashes and potential data corruption, indicating compatibility issues with some homebrew."
+      "reason": "Multiple users report LayeredFS crashes and game corruption on 21.2.0, with a specific thread detailing system-wide issues after updating."
     },
     "atmosphere": {
       "version": "1.10.2",
       "status": "Stable",
-      "reason": "Atmosphere 1.10.2 officially supports firmware 21.2.0, but a user reports LayeredFS causing all games to crash, suggesting potential instability with certain mods."
+      "reason": "Atmosphere 1.10.2 officially supports 21.2.0, but community reports indicate compatibility issues with LayeredFS and some homebrew."
     },
     "hekate": {
       "version": "6.5.1",
       "status": "Stable",
-      "reason": "Hekate v6.5.1 officially supports firmware 21.2.0 with faster booting and fixes for silicon errata, indicating stable bootloader support."
+      "reason": "Hekate v6.5.1 officially supports 21.2.0, with no major issues reported in the provided data."
     },
-    "lastSync": "02:26 AM",
+    "lastSync": "12:16 PM",
     "recommended_firmware": "20.5.0",
-    "recommended_firmware_reason": "Firmware 21.x has broken homebrew compatibility requiring recompilation, and there are reports of LayeredFS crashes and data corruption on 21.2.0, making 20.5.0 a more stable choice for full homebrew functionality."
+    "recommended_firmware_reason": "Firmware 21.x has widespread reports of homebrew incompatibility, LayeredFS crashes, and game corruption, while 20.5.0 is cited as a stable downgrade target for compatibility."
   },
   "articles": [
     {
@@ -33,6 +33,54 @@
       "size": "",
       "timestamp": "2026-02-08",
       "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Pokéswitch - Simple Pokémon save editor for Switch",
+      "url": "https://gbatemp.net/threads/pokeswitch-simple-pokemon-save-editor-for-switch.677289/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-20",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Metroid Prime 4 Beyond save editing",
+      "url": "https://gbatemp.net/threads/metroid-prime-4-beyond-save-editing.677970/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-12",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Inazuma Eleven Victory Road Mod 60FPS + 4k Resolution",
+      "url": "https://gbatemp.net/threads/inazuma-eleven-victory-road-mod-60fps-4k-resolution.678451/",
+      "version": "v2.0.1",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-29",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Fix DK64 Audio Crash on N64 NSO",
+      "url": "https://gbatemp.net/threads/fix-dk64-audio-crash-on-n64-nso.678077/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-15",
+      "risk": "Danger"
     },
     {
       "type": "homebrew",
@@ -50,49 +98,37 @@
       "type": "homebrew",
       "content_type": "Tool",
       "source": "GBAtemp",
-      "title": "Pokéswitch - Simple Pokémon save editor for Switch",
-      "url": "https://gbatemp.net/threads/pokeswitch-simple-pokemon-save-editor-for-switch.677289/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-11-20",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tool",
-      "source": "GBAtemp",
-      "title": "Metroid Prime 4 Beyond save editing",
-      "url": "https://gbatemp.net/threads/metroid-prime-4-beyond-save-editing.677970/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-12-12",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tool",
-      "source": "GBAtemp",
       "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
       "url": "https://gbatemp.net/threads/d3hack-diablo-iii-eternal-collection-4k-1440p-1080p-seasonal-events-challenge-rifts-more-mod-menu-v2-7-6.678660/",
-      "version": "v2.7.6",
+      "version": "v3.0 (RC1)",
       "region": "",
       "size": "",
       "timestamp": "2026-01-06",
-      "risk": "Safe"
+      "risk": "Caution"
     },
     {
       "type": "homebrew",
-      "content_type": "Tool",
+      "content_type": "Question",
       "source": "GBAtemp",
-      "title": "Inazuma Eleven Victory Road Mod 60FPS + 4k Resolution",
-      "url": "https://gbatemp.net/threads/inazuma-eleven-victory-road-mod-60fps-4k-resolution.678451/",
-      "version": "v2.0.1",
+      "title": "[Help] LayeredFS Crashing ALL Games on FW 21.2.0 (AMS 1.10.2) - Was working perfectly before update",
+      "url": "https://gbatemp.net/threads/help-layeredfs-crashing-all-games-on-fw-21-2-0-ams-1-10-2-was-working-perfectly-before-update.679403/",
+      "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2025-12-29",
-      "risk": "Safe"
+      "timestamp": "2026-02-02",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Question",
+      "source": "GBAtemp",
+      "title": "1.10.2 / 21.0.1 CORRUPTED ALL GAMES / HOMEBREW",
+      "url": "https://gbatemp.net/threads/1-10-2-21-0-1-corrupted-all-games-homebrew.679483/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-05",
+      "risk": "Danger"
     },
     {
       "type": "homebrew",
@@ -107,16 +143,40 @@
       "risk": "Safe"
     },
     {
-      "type": "homebrew",
-      "content_type": "Tutorial",
+      "type": "update",
+      "content_type": "News",
       "source": "GBAtemp",
-      "title": "Fix DK64 Audio Crash on N64 NSO",
-      "url": "https://gbatemp.net/threads/fix-dk64-audio-crash-on-n64-nso.678077/",
+      "title": "Nintendo Switch firmware 21.2.0 released",
+      "url": "https://gbatemp.net/threads/nintendo-switch-firmware-21-2-0-released.678863/",
+      "version": "21.2.0",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-13",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Creator of atmosphere retiring",
+      "url": "https://gbatemp.net/threads/creator-of-atmosphere-retiring.679223/",
       "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2025-12-15",
-      "risk": "Danger"
+      "timestamp": "2026-01-27",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Discussion",
+      "source": "GBAtemp",
+      "title": "We do what Nintendon't",
+      "url": "https://gbatemp.net/threads/we-do-what-nintendont.679617/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-10",
+      "risk": "Caution"
     },
     {
       "type": "homebrew",
@@ -131,127 +191,7 @@
       "risk": "Caution"
     },
     {
-      "type": "homebrew",
-      "content_type": "Question",
-      "source": "GBAtemp",
-      "title": "[Help] LayeredFS Crashing ALL Games on FW 21.2.0 (AMS 1.10.2) - Was working perfectly before update",
-      "url": "https://gbatemp.net/threads/help-layeredfs-crashing-all-games-on-fw-21-2-0-ams-1-10-2-was-working-perfectly-before-update.679403/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-02",
-      "risk": "Caution"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Question",
-      "source": "GBAtemp",
-      "title": "Updated to the latest fw. A system message sometimes blinks when trying to run a game",
-      "url": "https://gbatemp.net/threads/updated-to-the-latest-fw-a-system-message-sometimes-blinks-when-trying-to-run-a-game.679297/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-01-30",
-      "risk": "Caution"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Question",
-      "source": "GBAtemp",
-      "title": "Switch Lite no battery information and no boot to firmware after hekate usb tools crash.",
-      "url": "https://gbatemp.net/threads/switch-lite-no-battery-information-and-no-boot-to-firmware-after-hekate-usb-tools-crash.679374/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-01",
-      "risk": "Danger"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Question",
-      "source": "GBAtemp",
-      "title": "(Error Code: 2-ARVHA-0000) When opening the 2.00 patched YouTube app on a hard-modded (Banned Switch)",
-      "url": "https://gbatemp.net/threads/error-code-2-arvha-0000-when-opening-the-2-00-patched-youtube-app-on-a-hard-modded-banned-switch.679514/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-06",
-      "risk": "Caution"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "News",
-      "source": "GBAtemp",
-      "title": "Solution to Metroid Prime 4 not running on 19.0.1",
-      "url": "https://gbatemp.net/threads/solution-to-metroid-prime-4-not-running-on-19-0-1.679606/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-09",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "News",
-      "source": "GBAtemp",
-      "title": "Switch 2 shell + stick swap",
-      "url": "https://gbatemp.net/threads/switch-2-shell-stick-swap.679521/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-06",
-      "risk": "Caution"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "News",
-      "source": "GBAtemp",
-      "title": "Switch 2 DS Dual Screen add-on for February showcase",
-      "url": "https://gbatemp.net/threads/switch-2-ds-dual-screen-add-on-for-february-showcase.678837/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-01-12",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "News",
-      "source": "GBAtemp",
-      "title": "NSO Gamecube Controller Bluetooth PC Support",
-      "url": "https://gbatemp.net/threads/nso-gamecube-controller-bluetooth-pc-support.678409/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-12-28",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "News",
-      "source": "GBAtemp",
-      "title": "Nintendo Switch 2: The Current State of Physical Releases",
-      "url": "https://gbatemp.net/threads/nintendo-switch-2-the-current-state-of-physical-releases.678010/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-12-13",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "News",
-      "source": "GBAtemp",
-      "title": "Digital Eclipse lied about the physical release of Mortal Kombat Kollection for Switch 2",
-      "url": "https://gbatemp.net/threads/digital-eclipse-lied-about-the-physical-release-of-mortal-kombat-kollection-for-switch-2.678035/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-12-14",
-      "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
+      "type": "game",
       "content_type": "News",
       "source": "GBAtemp",
       "title": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
@@ -263,7 +203,7 @@
       "risk": "Safe"
     },
     {
-      "type": "homebrew",
+      "type": "game",
       "content_type": "News",
       "source": "GBAtemp",
       "title": "Nintendo surprise drops a new GameCube title onto the Switch Online library",
@@ -275,7 +215,31 @@
       "risk": "Safe"
     },
     {
-      "type": "homebrew",
+      "type": "game",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Digital Eclipse lied about the physical release of Mortal Kombat Kollection for Switch 2",
+      "url": "https://gbatemp.net/threads/digital-eclipse-lied-about-the-physical-release-of-mortal-kombat-kollection-for-switch-2.678035/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-14",
+      "risk": "Safe"
+    },
+    {
+      "type": "game",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo Switch 2: The Current State of Physical Releases",
+      "url": "https://gbatemp.net/threads/nintendo-switch-2-the-current-state-of-physical-releases.678010/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-13",
+      "risk": "Safe"
+    },
+    {
+      "type": "game",
       "content_type": "News",
       "source": "GBAtemp",
       "title": "Nintendo Switch Online retro catalog games for December 2025 announced",
@@ -287,7 +251,7 @@
       "risk": "Safe"
     },
     {
-      "type": "homebrew",
+      "type": "game",
       "content_type": "News",
       "source": "GBAtemp",
       "title": "Nintendo Switch Online retro catalog games for November 2025 revealed",
@@ -299,7 +263,7 @@
       "risk": "Safe"
     },
     {
-      "type": "homebrew",
+      "type": "game",
       "content_type": "News",
       "source": "GBAtemp",
       "title": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
@@ -313,16 +277,28 @@
   ],
   "news": [
     {
+      "headline": "Creator of atmosphere retiring",
+      "source": "GBAtemp",
+      "timestamp": "2026-01-27",
+      "url": "https://gbatemp.net/threads/creator-of-atmosphere-retiring.679223/"
+    },
+    {
       "headline": "Nintendo Switch firmware 21.2.0 released",
       "source": "GBAtemp",
       "timestamp": "2026-01-13",
       "url": "https://gbatemp.net/threads/nintendo-switch-firmware-21-2-0-released.678863/"
     },
     {
-      "headline": "Nintendo Switch firmware version 21.0.1 now available",
+      "headline": "Pokemon Z-A Shiny Stash Live Map homebrew released",
       "source": "GBAtemp",
-      "timestamp": "2025-11-25",
-      "url": "https://gbatemp.net/threads/nintendo-switch-firmware-version-21-0-1-now-available.677447/"
+      "timestamp": "2026-02-08",
+      "url": "https://gbatemp.net/threads/pokemon-z-a-shiny-stash-live-map.679574/"
+    },
+    {
+      "headline": "Pokéswitch - Simple Pokémon save editor for Switch",
+      "source": "GBAtemp",
+      "timestamp": "2025-11-20",
+      "url": "https://gbatemp.net/threads/pokeswitch-simple-pokemon-save-editor-for-switch.677289/"
     },
     {
       "headline": "SysDVR Version 6.3",
@@ -448,5 +424,4 @@
       "subreddit": "r/SwitchPirates"
     }
   ]
-} 
- 
+}
