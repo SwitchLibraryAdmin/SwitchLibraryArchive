@@ -16,22 +16,15 @@
   <meta name="twitter:description" content="Complete post-hack companion guide for Nintendo Switch. Themes, emulation, homebrew, and more.">
   <meta name="twitter:image" content="https://switchhack.com/assets/images/pixel_mario_on_computer_og.jpg">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-        },
-      },
-    }
-  </script>
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preload" href="assets/css/tailwind.min.css" as="style">
+  <link rel="preload" href="assets/css/styles.css" as="style">
+  <link rel="preload" href="assets/js/nav.js" as="script">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.min.css">
   <link rel="stylesheet" href="assets/css/styles.css">
   <style>
     /* Timeline neon line — continuous rainbow cable */
@@ -621,7 +614,7 @@
       <!-- ═══ CHAPTER BREAK: CYBERPUNK CITY ═══ -->
       <div class="relative pl-14 sm:pl-16 pb-4">
         <div class="chapter-break rounded-2xl overflow-hidden h-32 relative pixel-art">
-          <img src="assets/images/Cyberpunk_city.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+          <img src="assets/images/Cyberpunk_city.jpg" srcset="assets/images/Cyberpunk_city-400w.jpg 400w, assets/images/Cyberpunk_city-800w.jpg 800w, assets/images/Cyberpunk_city.jpg 1280w" sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1280px" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
           <div class="relative w-full h-full bg-gradient-to-r from-slate-900 via-slate-900/40 to-slate-900 flex items-center px-8">
             <p class="font-mono text-xs text-pink-400/70 tracking-[0.3em] uppercase">// Entering Zone 04</p>
           </div>
@@ -769,7 +762,7 @@
       <!-- ═══ CHAPTER BREAK: POKEMON ═══ -->
       <div class="relative pl-14 sm:pl-16 pb-4">
         <div class="chapter-break rounded-2xl overflow-hidden h-32 relative pixel-art">
-          <img src="assets/images/Pokemon_cafe.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+          <img src="assets/images/Pokemon_cafe.jpg" srcset="assets/images/Pokemon_cafe-400w.jpg 400w, assets/images/Pokemon_cafe-800w.jpg 800w, assets/images/Pokemon_cafe.jpg 1280w" sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1280px" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
           <div class="relative w-full h-full bg-gradient-to-r from-slate-900 via-slate-900/40 to-slate-900 flex items-center px-8">
             <p class="font-mono text-xs text-cyan-400/70 tracking-[0.3em] uppercase">// Entering Zone 05</p>
           </div>
@@ -892,5 +885,6 @@
     topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   </script>
 
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js');</script>
 </body>
 </html>
