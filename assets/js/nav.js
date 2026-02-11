@@ -4,6 +4,7 @@
   const isGuide = page === 'guide.html';
   const isIntel = page === 'intel.html';
   const isMonitor = page === 'monitor.html';
+  const isAbout = page === 'about.html';
 
   const homeHref = isHome ? '#hero' : 'index.html';
   const communityHref = isHome ? '#community' : 'index.html#community';
@@ -26,6 +27,7 @@
         <a href="${communityHref}" class="${inactive}">Community</a>
         <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="monitor.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Monitor</a>
+        <a href="about.html" class="${isAbout ? active : inactive}"${isAbout ? ' aria-current="page"' : ''}>About</a>
         <a href="${ctaHref}" class="ml-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-shadow">
           ${ctaText}
         </a>
@@ -43,6 +45,7 @@
         <a href="${communityHref}" class="${inactive}">Community</a>
         <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="monitor.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Monitor</a>
+        <a href="about.html" class="${isAbout ? active : inactive}"${isAbout ? ' aria-current="page"' : ''}>About</a>
         <a href="${ctaHref}" class="mt-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-center shadow-lg shadow-cyan-500/25">
           ${ctaText}
         </a>

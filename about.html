@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwitchHack — About</title>
+  <meta name="description" content="About the creator of SwitchHack — law student, economist, and hardware freedom advocate.">
+  <meta property="og:title" content="SwitchHack — About">
+  <meta property="og:description" content="About the creator of SwitchHack — law student, economist, and hardware freedom advocate.">
+  <meta property="og:image" content="https://switchhack.com/assets/images/pixel_hacker_og.jpg">
+  <meta property="og:url" content="https://switchhack.com/about.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SwitchHack">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SwitchHack — About">
+  <meta name="twitter:description" content="About the creator of SwitchHack — law student, economist, and hardware freedom advocate.">
+  <meta name="twitter:image" content="https://switchhack.com/assets/images/pixel_hacker_og.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preload" href="assets/css/tailwind.min.css" as="style">
+  <link rel="preload" href="assets/css/styles.css" as="style">
+  <link rel="preload" href="assets/js/nav.js" as="script">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body class="bg-slate-900 text-gray-200 font-sans antialiased">
+
+  <!-- Skip to content (accessibility) -->
+  <a href="#about" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
+
+  <!-- ═══════════════════════════════════════════ NAVBAR ═══════════════════════════════════════════ -->
+  <div id="nav-container"></div>
+  <script src="assets/js/nav.js"></script>
+
+
+  <!-- ═══════════════════════════════════════════ ABOUT ═══════════════════════════════════════════ -->
+  <section id="about" class="relative min-h-screen flex items-center py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+
+      <!-- Two-column: image left, text right -->
+      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+
+        <!-- Profile image -->
+        <div class="flex-shrink-0">
+          <img
+            src="assets/images/Pixel_Me.png"
+            alt="Pixel art profile picture"
+            class="pixel-art border border-white/10 shadow-2xl shadow-cyan-500/10"
+            style="width: 485px;"
+          >
+        </div>
+
+        <!-- Content -->
+        <div class="text-center lg:text-left">
+          <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white mb-8">
+            Hello<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">!</span>
+          </h1>
+          <div class="space-y-6 text-gray-300 text-lg leading-relaxed">
+            <p>
+              I am a law student based on the East Coast with an Economics background. By day, I study how to prevent the concentration of power and keep markets fair. By night, I apply those principles to hardware, exploring how we can truly own the devices we pay for.
+            </p>
+            <p>
+              SwitchHack is my outlet for destressing and productively procrastinating. Aside from that, I am a former competitive gamer, a cyclist, and an avid fan of Leo Tolstoy.
+            </p>
+            <p>
+              Thanks again for looking into SwitchHack! I hope you found this little guide helpful.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════════ -->
+  <footer class="border-t border-white/10 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <span class="font-mono font-bold text-white">Switch<span class="text-cyan-400">Hack</span></span>
+        <span class="text-gray-600 text-sm">&copy; 2026</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-gray-500">
+        <a href="guide.html" class="hover:text-gray-300 transition-colors">Guide</a>
+        <a href="intel.html" class="hover:text-gray-300 transition-colors">Intel</a>
+        <a href="monitor.html" class="hover:text-gray-300 transition-colors">Monitor</a>
+        <a href="index.html#community" class="hover:text-gray-300 transition-colors">Community</a>
+      </div>
+    </div>
+  </footer>
+
+
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js');</script>
+</body>
+</html>
