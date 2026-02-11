@@ -57,7 +57,7 @@
     /* ── row grid (Finder list view) ── */
     .feed-row {
       display: grid;
-      grid-template-columns: 32px 1fr auto;
+      grid-template-columns: 32px 1fr auto auto;
       column-gap: 8px;
       align-items: center;
       min-height: 44px;
@@ -66,7 +66,7 @@
     }
     @media (min-width: 640px) {
       .feed-row {
-        grid-template-columns: 36px 1fr auto;
+        grid-template-columns: 36px 1fr auto auto;
         column-gap: 12px;
         min-height: 48px;
         padding: 6px 14px;
@@ -116,6 +116,20 @@
     }
     .threat-chip:hover .threat-tip { visibility: visible; opacity: 1; }
 
+    /* ── risk pill tooltip ── */
+    .risk-pill { position: relative; cursor: default; }
+    .risk-pill .risk-tip {
+      visibility: hidden; opacity: 0;
+      position: absolute; bottom: calc(100% + 8px); right: 0;
+      padding: 5px 8px; border-radius: 5px;
+      background: rgba(15,23,42,.95); border: 1px solid rgba(255,255,255,.12);
+      color: #cbd5e1; font-size: 10px; font-weight: 400;
+      white-space: nowrap; pointer-events: none; z-index: 30;
+      transition: opacity .15s, visibility .15s;
+      max-width: 250px; white-space: normal; line-height: 1.3;
+    }
+    .risk-pill:hover .risk-tip { visibility: visible; opacity: 1; }
+
     /* ── glass surface ── */
     .glass {
       background: rgba(255,255,255,.05);
@@ -129,12 +143,32 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,.12);
     }
+
+    /* ── sentiment gauge ── */
+    .gauge-track {
+      width: 100%; height: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, #f87171 0%, #fbbf24 40%, #34d399 100%);
+      position: relative;
+    }
+    .gauge-needle {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: white; border: 2px solid rgba(15,23,42,.8);
+      position: absolute; top: -2px;
+      transform: translateX(-50%);
+      transition: left .3s ease;
+    }
+
+    /* ── compat matrix ── */
+    .compat-status-full    { color: #34d399; }
+    .compat-status-partial { color: #fbbf24; }
+    .compat-status-broken  { color: #f87171; }
+    .compat-status-unknown { color: #64748b; }
   </style>
 </head>
 
 <body class="bg-slate-900 text-gray-200 font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30">
 
-  <!-- ══════ SHARED NAV ══════ -->
+  <!-- SHARED NAV -->
   <div id="nav-container"></div>
   <script src="assets/js/nav.js"></script>
 
@@ -142,7 +176,7 @@
   <div class="h-16"></div>
 
 
-  <!-- ══════ MAIN ══════ -->
+  <!-- MAIN -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 pt-3 sm:pt-4 pb-6">
 
     <!-- ── HEADER ROW: Title + search left, Stats right ── -->
@@ -167,6 +201,27 @@
         <div class="bg-white/[.05] border-l-4 border-l-purple-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
         </div>
       </div>
+    </div>
+
+    <!-- ── SCENE BRIEFING ── -->
+    <div id="scene-briefing" class="hidden mb-3">
+      <div class="glass rounded-md px-4 py-3 flex items-start gap-3">
+        <div class="flex-shrink-0 mt-0.5">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] font-semibold uppercase tracking-wider text-cyan-400">Scene Briefing</span>
+            <span class="hidden sm:inline-flex items-center gap-1.5" id="sentiment-badge"></span>
+          </div>
+          <p class="text-[13px] text-gray-300 leading-relaxed" id="briefing-text"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TRENDING TOPICS ── -->
+    <div id="trending-topics" class="hidden flex items-center gap-1.5 overflow-x-auto mb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+      <span class="text-[10px] font-mono text-white/30 uppercase tracking-wider whitespace-nowrap mr-1">Trending</span>
     </div>
 
     <!-- Filter pills -->
@@ -244,9 +299,32 @@
             </div>
             <div class="text-[11px] text-gray-500 mt-1 leading-snug skel w-full h-3" id="rec-fw-reason"></div>
           </div>
+          <!-- Sentiment gauge -->
+          <div id="sentiment-section" class="hidden">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-mono text-gray-500 uppercase tracking-wider">Community Mood</span>
+              <span class="text-[11px] font-semibold" id="sentiment-label-text"></span>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-needle" id="sentiment-needle" style="left:50%"></div>
+            </div>
+            <div class="flex justify-between mt-1">
+              <span class="text-[9px] text-gray-600">Alarmed</span>
+              <span class="text-[9px] text-gray-600">Confident</span>
+            </div>
+          </div>
           <a href="guide.html" class="flex items-center justify-center w-full py-2 text-[11px] font-semibold uppercase tracking-wider text-black bg-yellow-400 hover:bg-yellow-300 rounded-md transition-colors">
             Update My Setup →
           </a>
+        </div>
+
+        <!-- Compatibility Matrix -->
+        <div id="compat-section" class="hidden glass rounded-md p-3 sm:p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span class="text-[11px] font-semibold text-white/50 uppercase tracking-wider">Compatibility</span>
+          </div>
+          <div id="compat-matrix" class="space-y-1.5"></div>
         </div>
 
         <!-- Latest Releases -->
@@ -267,7 +345,7 @@
   </main>
 
 
-  <!-- ══════ FOOTER ══════ -->
+  <!-- FOOTER -->
   <footer class="border-t border-white/10 py-12">
     <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2">
@@ -284,7 +362,7 @@
   </footer>
 
 
-  <!-- ══════ SCRIPT ══════ -->
+  <!-- SCRIPT -->
   <script>
   (function() {
     'use strict';
@@ -306,8 +384,15 @@
       Release:    { icon: '📦', bg: 'rgba(244,114,182,.15)', border: 'rgba(244,114,182,.4)', fg: '#f472b6' }
     };
 
+    var riskStyle = {
+      Safe:    { cls: 'risk-safe',     label: 'S' },
+      Caution: { cls: 'risk-warning',  label: 'C' },
+      Danger:  { cls: 'risk-critical', label: 'D' }
+    };
+
     var statusHud    = document.getElementById('status-hud');
-    var syncTime     = document.getElementById('sync-time');    var pulseDot     = document.getElementById('pulse-dot');
+    var syncTime     = document.getElementById('sync-time');
+    var pulseDot     = document.getElementById('pulse-dot');
     var releasesList = document.getElementById('releases-list');
     var skeletonLoader = document.getElementById('skeleton-loader');
     var emptyState   = document.getElementById('empty-state');
@@ -337,9 +422,7 @@
 
     function fmtUp(n) { return n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : String(n); }
 
-
-    /* ── badge palette ── */
-
+    function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 
     /* ── render: HUD strip ── */
@@ -372,7 +455,7 @@
         h += '<span class="text-[10px] font-mono font-semibold text-gray-500 uppercase tracking-[.12em]">' + c.label + '</span>';
         h += '<span class="text-[9px] font-semibold uppercase ' + s.color + '">' + c.status + '</span>';
         h += '</div>';
-        if (hasTip) h += '<span class="threat-tip">' + tip + '</span>';
+        if (hasTip) h += '<span class="threat-tip">' + escHtml(tip) + '</span>';
         h += '</div>';
       });
       statusHud.innerHTML = h;
@@ -386,6 +469,101 @@
       var d = new Date(val);
       var display = isNaN(d.getTime()) ? val : timeAgo(val);
       syncTime.textContent = 'Last sync ' + display;
+    }
+
+
+    /* ── render: scene briefing ── */
+
+    function renderBriefing(briefing, stats) {
+      if (!briefing) return;
+      var el = document.getElementById('scene-briefing');
+      document.getElementById('briefing-text').textContent = briefing;
+      el.classList.remove('hidden');
+
+      // Sentiment badge in briefing
+      if (stats && stats.sentiment_score !== undefined) {
+        var score = stats.sentiment_score;
+        var label = stats.sentiment_label || 'Unknown';
+        var color = score >= 70 ? '#34d399' : score >= 40 ? '#fbbf24' : '#f87171';
+        var badge = document.getElementById('sentiment-badge');
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:' + color + '"></span>' +
+          '<span class="text-[10px] font-semibold" style="color:' + color + '">' + escHtml(label) + ' ' + score + '/100</span>';
+      }
+    }
+
+
+    /* ── render: trending topics ── */
+
+    function renderTrending(topics) {
+      if (!topics || !topics.length) return;
+      var el = document.getElementById('trending-topics');
+      var sentimentColors = {
+        positive: { bg: 'rgba(52,211,153,.12)', fg: '#34d399', border: 'rgba(52,211,153,.3)' },
+        negative: { bg: 'rgba(248,113,113,.12)', fg: '#f87171', border: 'rgba(248,113,113,.3)' },
+        neutral:  { bg: 'rgba(148,163,184,.12)', fg: '#94a3b8', border: 'rgba(148,163,184,.3)' }
+      };
+      var h = '<span class="text-[10px] font-mono text-white/30 uppercase tracking-wider whitespace-nowrap mr-1">Trending</span>';
+      topics.forEach(function(t) {
+        var c = sentimentColors[t.sentiment] || sentimentColors.neutral;
+        h += '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap" style="background:' + c.bg + ';color:' + c.fg + ';border:1px solid ' + c.border + '">';
+        h += escHtml(t.tag);
+        if (t.count > 1) h += ' <span style="opacity:.6">' + t.count + '</span>';
+        h += '</span>';
+      });
+      el.innerHTML = h;
+      el.classList.remove('hidden');
+    }
+
+
+    /* ── render: sentiment gauge ── */
+
+    function renderSentiment(stats) {
+      if (!stats || stats.sentiment_score === undefined) return;
+      var section = document.getElementById('sentiment-section');
+      var needle = document.getElementById('sentiment-needle');
+      var labelEl = document.getElementById('sentiment-label-text');
+      var score = stats.sentiment_score;
+      var label = stats.sentiment_label || 'Unknown';
+      var color = score >= 70 ? '#34d399' : score >= 40 ? '#fbbf24' : '#f87171';
+
+      needle.style.left = score + '%';
+      labelEl.textContent = label + ' (' + score + ')';
+      labelEl.style.color = color;
+      section.classList.remove('hidden');
+    }
+
+
+    /* ── render: compatibility matrix ── */
+
+    function renderCompatMatrix(matrix) {
+      if (!matrix || !matrix.length) return;
+      var section = document.getElementById('compat-section');
+      var container = document.getElementById('compat-matrix');
+
+      var statusIcons = {
+        Full: { icon: '●', cls: 'compat-status-full' },
+        Partial: { icon: '◐', cls: 'compat-status-partial' },
+        Broken: { icon: '✕', cls: 'compat-status-broken' },
+        Unknown: { icon: '?', cls: 'compat-status-unknown' }
+      };
+
+      var h = '';
+      matrix.forEach(function(row) {
+        var si = statusIcons[row.status] || statusIcons.Unknown;
+        h += '<div class="flex items-center gap-2 py-1.5 border-b border-white/[.06] last:border-0">';
+        h += '<span class="text-sm ' + si.cls + ' flex-shrink-0 w-4 text-center">' + si.icon + '</span>';
+        h += '<div class="min-w-0 flex-1">';
+        h += '<div class="flex items-center gap-1.5">';
+        h += '<span class="text-[12px] font-medium text-white truncate">' + escHtml(row.tool) + '</span>';
+        if (row.version) h += '<span class="text-[10px] font-mono text-gray-500">' + escHtml(row.version) + '</span>';
+        h += '</div>';
+        if (row.notes) h += '<div class="text-[10px] text-gray-500 truncate">' + escHtml(row.notes) + '</div>';
+        h += '</div>';
+        h += '<span class="text-[9px] font-semibold uppercase ' + si.cls + ' flex-shrink-0">' + row.status + '</span>';
+        h += '</div>';
+      });
+      container.innerHTML = h;
+      section.classList.remove('hidden');
     }
 
 
@@ -406,6 +584,7 @@
         var fresh = isNew(r.timestamp);
         var ct = r.content_type || 'Discussion';
         var s = ctStyle[ct] || ctStyle.Discussion;
+        var rs = riskStyle[r.risk] || riskStyle.Safe;
         var hasUrl = r.url && r.url !== '#';
         var tag = hasUrl ? 'a' : 'div';
         var linkAttrs = hasUrl ? ' href="' + r.url + '" target="_blank" rel="noopener"' : '';
@@ -418,19 +597,29 @@
         // title cell
         h += '<div class="min-w-0 title-cell relative">';
         h += '<div class="flex items-center gap-2">';
-        h += '<span class="text-[13px] font-medium text-white truncate">' + r.title + '</span>';
+        h += '<span class="text-[13px] font-medium text-white truncate">' + escHtml(r.title) + '</span>';
         if (fresh) h += '<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0"></span>';
         h += '</div>';
+        // description
+        if (r.description) {
+          h += '<div class="text-[11px] text-gray-500 truncate mt-0.5 hidden sm:block">' + escHtml(r.description) + '</div>';
+        }
         h += '<div class="flex items-center gap-2 mt-0.5">';
         h += '<span class="text-[10px] font-semibold uppercase" style="color:' + s.fg + '">' + ct + '</span>';
         h += '<span class="text-[10px] text-gray-500">·</span>';
         h += '<span class="text-[10px] text-gray-500">' + (r.source || 'GBAtemp') + '</span>';
-        if (r.version) { h += '<span class="text-[10px] text-gray-500">·</span><span class="text-[10px] font-mono text-gray-500">' + r.version + '</span>'; }
+        if (r.version) { h += '<span class="text-[10px] text-gray-500">·</span><span class="text-[10px] font-mono text-gray-500">' + escHtml(r.version) + '</span>'; }
         h += '</div>';
         h += '</div>';
 
         // time
         h += '<div class="text-right"><span class="text-[11px] font-mono text-gray-400">' + timeAgo(r.timestamp) + '</span></div>';
+
+        // risk pill
+        h += '<div class="risk-pill">';
+        h += '<span class="inline-flex items-center justify-center w-5 h-5 rounded text-[9px] font-bold border ' + rs.cls + '">' + rs.label + '</span>';
+        if (r.risk_reason) h += '<span class="risk-tip">' + escHtml(r.risk_reason) + '</span>';
+        h += '</div>';
 
         h += '</' + tag + '>';
       });
@@ -467,7 +656,7 @@
       ghReleases.forEach(function(n) {
         var fresh = isNew(n.timestamp);
         h += '<a href="' + (n.url || '#') + '" target="_blank" rel="noopener" class="block rounded-md p-3 transition-all hover:bg-white/[.07] group" style="background:rgba(255,255,255,.025)">';
-        h += '<div class="text-[12.5px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors">' + n.headline;
+        h += '<div class="text-[12.5px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors">' + escHtml(n.headline);
         if (fresh) h += ' <span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 ml-1 align-middle"></span>';
         h += '</div>';
         h += '<div class="flex items-center gap-2 mt-1.5">';
@@ -523,7 +712,7 @@
           h += '<div class="mb-1.5"><span class="inline-flex items-center px-1.5 py-px rounded text-[9px] font-bold uppercase tracking-wide" style="' + badgeColor + '">' + badgeText + '</span></div>';
         }
         // title – wraps, never cut off
-        h += '<div class="text-[12.5px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors mb-1.5">' + p.title + '</div>';
+        h += '<div class="text-[12.5px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors mb-1.5">' + escHtml(p.title) + '</div>';
         // meta row: upvotes · subreddit · date
         h += '<div class="flex items-center gap-2 flex-wrap">';
         // upvote pill
@@ -533,7 +722,7 @@
         h += '</span>';
         // subreddit
         if (p.subreddit) {
-          h += '<span class="text-[10px] font-mono text-gray-500">' + p.subreddit + '</span>';
+          h += '<span class="text-[10px] font-mono text-gray-500">' + escHtml(p.subreddit) + '</span>';
         }
         // date
         if (p.timestamp) {
@@ -592,6 +781,8 @@
       if (skeletonLoader) skeletonLoader.remove();
       renderMeta(d.dashboard_stats);
       renderSync(d.dashboard_stats ? d.dashboard_stats.lastSync : null);
+
+      // Recommended firmware
       if (d.dashboard_stats) {
         var recVer = d.dashboard_stats.recommended_firmware;
         var recReason = d.dashboard_stats.recommended_firmware_reason;
@@ -608,6 +799,13 @@
           fwReason.className = 'text-[11px] text-gray-500 mt-1 leading-snug';
         }
       }
+
+      // New features
+      renderBriefing(d.scene_briefing, d.dashboard_stats);
+      renderTrending(d.trending_topics);
+      renderSentiment(d.dashboard_stats);
+      renderCompatMatrix(d.compatibility_matrix);
+
       allReleases = d.articles || [];
       renderReleases();
       renderNews(d.news);

@@ -17,6 +17,7 @@ scrapers/
 
 # Debug artifacts
 debug_claude_response.txt
+scrapers/debug/
 
 # Personal notes
 TODO.md
