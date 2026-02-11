@@ -1,0 +1,311 @@
+{
+  "dashboard_stats": {
+    "threat_level": "Caution",
+    "threat_trend": "Stable",
+    "firmware": {
+      "version": "21.2.0",
+      "status": "Caution"
+    },
+    "atmosphere": {
+      "version": "1.10.2",
+      "status": "Stable"
+    },
+    "hekate": {
+      "version": "6.5.1",
+      "status": "Stable"
+    },
+    "lastSync": "10:28 PM"
+  },
+  "articles": [
+    {
+      "type": "homebrew",
+      "title": "Pokéswitch - Simple Pokémon save editor for Switch",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-20",
+      "risk": "Caution"
+    },
+    {
+      "type": "update",
+      "title": "Nintendo Switch firmware version 21.0.1 now available",
+      "version": "21.0.1",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-25",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "Preliminary list of updated homebrew apps and tools for FW 21.0.0 | AMS 1.10.0 | Please add your findings!!!",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-17",
+      "risk": "Caution"
+    },
+    {
+      "type": "game",
+      "title": "INAZUMA ELEVEN: Victory Road",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-13",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "title": "D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
+      "version": "v3.0 (RC1)",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-06",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "Metroid Prime 4 Beyond save editing",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-12",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "Extracting CFW Switch Game Saves from the SD (NOT inside the Console)",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-02",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "VPN and tunneling.",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-31",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "Issues getting tinfoil to work",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-02",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "Picofly mod kamikaze failed with black screen",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "title": "Switch Lite no battery information and no boot to firmware after hekate usb tools crash.",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-01",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "title": "My 2026 Setup (Guide with links and Capabilities)",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-30",
+      "risk": "Safe"
+    },
+    {
+      "type": "homebrew",
+      "title": "1.10.2 / 21.0.1 CORRUPTED ALL GAMES / HOMEBREW",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-05",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "title": "Updated to the latest fw. A system message sometimes blinks when trying to run a game",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-30",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "$1000 for a working Sys-Tweak on the newest firmware",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Caution"
+    },
+    {
+      "type": "game",
+      "title": "OCTOPATH TRAVELER 0 1.0.2 TID: 01005270232F2000 BID: FEABC8D141EECCA5",
+      "version": "1.0.2",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-03",
+      "risk": "Safe"
+    },
+    {
+      "type": "game",
+      "title": "DRAGON QUEST VII Reimagined 1.1.0 TID: 0100A9D01C446000 BID: AB06020960EDD828",
+      "version": "1.1.0",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-03",
+      "risk": "Safe"
+    },
+    {
+      "type": "game",
+      "title": "The Legend of Heroes: Trails beyond the Horizon Story Demo 1.0.0 TID: 0100787024044000 BID: A6CE7862EA8BDD2E",
+      "version": "1.0.0",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-22",
+      "risk": "Safe"
+    },
+    {
+      "type": "game",
+      "title": "スーパーボンバーマンコレクション 1.0.2 TID: 01002D4023E52000 BID: 89B01FA88FBABCDF",
+      "version": "1.0.2",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-05",
+      "risk": "Safe"
+    },
+    {
+      "type": "game",
+      "title": "Dispatch 1.0.4 TID: 01008BA02525A000 BID: D1F98EB4615FC0B2",
+      "version": "1.0.4",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-03",
+      "risk": "Safe"
+    }
+  ],
+  "news": [
+    {
+      "headline": "Preliminary list of updated homebrew apps and tools for FW 21.0.0",
+      "source": "GBAtemp",
+      "timestamp": "2025-11-17",
+      "url": "https://gbatemp.net/threads/preliminary-list-of-updated-homebrew-apps-and-tools-for-fw-21-0-0-ams-1-10-0-please-add-your-findings.677217/"
+    },
+    {
+      "headline": "Pokéswitch - Simple Pokémon save editor for Switch",
+      "source": "GBAtemp",
+      "timestamp": "2025-11-20",
+      "url": "https://gbatemp.net/threads/pokeswitch-simple-pokemon-save-editor-for-switch.677289/"
+    },
+    {
+      "headline": "Nintendo Switch firmware version 21.0.1 now available",
+      "source": "GBAtemp",
+      "timestamp": "2025-11-25",
+      "url": "https://gbatemp.net/threads/nintendo-switch-firmware-version-21-0-1-now-available.677447/"
+    },
+    {
+      "headline": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
+      "source": "GBAtemp",
+      "timestamp": "2025-12-09",
+      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/"
+    },
+    {
+      "headline": "Nintendo surprise drops a new GameCube title onto the Switch Online library",
+      "source": "GBAtemp",
+      "timestamp": "2025-12-11",
+      "url": "https://gbatemp.net/threads/nintendo-surprise-drops-a-new-gamecube-title-onto-the-switch-online-library.677946/"
+    },
+    {
+      "headline": "SciresM (Atmosphere developer) is retiring",
+      "source": "GBAtemp",
+      "timestamp": "2026-01-27",
+      "url": "https://gbatemp.net/threads/sciresm-atmosphere-developer-is-retiring.679222/"
+    },
+    {
+      "headline": "Atmosphère 1.10.2",
+      "source": "GitHub",
+      "timestamp": "2026-01-14",
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/releases/tag/1.10.2"
+    },
+    {
+      "headline": "hekate v6.5.1 & Nyx v1.9.1",
+      "source": "GitHub",
+      "timestamp": "2026-01-20",
+      "url": "https://github.com/CTCaer/hekate/releases/tag/v6.5.1"
+    },
+    {
+      "headline": "sphaira 1.0.0",
+      "source": "GitHub",
+      "timestamp": "2025-11-18",
+      "url": "https://github.com/ITotalJustice/sphaira/releases/tag/1.0.0"
+    },
+    {
+      "headline": "nx-hbmenu v3.6.1",
+      "source": "GitHub",
+      "timestamp": "2025-11-15",
+      "url": "https://github.com/switchbrew/nx-hbmenu/releases/tag/v3.6.1"
+    },
+    {
+      "headline": "nx-hbloader v2.4.5",
+      "source": "GitHub",
+      "timestamp": "2025-11-15",
+      "url": "https://github.com/switchbrew/nx-hbloader/releases/tag/v2.4.5"
+    }
+  ],
+  "reddit": [
+    {
+      "title": "Atmosphere Dev is retiring, good sailing, SciresM.",
+      "upvotes": 794,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qo12cv/atmosphere_dev_is_retiring_good_sailing_sciresm/"
+    },
+    {
+      "title": "Shhh this thing is way too overpowered",
+      "upvotes": 612,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qv0ahz/shhh_this_thing_is_way_too_overpowered/"
+    },
+    {
+      "title": "I don’t think the seller knew what he had..",
+      "upvotes": 548,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qvpag3/i_dont_think_the_seller_knew_what_he_had/"
+    },
+    {
+      "title": "OLED Kamikaze Method speedrun in 15sec",
+      "upvotes": 479,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qzb47g/oled_kamikaze_method_speedrun_in_15sec/"
+    },
+    {
+      "title": "My 24 minutes OLED picofly job",
+      "upvotes": 461,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qp5ibj/my_24_minutes_oled_picofly_job/"
+    },
+    {
+      "title": "Just got my OLED switch banned 👊😔",
+      "upvotes": 395,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qim0zc/just_got_my_oled_switch_banned/"
+    },
+    {
+      "title": "Modded Switch lite is a child dream",
+      "upvotes": 381,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qpn0np/modded_switch_lite_is_a_child_dream/"
+    },
+    {
+      "title": "Current Methods and Exploits | Beginner FAQ #3, It's Been Too Long Edition!",
+      "upvotes": 357,
+      "url": "https://www.reddit.com/r/SwitchHaxing/comments/gip0jb/current_methods_and_exploits_beginner_faq_3_its/"
+    }
+  ]
+}
