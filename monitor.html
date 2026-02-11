@@ -30,7 +30,7 @@
       },
     }
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <style>
     /* ── heartbeat ── */
     @keyframes pulse-glow {
@@ -44,6 +44,10 @@
       animation: pulse-glow 2s ease-out infinite;
       flex-shrink: 0;
     }
+
+    /* ── hide scrollbar for pill strip ── */
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
 
     /* ── skeleton shimmer ── */
     @keyframes shimmer {
@@ -60,18 +64,23 @@
     /* ── row grid (Finder list view) ── */
     .feed-row {
       display: grid;
-      grid-template-columns: 36px 1fr auto auto;
-      column-gap: 12px;
+      grid-template-columns: 32px 1fr auto;
+      column-gap: 8px;
       align-items: center;
-      height: 42px;
-      padding: 0 14px;
+      min-height: 44px;
+      padding: 6px 10px;
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
-    .feed-row:last-child { border-bottom: none; }
-    @media (max-width: 640px) {
-      .feed-row { grid-template-columns: 36px 1fr auto; }
-      .col-meta { display: none !important; }
+    @media (min-width: 640px) {
+      .feed-row {
+        grid-template-columns: 36px 1fr auto;
+        column-gap: 12px;
+        min-height: 48px;
+        padding: 6px 14px;
+      }
     }
+    a.feed-row { cursor: pointer; }
+    .feed-row:last-child { border-bottom: none; }
 
     /* ── tooltip ── */
     .title-cell .tip { visibility: hidden; opacity: 0; transition: .1s; }
@@ -134,54 +143,55 @@
 
   <!-- ══════ SHARED NAV ══════ -->
   <div id="nav-container"></div>
-  <script src="nav.js"></script>
+  <script src="assets/js/nav.js"></script>
 
   <!-- spacer for fixed nav -->
   <div class="h-16"></div>
 
 
   <!-- ══════ MAIN ══════ -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-6 pt-4 pb-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 pt-3 sm:pt-4 pb-6">
 
-    <!-- ── HEADER ROW: Title left, Stats right ── -->
-    <div class="flex justify-between items-end w-full mb-6">
-      <div class="flex items-center gap-3">
-        <h1 class="text-lg font-bold text-white tracking-tight">Release Feed</h1>
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/[.07] border border-white/10 text-[10px] font-mono text-gray-400" id="release-count"></span>
-        <div class="flex items-center gap-1.5 ml-2">
-          <span class="pulse-dot" id="pulse-dot"></span>
-          <span class="text-[10px] font-mono text-white/25 tracking-wide" id="sync-time">SYNCING</span>
+    <!-- ── HEADER ROW: Title + search left, Stats right ── -->
+    <div class="flex justify-between items-center w-full mb-3 sm:mb-4">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <h1 class="text-base sm:text-lg font-bold text-white tracking-tight">Scene News</h1>
+        <div class="relative">
+          <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="search-input" placeholder="Search…"
+            class="w-32 sm:w-44 pl-8 pr-3 py-1 text-[13px] bg-slate-800/60 border border-white/10 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/40 transition-colors">
         </div>
       </div>
-      <div class="hidden sm:flex items-center gap-4" id="status-hud">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5">
+          <span class="pulse-dot" id="pulse-dot"></span>
+          <span class="text-[10px] font-mono text-white/40 tracking-wide" id="sync-time">SYNCING</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-4" id="status-hud">
         <!-- skeleton -->
         <div class="bg-white/[.05] border-l-4 border-l-emerald-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
         <div class="bg-white/[.05] border-l-4 border-l-blue-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
         <div class="bg-white/[.05] border-l-4 border-l-purple-500 rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center"><div class="h-5 w-16 skel mb-1"></div><div class="h-2.5 w-24 skel"></div></div>
+        </div>
       </div>
     </div>
 
+    <!-- Filter pills -->
+    <div class="flex items-center gap-1.5 overflow-x-auto sm:flex-wrap mb-3 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide" id="filter-bar">
+      <button class="filter-btn active px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="all">All</button>
+      <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="Tool">🔧 Tool</button>
+      <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="Tutorial">📖 Tutorial</button>
+      <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="Discussion">💬 Discussion</button>
+      <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="Question">❓ Question</button>
+      <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="News">📰 News</button>
+      <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="Release">📦 Release</button>
+    </div>
+
     <!-- ── COLUMNS ── -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
 
-      <!-- ── FEED (3/4) ── -->
-      <div class="lg:col-span-3 min-w-0">
-
-        <!-- Controls -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-2">
-          <div class="relative flex-1 max-w-xs">
-            <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="search-input" placeholder="Search…"
-              class="w-full pl-8 pr-3 py-1.5 text-[13px] bg-slate-800/60 border border-white/10 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/40 transition-colors">
-          </div>
-          <div class="flex items-center gap-1.5" id="filter-bar">
-            <button class="filter-btn active px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="all">All</button>
-            <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="game">Games</button>
-            <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="update">Updates</button>
-            <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="dlc">DLC</button>
-            <button class="filter-btn px-2.5 py-1 text-[11px] font-medium rounded-md border border-white/10 transition-all whitespace-nowrap" data-filter="homebrew">Homebrew</button>
-          </div>
-        </div>
+      <!-- ── FEED (left, 6/12) ── -->
+      <div class="lg:col-span-6 min-w-0">
 
         <!-- Feed list -->
         <div class="glass rounded-md overflow-hidden">
@@ -197,18 +207,36 @@
               <div class="feed-row"><div class="w-8 h-11 rounded skel"></div><div><div class="h-3.5 w-44 skel mb-1.5"></div><div class="h-2.5 w-20 skel"></div></div><div class="col-meta"><div class="h-3 w-16 skel"></div></div><div><div class="h-3 w-8  skel"></div></div></div>
             </div>
           </div>
-          <div id="empty-state" class="hidden px-6 py-12 text-center">
-            <p class="text-[13px] text-white/25">No releases match</p>
+          <div id="empty-state" class="hidden px-6 py-16 text-center">
+            <img src="assets/images/pixel_Rabbit_girl.gif" alt="" class="mx-auto mb-4 w-24 h-24" style="image-rendering:pixelated">
+            <p class="text-sm font-mono font-bold text-cyan-400">No Data Found</p>
           </div>
-          <div id="error-state" class="hidden px-6 py-12 text-center">
-            <p class="text-[13px] text-white/25">Failed to load data</p>
+          <div id="error-state" class="hidden px-6 py-16 text-center">
+            <img src="assets/images/pixel_Rabbit_girl.gif" alt="" class="mx-auto mb-4 w-24 h-24" style="image-rendering:pixelated">
+            <p class="text-sm font-mono font-bold text-purple-400">Signal Lost</p>
           </div>
         </div>
       </div>
 
 
-      <!-- ── SIDEBAR (1/4) ── -->
-      <aside class="lg:col-span-1 space-y-4 lg:mt-[42px]">
+      <!-- ── REDDIT (middle, 3/12) ── -->
+      <div class="lg:col-span-3">
+        <!-- Reddit -->
+        <div class="glass rounded-md p-3 sm:p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-3 h-3 text-[#ff6314]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 13.38c.15.36.23.75.23 1.14 0 2.42-2.83 4.38-6.32 4.38s-6.32-1.96-6.32-4.38c0-.4.09-.79.24-1.15-.85-.49-1.38-1.4-1.38-2.39 0-1.55 1.25-2.8 2.8-2.8.87 0 1.65.4 2.17 1.02a9.6 9.6 0 012.48-.67V7.53l2.93-.61a.75.75 0 01.87.49l.12.42a.75.75 0 01-.49.87l-2.68.56v.28a9.6 9.6 0 012.48.67 2.8 2.8 0 012.17-1.02c1.55 0 2.8 1.25 2.8 2.8 0 .99-.53 1.9-1.38 2.39zm-8.41.04c0 .78.63 1.41 1.41 1.41s1.41-.63 1.41-1.41-.63-1.41-1.41-1.41-1.41.63-1.41 1.41zm5.18 0c0 .78.63 1.41 1.41 1.41s1.41-.63 1.41-1.41-.63-1.41-1.41-1.41-1.41.63-1.41 1.41zm-4.85 3.61c.26.37.76.57 1.45.57h1.25c.69 0 1.19-.2 1.45-.57a.5.5 0 10-.82-.57c-.06.09-.24.22-.63.22h-1.25c-.39 0-.57-.13-.63-.22a.5.5 0 10-.82.57z"/></svg>
+            <span class="text-[11px] font-semibold text-white/50 uppercase tracking-wider">Reddit</span>
+          </div>
+          <div id="reddit-list" class="space-y-2">
+            <div class="rounded-md bg-white/[.03] p-3"><div class="h-3 w-full skel mb-2"></div><div class="flex gap-3"><div class="h-2.5 w-10 skel"></div><div class="h-2.5 w-14 skel"></div></div></div>
+            <div class="rounded-md bg-white/[.03] p-3"><div class="h-3 w-4/5 skel mb-2"></div><div class="flex gap-3"><div class="h-2.5 w-10 skel"></div><div class="h-2.5 w-14 skel"></div></div></div>
+            <div class="rounded-md bg-white/[.03] p-3"><div class="h-3 w-full skel mb-2"></div><div class="flex gap-3"><div class="h-2.5 w-10 skel"></div><div class="h-2.5 w-14 skel"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SIDEBAR (right, 3/12) ── -->
+      <aside class="lg:col-span-3 space-y-4">
 
         <!-- Update Setup -->
         <div class="rounded-md bg-slate-800/60 border border-white/10 p-4 space-y-3">
@@ -228,29 +256,16 @@
           </a>
         </div>
 
-        <!-- Scene News -->
-        <div class="glass rounded-md p-4">
+        <!-- Latest Releases -->
+        <div class="glass rounded-md p-3 sm:p-4">
           <div class="flex items-center gap-2 mb-3">
-            <svg class="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span class="text-[11px] font-semibold text-white/50 uppercase tracking-wider">Scene News</span>
+            <svg class="w-3 h-3 text-white/40" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span class="text-[11px] font-semibold text-white/50 uppercase tracking-wider">Latest Releases</span>
           </div>
-          <div id="news-list" class="space-y-0 divide-y divide-white/[.05]">
-            <div class="py-2"><div class="h-3 w-full skel mb-1"></div><div class="h-2.5 w-16 skel"></div></div>
-            <div class="py-2"><div class="h-3 w-4/5 skel mb-1"></div><div class="h-2.5 w-20 skel"></div></div>
-            <div class="py-2"><div class="h-3 w-full skel mb-1"></div><div class="h-2.5 w-12 skel"></div></div>
-          </div>
-        </div>
-
-        <!-- Reddit -->
-        <div class="glass rounded-md p-4">
-          <div class="flex items-center gap-2 mb-3">
-            <svg class="w-3 h-3 text-[#ff6314]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 13.38c.15.36.23.75.23 1.14 0 2.42-2.83 4.38-6.32 4.38s-6.32-1.96-6.32-4.38c0-.4.09-.79.24-1.15-.85-.49-1.38-1.4-1.38-2.39 0-1.55 1.25-2.8 2.8-2.8.87 0 1.65.4 2.17 1.02a9.6 9.6 0 012.48-.67V7.53l2.93-.61a.75.75 0 01.87.49l.12.42a.75.75 0 01-.49.87l-2.68.56v.28a9.6 9.6 0 012.48.67 2.8 2.8 0 012.17-1.02c1.55 0 2.8 1.25 2.8 2.8 0 .99-.53 1.9-1.38 2.39zm-8.41.04c0 .78.63 1.41 1.41 1.41s1.41-.63 1.41-1.41-.63-1.41-1.41-1.41-1.41.63-1.41 1.41zm5.18 0c0 .78.63 1.41 1.41 1.41s1.41-.63 1.41-1.41-.63-1.41-1.41-1.41-1.41.63-1.41 1.41zm-4.85 3.61c.26.37.76.57 1.45.57h1.25c.69 0 1.19-.2 1.45-.57a.5.5 0 10-.82-.57c-.06.09-.24.22-.63.22h-1.25c-.39 0-.57-.13-.63-.22a.5.5 0 10-.82.57z"/></svg>
-            <span class="text-[11px] font-semibold text-white/50 uppercase tracking-wider">r/SwitchPirates</span>
-          </div>
-          <div id="reddit-list" class="space-y-0 divide-y divide-white/[.05]">
-            <div class="py-2 flex gap-2"><div class="w-7 h-3 skel flex-shrink-0"></div><div class="flex-1"><div class="h-3 w-full skel mb-1"></div><div class="h-3 w-3/4 skel"></div></div></div>
-            <div class="py-2 flex gap-2"><div class="w-7 h-3 skel flex-shrink-0"></div><div class="flex-1"><div class="h-3 w-full skel"></div></div></div>
-            <div class="py-2 flex gap-2"><div class="w-7 h-3 skel flex-shrink-0"></div><div class="flex-1"><div class="h-3 w-4/5 skel"></div></div></div>
+          <div id="news-list" class="space-y-2">
+            <div class="rounded-md bg-white/[.03] p-3"><div class="h-3 w-full skel mb-2"></div><div class="h-2.5 w-16 skel"></div></div>
+            <div class="rounded-md bg-white/[.03] p-3"><div class="h-3 w-4/5 skel mb-2"></div><div class="h-2.5 w-20 skel"></div></div>
+            <div class="rounded-md bg-white/[.03] p-3"><div class="h-3 w-full skel mb-2"></div><div class="h-2.5 w-12 skel"></div></div>
           </div>
         </div>
       </aside>
@@ -286,19 +301,27 @@
     localStorage.setItem(LAST_VISIT_KEY, new Date().toISOString());
 
     var allReleases = [];
-    var activeFilter = 'all';
     var searchQuery = '';
+    var activeFilter = 'all';
+
+    var ctStyle = {
+      Tool:       { icon: '🔧', bg: 'rgba(139,92,246,.15)', border: 'rgba(139,92,246,.4)', fg: '#a78bfa' },
+      Tutorial:   { icon: '📖', bg: 'rgba(59,130,246,.15)',  border: 'rgba(59,130,246,.4)',  fg: '#60a5fa' },
+      Discussion: { icon: '💬', bg: 'rgba(100,116,139,.15)', border: 'rgba(100,116,139,.4)', fg: '#94a3b8' },
+      Question:   { icon: '❓', bg: 'rgba(251,191,36,.15)',  border: 'rgba(251,191,36,.4)',  fg: '#fbbf24' },
+      News:       { icon: '📰', bg: 'rgba(34,211,153,.15)',  border: 'rgba(34,211,153,.4)',  fg: '#34d399' },
+      Release:    { icon: '📦', bg: 'rgba(244,114,182,.15)', border: 'rgba(244,114,182,.4)', fg: '#f472b6' }
+    };
 
     var statusHud    = document.getElementById('status-hud');
-    var syncTime     = document.getElementById('sync-time');
-    var pulseDot     = document.getElementById('pulse-dot');
+    var syncTime     = document.getElementById('sync-time');    var pulseDot     = document.getElementById('pulse-dot');
     var releasesList = document.getElementById('releases-list');
     var skeletonLoader = document.getElementById('skeleton-loader');
     var emptyState   = document.getElementById('empty-state');
     var errorState   = document.getElementById('error-state');
     var searchInput  = document.getElementById('search-input');
     var filterBar    = document.getElementById('filter-bar');
-    var releaseCount = document.getElementById('release-count');
+
     var newsList     = document.getElementById('news-list');
     var redditList   = document.getElementById('reddit-list');
 
@@ -324,12 +347,6 @@
 
     /* ── badge palette ── */
 
-    var badge = {
-      game:     { label: 'Game',     bg: '#059669', fg: '#fff' },
-      update:   { label: 'Update',   bg: '#2563eb', fg: '#fff' },
-      dlc:      { label: 'DLC',      bg: '#d97706', fg: '#fff' },
-      homebrew: { label: 'Homebrew', bg: '#7c3aed', fg: '#fff' }
-    };
 
 
     /* ── render: HUD strip ── */
@@ -383,46 +400,46 @@
 
     function renderReleases() {
       var list = allReleases.filter(function(r) {
-        return (activeFilter === 'all' || r.type === activeFilter) &&
+        return (activeFilter === 'all' || r.content_type === activeFilter) &&
                (!searchQuery || r.title.toLowerCase().indexOf(searchQuery) !== -1);
       });
-      releaseCount.textContent = list.length === allReleases.length ? list.length + ' releases' : list.length + ' of ' + allReleases.length;
 
       if (!list.length) { emptyState.classList.remove('hidden'); releasesList.innerHTML = ''; return; }
       emptyState.classList.add('hidden');
+      list.sort(function(a, b) { return (b.timestamp || '').localeCompare(a.timestamp || ''); });
 
       var h = '';
       list.forEach(function(r) {
-        var b = badge[r.type] || badge.game;
         var fresh = isNew(r.timestamp);
-        var riskCls = r.risk === 'Danger' ? 'risk-critical' : r.risk === 'Caution' ? 'risk-warning' : 'risk-safe';
+        var ct = r.content_type || 'Discussion';
+        var s = ctStyle[ct] || ctStyle.Discussion;
+        var hasUrl = r.url && r.url !== '#';
+        var tag = hasUrl ? 'a' : 'div';
+        var linkAttrs = hasUrl ? ' href="' + r.url + '" target="_blank" rel="noopener"' : '';
 
-        h += '<div class="feed-row hover:bg-white/[.07] transition-colors' + (fresh ? ' row-new' : '') + '">';
+        h += '<' + tag + linkAttrs + ' class="feed-row hover:bg-white/[.07] transition-colors' + (fresh ? ' row-new' : '') + '" style="text-decoration:none;color:inherit">';
 
-        // poster
-        h += '<div class="w-8 h-11 rounded bg-white/[.06] border border-white/10 flex-shrink-0"></div>';
+        // icon box
+        h += '<div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0 text-sm" style="background:' + s.bg + ';border:1px solid ' + s.border + '">' + s.icon + '</div>';
 
         // title cell
-        h += '<div class="min-w-0 title-cell relative"';
-        if (r.titleId) h += ' data-tid="' + r.titleId + '" onclick="copyTid(this)" style="cursor:pointer"';
-        h += '>';
+        h += '<div class="min-w-0 title-cell relative">';
         h += '<div class="flex items-center gap-2">';
         h += '<span class="text-[13px] font-medium text-white truncate">' + r.title + '</span>';
-        h += '<span class="inline-flex items-center px-1.5 py-px rounded-sm text-[10px] font-semibold uppercase leading-none flex-shrink-0" style="color:' + b.fg + ';background:' + b.bg + '">' + b.label + '</span>';
-        h += '<span class="inline-flex items-center px-1.5 py-px rounded-sm border text-[9px] font-bold uppercase leading-none flex-shrink-0 ' + riskCls + '">' + r.risk + '</span>';
         if (fresh) h += '<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0"></span>';
         h += '</div>';
-        h += '<span class="text-[11px] font-mono text-gray-400">' + r.version + '</span>';
-        if (r.titleId) h += '<span class="tip absolute bottom-full left-0 mb-1 px-2 py-1 text-[10px] font-mono bg-black text-cyan-400 border border-white/10 rounded-md whitespace-nowrap pointer-events-none z-20">' + r.titleId + '</span>';
+        h += '<div class="flex items-center gap-2 mt-0.5">';
+        h += '<span class="text-[10px] font-semibold uppercase" style="color:' + s.fg + '">' + ct + '</span>';
+        h += '<span class="text-[10px] text-gray-500">·</span>';
+        h += '<span class="text-[10px] text-gray-500">' + (r.source || 'GBAtemp') + '</span>';
+        if (r.version) { h += '<span class="text-[10px] text-gray-500">·</span><span class="text-[10px] font-mono text-gray-500">' + r.version + '</span>'; }
         h += '</div>';
-
-        // meta
-        h += '<div class="col-meta text-right"><span class="text-[11px] font-mono text-gray-400">' + r.region + ' · ' + r.size + '</span></div>';
+        h += '</div>';
 
         // time
         h += '<div class="text-right"><span class="text-[11px] font-mono text-gray-400">' + timeAgo(r.timestamp) + '</span></div>';
 
-        h += '</div>';
+        h += '</' + tag + '>';
       });
       releasesList.innerHTML = h;
     }
@@ -431,12 +448,38 @@
     /* ── render: news ── */
 
     function renderNews(news) {
-      if (!news || !news.length) { newsList.innerHTML = '<p class="py-3 text-[12px] text-white/20 text-center">No news</p>'; return; }
+      if (!news || !news.length) { newsList.innerHTML = '<p class="py-3 text-[12px] text-white/20 text-center">No releases</p>'; return; }
+
+      // only show GitHub releases
+      var ghReleases = news.filter(function(n) { return n.source === 'GitHub'; });
+      if (!ghReleases.length) { newsList.innerHTML = '<p class="py-3 text-[12px] text-white/20 text-center">No releases</p>'; return; }
+
+      // sort newest first
+      ghReleases.sort(function(a, b) {
+        return new Date(b.timestamp || 0).getTime() - new Date(a.timestamp || 0).getTime();
+      });
+
+      // dedupe: keep only the latest release per project (first word of headline)
+      var seen = {};
+      ghReleases = ghReleases.filter(function(n) {
+        var project = (n.headline || '').split(/[\s\-_]/)[0].toLowerCase()
+          .normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+        if (!project) return true;
+        if (seen[project]) return false;
+        seen[project] = true;
+        return true;
+      });
+
       var h = '';
-      news.forEach(function(n) {
-        h += '<a href="' + (n.url || '#') + '" class="flex items-baseline justify-between py-2.5 group">';
-        h += '<span class="text-[12px] text-gray-300 group-hover:text-white transition-colors truncate mr-3">' + n.headline + '</span>';
-        h += '<span class="text-[10px] font-mono text-gray-500 flex-shrink-0">' + timeAgo(n.timestamp) + '</span>';
+      ghReleases.forEach(function(n) {
+        var fresh = isNew(n.timestamp);
+        h += '<a href="' + (n.url || '#') + '" target="_blank" rel="noopener" class="block rounded-md p-3 transition-all hover:bg-white/[.07] group" style="background:rgba(255,255,255,.025)">';
+        h += '<div class="text-[12.5px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors">' + n.headline;
+        if (fresh) h += ' <span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 ml-1 align-middle"></span>';
+        h += '</div>';
+        h += '<div class="flex items-center gap-2 mt-1.5">';
+        h += '<span class="text-[10px] font-mono text-gray-500">' + timeAgo(n.timestamp) + '</span>';
+        h += '</div>';
         h += '</a>';
       });
       newsList.innerHTML = h;
@@ -447,11 +490,63 @@
 
     function renderReddit(posts) {
       if (!posts || !posts.length) { redditList.innerHTML = '<p class="py-3 text-[12px] text-white/20 text-center">No posts</p>'; return; }
+
+      var now = Date.now();
+      var cutoff3mo = now - (90 * 86400000);
+      var cutoff7d  = now - (7 * 86400000);
+      var cutoff1d  = now - (1 * 86400000);
+
+      // filter to last 3 months
+      var recent = posts.filter(function(p) {
+        return p.timestamp ? new Date(p.timestamp).getTime() >= cutoff3mo : true;
+      });
+
+      // find top-of-day and top-of-week by upvotes
+      var topDay = null, topWeek = null;
+      recent.forEach(function(p) {
+        var t = p.timestamp ? new Date(p.timestamp).getTime() : 0;
+        if (t >= cutoff1d && (!topDay || p.upvotes > topDay.upvotes)) topDay = p;
+        if (t >= cutoff7d && (!topWeek || p.upvotes > topWeek.upvotes)) topWeek = p;
+      });
+
+      // sort by date, newest first
+      recent.sort(function(a, b) {
+        return new Date(b.timestamp || 0).getTime() - new Date(a.timestamp || 0).getTime();
+      });
+
+      if (!recent.length) { redditList.innerHTML = '<p class="py-3 text-[12px] text-white/20 text-center">No recent posts</p>'; return; }
+
       var h = '';
-      posts.forEach(function(p) {
-        h += '<a href="' + (p.url || '#') + '" class="flex items-start gap-2.5 py-2.5 group">';
-        h += '<span class="text-[11px] font-mono font-semibold text-[#ff6314] w-7 flex-shrink-0 text-right pt-px">' + fmtUp(p.upvotes) + '</span>';
-        h += '<span class="text-[12px] text-gray-300 group-hover:text-white transition-colors leading-snug line-clamp-2">' + p.title + '</span>';
+      recent.forEach(function(p) {
+        var isTopDay  = topDay  && p === topDay;
+        var isTopWeek = !isTopDay && topWeek && p === topWeek;
+        var highlight = isTopDay ? 'border-left:3px solid #ff6314;' : isTopWeek ? 'border-left:3px solid #fbbf24;' : '';
+
+        h += '<a href="' + (p.url || '#') + '" target="_blank" rel="noopener" class="block rounded-md p-3 transition-all hover:bg-white/[.07] group" style="background:rgba(255,255,255,.025);' + highlight + '">';
+        // badge row
+        if (isTopDay || isTopWeek) {
+          var badgeColor = isTopDay ? 'color:#ff6314;background:rgba(255,99,20,.12)' : 'color:#fbbf24;background:rgba(251,191,36,.12)';
+          var badgeText  = isTopDay ? '🔥 Top Today' : '⭐ Top This Week';
+          h += '<div class="mb-1.5"><span class="inline-flex items-center px-1.5 py-px rounded text-[9px] font-bold uppercase tracking-wide" style="' + badgeColor + '">' + badgeText + '</span></div>';
+        }
+        // title – wraps, never cut off
+        h += '<div class="text-[12.5px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors mb-1.5">' + p.title + '</div>';
+        // meta row: upvotes · subreddit · date
+        h += '<div class="flex items-center gap-2 flex-wrap">';
+        // upvote pill
+        h += '<span class="inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold" style="color:#ff6314;background:rgba(255,99,20,.12)">';
+        h += '<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 12 12"><path d="M6 1L1 7h3.5v4h3V7H11z"/></svg>';
+        h += fmtUp(p.upvotes);
+        h += '</span>';
+        // subreddit
+        if (p.subreddit) {
+          h += '<span class="text-[10px] font-mono text-gray-500">' + p.subreddit + '</span>';
+        }
+        // date
+        if (p.timestamp) {
+          h += '<span class="text-[10px] font-mono text-gray-500">' + timeAgo(p.timestamp) + '</span>';
+        }
+        h += '</div>';
         h += '</a>';
       });
       redditList.innerHTML = h;
@@ -473,7 +568,6 @@
       renderReleases();
     });
 
-    // init filter styles
     filterBar.querySelectorAll('.filter-btn').forEach(function(b) {
       if (b.classList.contains('active')) {
         b.style.background = 'rgba(255,255,255,.1)'; b.style.color = 'rgba(255,255,255,.9)'; b.style.borderColor = 'rgba(255,255,255,.15)';
@@ -499,7 +593,7 @@
 
     /* ── fetch ── */
 
-    fetch('monitor_data.json').then(function(r) {
+    fetch('data/monitor_data.json').then(function(r) {
       if (!r.ok) throw 0; return r.json();
     }).then(function(d) {
       if (skeletonLoader) skeletonLoader.remove();

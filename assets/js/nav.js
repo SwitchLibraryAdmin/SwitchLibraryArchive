@@ -16,7 +16,7 @@
 
   const navHTML = `
   <nav class="fixed top-0 inset-x-0 z-50 bg-slate-900/70 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
       <a href="${homeHref}" class="font-mono font-bold text-xl tracking-tight text-white glitch-hover">
         Switch<span class="text-cyan-400">Hack</span>
       </a>
@@ -30,7 +30,7 @@
           ${ctaText}
         </a>
       </div>
-      <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white" aria-label="Menu">
+      <button id="mobile-menu-btn" class="md:hidden p-2 -mr-2 text-gray-400 hover:text-white" aria-label="Menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
