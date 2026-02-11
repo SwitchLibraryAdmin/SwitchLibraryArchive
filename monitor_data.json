@@ -1,40 +1,27 @@
 {
   "dashboard_stats": {
-    "threat_level": "Caution",
-    "threat_trend": "Stable",
+    "threat_level": "Danger",
+    "threat_trend": "Rising",
     "firmware": {
       "version": "21.2.0",
-      "status": "Caution"
+      "status": "Caution",
+      "reason": "Firmware 21.0.0 and 21.0.1 have widespread compatibility issues with homebrew, causing game corruption and crashes."
     },
     "atmosphere": {
       "version": "1.10.2",
-      "status": "Stable"
+      "status": "Stable",
+      "reason": "Atmosphere 1.10.2 supports up to firmware 21.2.0, but many homebrew apps remain incompatible with newer firmwares."
     },
     "hekate": {
       "version": "6.5.1",
-      "status": "Stable"
+      "status": "Stable",
+      "reason": "Hekate v6.5.1 supports up to firmware 21.2.0, but users report boot issues and corruption after updating."
     },
-    "lastSync": "10:28 PM"
+    "lastSync": "11:14 PM",
+    "recommended_firmware": "20.5.0",
+    "recommended_firmware_reason": "Firmware 20.5.0 is stable with full homebrew support, unlike newer versions causing widespread corruption and compatibility problems."
   },
   "articles": [
-    {
-      "type": "homebrew",
-      "title": "Pokéswitch - Simple Pokémon save editor for Switch",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-11-20",
-      "risk": "Caution"
-    },
-    {
-      "type": "update",
-      "title": "Nintendo Switch firmware version 21.0.1 now available",
-      "version": "21.0.1",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-11-25",
-      "risk": "Caution"
-    },
     {
       "type": "homebrew",
       "title": "Preliminary list of updated homebrew apps and tools for FW 21.0.0 | AMS 1.10.0 | Please add your findings!!!",
@@ -55,8 +42,26 @@
     },
     {
       "type": "homebrew",
-      "title": "D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
-      "version": "v3.0 (RC1)",
+      "title": "Pokéswitch - Simple Pokémon save editor for Switch",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-20",
+      "risk": "Caution"
+    },
+    {
+      "type": "update",
+      "title": "Nintendo Switch firmware version 21.0.1 now available",
+      "version": "21.0.1",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-11-25",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
+      "version": "v2.7.6",
       "region": "",
       "size": "",
       "timestamp": "2026-01-06",
@@ -70,6 +75,60 @@
       "size": "",
       "timestamp": "2025-12-12",
       "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "We do what Nintendon't",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-10",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "title": "1.10.2 / 21.0.1 CORRUPTED ALL GAMES / HOMEBREW",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-05",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "title": "Updated to the latest fw. A system message sometimes blinks when trying to run a game",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-30",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "$1000 for a working Sys-Tweak on the newest firmware",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Caution"
+    },
+    {
+      "type": "homebrew",
+      "title": "Picofly mod kamikaze failed with black screen",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-06",
+      "risk": "Danger"
+    },
+    {
+      "type": "homebrew",
+      "title": "Switch Lite no battery information and no boot to firmware after hekate usb tools crash.",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-01",
+      "risk": "Danger"
     },
     {
       "type": "homebrew",
@@ -100,57 +159,12 @@
     },
     {
       "type": "homebrew",
-      "title": "Picofly mod kamikaze failed with black screen",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-06",
-      "risk": "Danger"
-    },
-    {
-      "type": "homebrew",
-      "title": "Switch Lite no battery information and no boot to firmware after hekate usb tools crash.",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-01",
-      "risk": "Danger"
-    },
-    {
-      "type": "homebrew",
       "title": "My 2026 Setup (Guide with links and Capabilities)",
       "version": "",
       "region": "",
       "size": "",
       "timestamp": "2026-01-30",
       "risk": "Safe"
-    },
-    {
-      "type": "homebrew",
-      "title": "1.10.2 / 21.0.1 CORRUPTED ALL GAMES / HOMEBREW",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-05",
-      "risk": "Danger"
-    },
-    {
-      "type": "homebrew",
-      "title": "Updated to the latest fw. A system message sometimes blinks when trying to run a game",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-01-30",
-      "risk": "Caution"
-    },
-    {
-      "type": "homebrew",
-      "title": "$1000 for a working Sys-Tweak on the newest firmware",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-06",
-      "risk": "Caution"
     },
     {
       "type": "game",
@@ -200,7 +214,7 @@
   ],
   "news": [
     {
-      "headline": "Preliminary list of updated homebrew apps and tools for FW 21.0.0",
+      "headline": "Preliminary list of updated homebrew apps for FW 21.0.0",
       "source": "GBAtemp",
       "timestamp": "2025-11-17",
       "url": "https://gbatemp.net/threads/preliminary-list-of-updated-homebrew-apps-and-tools-for-fw-21-0-0-ams-1-10-0-please-add-your-findings.677217/"
@@ -218,22 +232,16 @@
       "url": "https://gbatemp.net/threads/nintendo-switch-firmware-version-21-0-1-now-available.677447/"
     },
     {
-      "headline": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
-      "source": "GBAtemp",
-      "timestamp": "2025-12-09",
-      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/"
-    },
-    {
-      "headline": "Nintendo surprise drops a new GameCube title onto the Switch Online library",
-      "source": "GBAtemp",
-      "timestamp": "2025-12-11",
-      "url": "https://gbatemp.net/threads/nintendo-surprise-drops-a-new-gamecube-title-onto-the-switch-online-library.677946/"
-    },
-    {
       "headline": "SciresM (Atmosphere developer) is retiring",
       "source": "GBAtemp",
       "timestamp": "2026-01-27",
       "url": "https://gbatemp.net/threads/sciresm-atmosphere-developer-is-retiring.679222/"
+    },
+    {
+      "headline": "1.10.2 / 21.0.1 CORRUPTED ALL GAMES / HOMEBREW",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-05",
+      "url": "https://gbatemp.net/threads/1-10-2-21-0-1-corrupted-all-games-homebrew.679483/"
     },
     {
       "headline": "Atmosphère 1.10.2",
@@ -242,28 +250,34 @@
       "url": "https://github.com/Atmosphere-NX/Atmosphere/releases/tag/1.10.2"
     },
     {
+      "headline": "Atmosphère 1.10.1",
+      "source": "GitHub",
+      "timestamp": "2025-12-09",
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/releases/tag/1.10.1"
+    },
+    {
+      "headline": "Atmosphère 1.10.0 (pre-release)",
+      "source": "GitHub",
+      "timestamp": "2025-11-15",
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/releases/tag/1.10.0-prerelease"
+    },
+    {
       "headline": "hekate v6.5.1 & Nyx v1.9.1",
       "source": "GitHub",
       "timestamp": "2026-01-20",
       "url": "https://github.com/CTCaer/hekate/releases/tag/v6.5.1"
     },
     {
+      "headline": "hekate v6.5.0 & Nyx v1.9.0",
+      "source": "GitHub",
+      "timestamp": "2026-01-14",
+      "url": "https://github.com/CTCaer/hekate/releases/tag/v6.5.0"
+    },
+    {
       "headline": "sphaira 1.0.0",
       "source": "GitHub",
       "timestamp": "2025-11-18",
       "url": "https://github.com/ITotalJustice/sphaira/releases/tag/1.0.0"
-    },
-    {
-      "headline": "nx-hbmenu v3.6.1",
-      "source": "GitHub",
-      "timestamp": "2025-11-15",
-      "url": "https://github.com/switchbrew/nx-hbmenu/releases/tag/v3.6.1"
-    },
-    {
-      "headline": "nx-hbloader v2.4.5",
-      "source": "GitHub",
-      "timestamp": "2025-11-15",
-      "url": "https://github.com/switchbrew/nx-hbloader/releases/tag/v2.4.5"
     }
   ],
   "reddit": [
