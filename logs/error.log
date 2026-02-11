@@ -1,0 +1,23 @@
+/bin/bash: /Users/lunt3/Documents/SwitchHack/autoupdate.sh: No such file or directory
+/bin/bash: /Users/lunt3/Documents/SwitchHack/scripts/autoupdate.sh: Operation not permitted
+Traceback (most recent call last):
+  File "/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py", line 43, in <module>
+    import nodriver as uc
+  File "/Users/lunt3/Library/Python/3.9/lib/python/site-packages/nodriver/__init__.py", line 10, in <module>
+    from nodriver.core import util
+  File "/Users/lunt3/Library/Python/3.9/lib/python/site-packages/nodriver/core/util.py", line 18, in <module>
+    from .element import Element
+  File "/Users/lunt3/Library/Python/3.9/lib/python/site-packages/nodriver/core/element.py", line 18, in <module>
+    from .config import PathLike
+  File "/Users/lunt3/Library/Python/3.9/lib/python/site-packages/nodriver/core/config.py", line 28, in <module>
+    PathLike = TypeVar("PathLike", bound=str | pathlib.Path)
+TypeError: unsupported operand type(s) for |: 'type' and 'type'
+Traceback (most recent call last):
+  File "/Users/lunt3/Documents/SwitchHack/scrapers/intel_processor.py", line 979, in <module>
+    process_intel()
+  File "/Users/lunt3/Documents/SwitchHack/scrapers/intel_processor.py", line 913, in process_intel
+    raw_list = json.load(f)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+OSError: [Errno 11] Resource deadlock avoided
+Everything up-to-date
