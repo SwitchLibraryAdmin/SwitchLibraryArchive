@@ -160,71 +160,37 @@
         Who actually pirates content? The data paints a picture that challenges common stereotypes.
       </p>
 
-      <!-- 2x2 Data Widget Grid -->
+      <!-- Data Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 
-        <!-- Card A: Under 35 -->
-        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-cyan-500/30 transition-colors duration-200">
-          <div class="flex items-start justify-between mb-6">
-            <div>
-              <p class="font-mono text-cyan-400 text-[10px] tracking-[0.2em] uppercase mb-1">Age Distribution</p>
-              <p class="text-white font-semibold">Under 35</p>
+        <!-- Card: Gender Split -->
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-5 hover:border-pink-500/30 transition-colors duration-200">
+          <div class="flex items-center gap-5">
+            <div class="w-24 h-24 flex-shrink-0 relative flex items-center justify-center">
+              <svg class="w-24 h-24 -rotate-90" viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"/><circle cx="48" cy="48" r="40" fill="none" stroke="#ec4899" stroke-width="8" stroke-dasharray="108.1 251.3" stroke-linecap="round"/></svg>
+              <span class="absolute font-mono text-pink-400 text-lg font-black">43%</span>
             </div>
-            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
-              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#22d3ee" stroke-width="7" stroke-dasharray="136.9 213.6" stroke-linecap="round"/></svg>
-              <span class="absolute font-mono text-cyan-400 text-xs font-bold">64%</span>
+            <div class="min-w-0">
+              <p class="font-mono text-pink-400 text-xs tracking-[0.2em] uppercase mb-1">Gender Split</p>
+              <p class="text-white font-semibold text-lg mb-1.5">Women</p>
+              <p class="text-gray-400 text-[15px] leading-relaxed">of pirates are women. The stereotype of piracy as a male-dominated activity doesn&rsquo;t hold up under scrutiny.</p>
             </div>
           </div>
-          <p class="font-mono text-5xl sm:text-6xl font-black text-cyan-400 mb-2">64<span class="text-2xl">%</span></p>
-          <p class="text-gray-400 text-sm leading-relaxed">of all digital pirates are under the age of 35&mdash;the demographic with the least disposable income and the highest digital literacy.</p>
         </div>
 
-        <!-- Card B: Gender Split -->
-        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-pink-500/30 transition-colors duration-200">
-          <div class="flex items-start justify-between mb-6">
-            <div>
-              <p class="font-mono text-pink-400 text-[10px] tracking-[0.2em] uppercase mb-1">Gender Split</p>
-              <p class="text-white font-semibold">Women</p>
+        <!-- Card: Prevalence -->
+        <div class="bg-slate-800 border border-white/10 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors duration-200">
+          <div class="flex items-center gap-5">
+            <div class="w-24 h-24 flex-shrink-0 relative flex items-center justify-center">
+              <svg class="w-24 h-24 -rotate-90" viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"/><circle cx="48" cy="48" r="40" fill="none" stroke="#10b981" stroke-width="8" stroke-dasharray="143.3 251.3" stroke-linecap="round"/></svg>
+              <span class="absolute font-mono text-emerald-400 text-lg font-black">57%</span>
             </div>
-            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
-              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#ec4899" stroke-width="7" stroke-dasharray="91.9 213.6" stroke-linecap="round"/></svg>
-              <span class="absolute font-mono text-pink-400 text-xs font-bold">43%</span>
-            </div>
-          </div>
-          <p class="font-mono text-5xl sm:text-6xl font-black text-pink-400 mb-2">43<span class="text-2xl">%</span></p>
-          <p class="text-gray-400 text-sm leading-relaxed">of pirates are women. The stereotype of piracy as a male-dominated activity doesn&rsquo;t hold up under scrutiny.</p>
-        </div>
-
-        <!-- Card C: Global Bandwidth -->
-        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-purple-500/30 transition-colors duration-200">
-          <div class="flex items-start justify-between mb-6">
-            <div>
-              <p class="font-mono text-purple-400 text-[10px] tracking-[0.2em] uppercase mb-1">Global Bandwidth</p>
-              <p class="text-white font-semibold">File Sharing Traffic</p>
-            </div>
-            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
-              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#8b5cf6" stroke-width="7" stroke-dasharray="51.3 213.6" stroke-linecap="round"/></svg>
-              <span class="absolute font-mono text-purple-400 text-xs font-bold">24%</span>
+            <div class="min-w-0">
+              <p class="font-mono text-emerald-400 text-xs tracking-[0.2em] uppercase mb-1">Prevalence</p>
+              <p class="text-white font-semibold text-lg mb-1.5">Have Pirated At Least Once</p>
+              <p class="text-gray-400 text-[15px] leading-relaxed">of all computer users globally have pirated content at least once. It&rsquo;s not a fringe activity&mdash;it&rsquo;s a majority behavior.</p>
             </div>
           </div>
-          <p class="font-mono text-5xl sm:text-6xl font-black text-purple-400 mb-2">24<span class="text-2xl">%</span></p>
-          <p class="text-gray-400 text-sm leading-relaxed">of total global internet bandwidth is consumed by file sharing activity. Nearly a quarter of all internet traffic.</p>
-        </div>
-
-        <!-- Card D: Prevalence -->
-        <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-colors duration-200">
-          <div class="flex items-start justify-between mb-6">
-            <div>
-              <p class="font-mono text-emerald-400 text-[10px] tracking-[0.2em] uppercase mb-1">Prevalence</p>
-              <p class="text-white font-semibold">Have Pirated At Least Once</p>
-            </div>
-            <div class="w-20 h-20 flex-shrink-0 relative flex items-center justify-center">
-              <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="7"/><circle cx="40" cy="40" r="34" fill="none" stroke="#10b981" stroke-width="7" stroke-dasharray="121.8 213.6" stroke-linecap="round"/></svg>
-              <span class="absolute font-mono text-emerald-400 text-xs font-bold">57%</span>
-            </div>
-          </div>
-          <p class="font-mono text-5xl sm:text-6xl font-black text-emerald-400 mb-2">57<span class="text-2xl">%</span></p>
-          <p class="text-gray-400 text-sm leading-relaxed">of all computer users globally have pirated content at least once. It&rsquo;s not a fringe activity&mdash;it&rsquo;s a majority behavior.</p>
         </div>
 
       </div>
@@ -242,7 +208,7 @@
       </div>
       <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">The Gatekeeper Bypass</h2>
       <p class="text-gray-400 max-w-3xl mb-10 leading-relaxed">
-        Some of the biggest names in entertainment have publicly acknowledged that unauthorized sharing acted as a distribution channel&mdash;one that bypassed traditional gatekeepers and ultimately drove legitimate revenue.
+        Some of the biggest names in tech and entertainment have publicly acknowledged that piracy built their empires&mdash;turning unauthorized users into paying customers at scale.
       </p>
 
       <!-- Quote Cards -->
@@ -252,23 +218,24 @@
         <div class="bg-slate-800 border border-white/10 rounded-2xl p-6 hover:border-emerald-500/20 transition-colors duration-200">
           <div class="flex items-start gap-5">
             <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
-              <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-3">
-                <h3 class="text-white font-bold text-lg">Adobe Photoshop</h3>
+                <h3 class="text-white font-bold text-lg">Microsoft Windows</h3>
                 <span class="verified-badge w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0" title="Verified Source">
                   <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="font-mono text-[10px] tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2 py-0.5 uppercase">The Industry Standard</span>
+                <span class="font-mono text-[10px] tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-md px-2 py-0.5 uppercase">The Long Game</span>
               </div>
               <blockquote class="border-l-2 border-emerald-500 pl-4 mb-3">
                 <p class="text-gray-300 leading-relaxed italic">
-                  &ldquo;Photoshop became the industry standard <em>because</em> it was pirated by students who later forced their employers to buy enterprise licenses.&rdquo;
+                  &ldquo;We want them to steal ours. They&rsquo;ll get sort of addicted, and then we&rsquo;ll somehow figure out how to collect sometime in the next decade.&rdquo;
                 </p>
               </blockquote>
-              <p class="text-gray-500 text-sm leading-relaxed">
-                Adobe&rsquo;s dominance in creative software was built on a generation of students and freelancers who learned on pirated copies. When those users entered the workforce, they brought the software with them&mdash;and their employers paid full enterprise pricing. Adobe later formalized this with the Creative Cloud subscription model, offering steep student discounts to replicate the same pipeline legally.
+              <p class="text-gray-400 text-sm mb-2">&mdash; <strong class="text-white">Bill Gates</strong>, Founder of Microsoft</p>
+              <p class="mt-3">
+                <a href="https://www.cnet.com/tech/tech-industry/say-what-a-look-back-at-gates-pearls-of-wisdom/" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 text-xs font-mono underline underline-offset-4">Source: CNET &rarr;</a>
               </p>
             </div>
           </div>
@@ -294,9 +261,6 @@
                 </p>
               </blockquote>
               <p class="text-gray-400 text-sm mb-2">&mdash; <strong class="text-white">Jeff Bewkes</strong>, CEO of Time Warner (HBO&rsquo;s parent company)</p>
-              <p class="text-gray-500 text-sm leading-relaxed">
-                At the height of its piracy, Game of Thrones was generating more cultural conversation than any other show on television. Time Warner&rsquo;s own CEO acknowledged that the piracy acted as word-of-mouth marketing, driving HBO subscriptions to record highs.
-              </p>
               <p class="mt-3">
                 <a href="https://www.techdirt.com/2013/08/08/time-warner-ceo-says-having-game-thrones-as-most-pirated-is-better-than-emmy/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-mono underline underline-offset-4">Source: TechDirt &rarr;</a>
               </p>
@@ -324,9 +288,6 @@
                 </p>
               </blockquote>
               <p class="text-gray-400 text-sm mb-2">&mdash; <strong class="text-white">Ed Sheeran</strong>, CBS Interview</p>
-              <p class="text-gray-500 text-sm leading-relaxed">
-                Before signing his first record deal, Sheeran&rsquo;s music spread through unauthorized file sharing networks. He has publicly credited this distribution with building his fanbase outside the traditional label system, which ultimately led to one of the most successful music careers of the decade.
-              </p>
               <p class="mt-3">
                 <a href="https://www.cbsnews.com/news/ed-sheeran-reinventing-pop-music/" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 text-xs font-mono underline underline-offset-4">Source: CBS News &rarr;</a>
               </p>
@@ -415,7 +376,7 @@
       <div class="flex items-center gap-6 text-sm text-gray-500">
         <a href="guide.html" class="hover:text-gray-300 transition-colors">Guide</a>
         <a href="intel.html" class="hover:text-gray-300 transition-colors">Intel</a>
-        <a href="monitor.html" class="hover:text-gray-300 transition-colors">Monitor</a>
+        <a href="hub.html" class="hover:text-gray-300 transition-colors">Hub</a>
         <a href="index.html#community" class="hover:text-gray-300 transition-colors">Community</a>
       </div>
     </div>
