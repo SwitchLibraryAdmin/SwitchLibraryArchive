@@ -303,6 +303,23 @@
 
 
 
+<script>
+// Fix hash-scroll race condition: browser may scroll before fonts/images settle.
+// Re-scroll to the hash target once everything is fully loaded.
+if (location.hash) {
+  window.addEventListener('load', function () {
+    var el = document.querySelector(location.hash);
+    if (el) {
+      // Double-rAF ensures layout is fully recalculated after load
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          el.scrollIntoView({ behavior: 'auto' });
+        });
+      });
+    }
+  });
+}
+</script>
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js');</script>
 </body>
 </html>
