@@ -4,7 +4,7 @@ var PRECACHE = [
   '/index.html',
   '/guide.html',
   '/intel.html',
-  '/monitor.html',
+  '/hub.html',
   '/404.html',
   '/assets/css/tailwind.min.css',
   '/assets/css/styles.css',
