@@ -75,5 +75,16 @@
     "firmware_version": "21.2.0",
     "atmosphere_version": "1.10.2",
     "hekate_version": "6.5.1"
+  },
+  {
+    "timestamp": "2026-02-13T05:41:30.784112",
+    "threat_level": "Caution",
+    "threat_trend": "Rising",
+    "sentiment_score": 40,
+    "sentiment_label": "Anxious",
+    "recommended_firmware": "20.5.0",
+    "firmware_version": "21.2.0",
+    "atmosphere_version": "1.10.2",
+    "hekate_version": "6.5.1"
   }
 ]
