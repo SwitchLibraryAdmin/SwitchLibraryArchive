@@ -5,22 +5,22 @@
     "firmware": {
       "version": "21.2.0",
       "status": "Caution",
-      "reason": "FW 21.2.0 has LayeredFS crashing all games and multiple reports of bricking, bans, and corruption, making it risky for CFW users."
+      "reason": "Firmware 21.2.0 has LayeredFS crashing all games and multiple reports of bricking, bans, and corruption, but Atmosphere officially supports it."
     },
     "atmosphere": {
       "version": "1.10.2",
       "status": "Stable",
-      "reason": "Atmosphere 1.10.2 officially supports FW 21.2.0 but has known crash and corruption issues, requiring careful updates."
+      "reason": "Atmosphere 1.10.2 officially supports FW 21.2.0 but has crash and corruption reports, and LayeredFS is broken on this version."
     },
     "hekate": {
       "version": "6.5.1",
       "status": "Stable",
-      "reason": "Hekate 6.5.1 likely supports FW 21.2.0, but evidence shows Hekate 6.4.2 only supports up to 21.1.0, indicating potential compatibility gaps."
+      "reason": "Hekate 6.5.1's latest evidence (v6.4.2) supports up to FW 21.1.0, with ban reports and positive signals, but status for 21.2.0 is unclear."
     },
-    "lastSync": "05:41 AM",
+    "lastSync": "06:07 PM",
     "recommended_firmware": "20.5.0",
-    "recommended_firmware_reason": "FW 20.5.0 is widely supported by homebrew and CFW, with fewer reported issues compared to the problematic FW 21.x series.",
-    "sentiment_score": 40,
+    "recommended_firmware_reason": "FW 20.5.0 is cited as stable for downgrading due to FW 21.x breaking homebrew compatibility and causing issues like LayeredFS crashes on 21.2.0.",
+    "sentiment_score": 42,
     "sentiment_label": "Anxious"
   },
   "compatibility_matrix": [
@@ -28,13 +28,13 @@
       "tool": "Atmosphere",
       "version": "1.10.2",
       "status": "Partial",
-      "notes": "Officially supports FW 21.2.0 but has crash and corruption reports; LayeredFS is broken."
+      "notes": "Officially supports FW 21.2.0 but has LayeredFS crashes and corruption reports."
     },
     {
       "tool": "Hekate",
       "version": "6.5.1",
-      "status": "Partial",
-      "notes": "Likely supports FW 21.2.0, but evidence shows Hekate 6.4.2 only supports up to 21.1.0, suggesting possible issues."
+      "status": "Unknown",
+      "notes": "Latest evidence (v6.4.2) supports up to FW 21.1.0; compatibility with 21.2.0 is not confirmed."
     },
     {
       "tool": "LayeredFS",
@@ -46,42 +46,30 @@
       "tool": "sys-patch",
       "version": "N/A",
       "status": "Unknown",
-      "notes": "Not explicitly mentioned in evidence; compatibility with FW 21.2.0 is unclear due to lack of reports."
+      "notes": "Not directly mentioned in evidence, but FW 21.x breaks homebrew, suggesting potential issues."
     },
     {
       "tool": "Breeze",
       "version": "N/A",
       "status": "Partial",
-      "notes": "Used in tutorials but has crash and corruption signals; may work with caution on newer firmware."
+      "notes": "Used in tutorials with positive signals, but associated with crash and corruption reports."
     },
     {
       "tool": "Edizon",
       "version": "N/A",
       "status": "Unknown",
-      "notes": "Mentioned in evidence but no clear compatibility status for FW 21.2.0; likely affected by general homebrew issues."
-    },
-    {
-      "tool": "Homebrew Apps",
-      "version": "Various",
-      "status": "Partial",
-      "notes": "Many homebrew apps are incompatible with FW 21.x, requiring recompilation or downgrades to 20.5.0."
-    },
-    {
-      "tool": "Fusee",
-      "version": "Updated",
-      "status": "Full",
-      "notes": "Required update for Atmosphere 1.10.x; fusee-primary no longer works, but updated version is supported."
+      "notes": "Mentioned in evidence but no clear compatibility status for current firmware."
     }
   ],
   "trending_topics": [
     {
       "tag": "Firmware 21.2.0",
-      "count": 8,
+      "count": 5,
       "sentiment": "neutral"
     },
     {
       "tag": "Homebrew Updates",
-      "count": 12,
+      "count": 8,
       "sentiment": "positive"
     },
     {
@@ -90,17 +78,17 @@
       "sentiment": "neutral"
     },
     {
-      "tag": "Game Modding",
-      "count": 5,
+      "tag": "Game Mods",
+      "count": 3,
       "sentiment": "positive"
     },
     {
-      "tag": "NSO Updates",
-      "count": 4,
-      "sentiment": "positive"
+      "tag": "System Issues",
+      "count": 3,
+      "sentiment": "negative"
     }
   ],
-  "scene_briefing": "Caution is advised as threat levels are rising, with firmware 20.5.0 recommended for stability. The scene is buzzing with the release of Atmosphère 1.10.2, while discussions around Firmware 21.2.0 and Switch 2 news keep the community engaged.",
+  "scene_briefing": "Caution is advised as threats are rising, with firmware 20.5.0 recommended for stability. The scene is buzzing with the release of Atmosphère 1.10.2, while users remain anxious about firmware 21.2.0 causing compatibility issues.",
   "articles": [
     {
       "type": "homebrew",
@@ -113,8 +101,8 @@
       "size": "",
       "timestamp": "2026-02-08",
       "risk": "Caution",
-      "risk_reason": "New homebrew, in development",
-      "description": "Homebrew for real-time shiny stash map."
+      "risk_reason": "New homebrew, reads game memory",
+      "description": "Homebrew to display shiny Pokemon locations."
     },
     {
       "type": "homebrew",
@@ -127,8 +115,22 @@
       "size": "",
       "timestamp": "2025-12-12",
       "risk": "Caution",
-      "risk_reason": "Save editing, potential corruption",
-      "description": "Save editor for Metroid Prime 4."
+      "risk_reason": "Save editor, modifies game data",
+      "description": "Save editor for Metroid Prime 4 Beyond."
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
+      "url": "https://gbatemp.net/threads/d3hack-diablo-iii-eternal-collection-4k-1440p-1080p-seasonal-events-challenge-rifts-more-mod-menu-v2-7-6.678660/",
+      "version": "v2.7.6",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-06",
+      "risk": "Danger",
+      "risk_reason": "Modifies online game, high ban risk",
+      "description": "Diablo III mod menu with resolution hacks."
     },
     {
       "type": "homebrew",
@@ -137,30 +139,16 @@
       "title": "Inazuma Eleven Victory Road Mod 60FPS + 4k Resolution",
       "url": "https://gbatemp.net/threads/inazuma-eleven-victory-road-mod-60fps-4k-resolution.678451/",
       "version": "v2.0.1",
-      "region": "U",
+      "region": "",
       "size": "",
       "timestamp": "2025-12-29",
       "risk": "Caution",
       "risk_reason": "Game mod, untested on all systems",
-      "description": "60FPS and 4K mod for Inazuma Eleven."
+      "description": "Mod for Inazuma Eleven with 60FPS and 4K."
     },
     {
       "type": "homebrew",
       "content_type": "Tool",
-      "source": "GBAtemp",
-      "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
-      "url": "https://gbatemp.net/threads/d3hack-diablo-iii-eternal-collection-4k-1440p-1080p-seasonal-events-challenge-rifts-more-mod-menu-v2-7-6.678660/",
-      "version": "v3.0 (RC1)",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-01-06",
-      "risk": "Danger",
-      "risk_reason": "Extensive game modding, ban risk",
-      "description": "Diablo III mod menu with many features."
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tutorial",
       "source": "GBAtemp",
       "title": "Fix DK64 Audio Crash on N64 NSO",
       "url": "https://gbatemp.net/threads/fix-dk64-audio-crash-on-n64-nso.678077/",
@@ -169,8 +157,8 @@
       "size": "",
       "timestamp": "2025-12-15",
       "risk": "Danger",
-      "risk_reason": "Modifies NSO app, ban risk",
-      "description": "Guide to fix DK64 audio crash in NSO."
+      "risk_reason": "Modifies NSO app, high ban risk",
+      "description": "Fix for Donkey Kong 64 audio crash on NSO."
     },
     {
       "type": "homebrew",
@@ -183,12 +171,12 @@
       "size": "",
       "timestamp": "2026-02-02",
       "risk": "Caution",
-      "risk_reason": "Reports system-wide crashes",
-      "description": "Issue with LayeredFS on 21.2.0."
+      "risk_reason": "LayeredFS issue, may cause crashes",
+      "description": "Discussion on LayeredFS crashes after update."
     },
     {
       "type": "homebrew",
-      "content_type": "Discussion",
+      "content_type": "Question",
       "source": "GBAtemp",
       "title": "Switch Lite no battery information and no boot to firmware after hekate usb tools crash.",
       "url": "https://gbatemp.net/threads/switch-lite-no-battery-information-and-no-boot-to-firmware-after-hekate-usb-tools-crash.679374/",
@@ -197,36 +185,22 @@
       "size": "",
       "timestamp": "2026-02-01",
       "risk": "Danger",
-      "risk_reason": "Hardware mod issue, brick risk",
-      "description": "Picofly mod problem with battery info."
+      "risk_reason": "Hardware issue, potential brick",
+      "description": "Switch Lite boot issue after hekate crash."
     },
     {
       "type": "homebrew",
-      "content_type": "Tool",
+      "content_type": "Question",
       "source": "GBAtemp",
-      "title": "NSO Gamecube Controller Bluetooth PC Support",
-      "url": "https://gbatemp.net/threads/nso-gamecube-controller-bluetooth-pc-support.678409/",
+      "title": "Updated to the latest fw. A system message sometimes blinks when trying to run a game",
+      "url": "https://gbatemp.net/threads/updated-to-the-latest-fw-a-system-message-sometimes-blinks-when-trying-to-run-a-game.679297/",
       "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2025-12-28",
-      "risk": "Safe",
-      "risk_reason": "Controller utility, low risk",
-      "description": "Tool for NSO GameCube controller on PC."
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Release",
-      "source": "GBAtemp",
-      "title": "The Simpsons Hit & Run Remastered (Homebrew)",
-      "url": "https://gbatemp.net/threads/the-simpsons-hit-run-remastered-homebrew.679519/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-06",
+      "timestamp": "2026-01-30",
       "risk": "Caution",
-      "risk_reason": "WIP homebrew, untested",
-      "description": "Homebrew remaster of Simpsons Hit & Run."
+      "risk_reason": "System instability after update",
+      "description": "Issue with system message blinking after update."
     }
   ],
   "news": [
@@ -243,16 +217,22 @@
       "url": "https://gbatemp.net/threads/nintendo-surprise-drops-a-new-gamecube-title-onto-the-switch-online-library.677946/"
     },
     {
+      "headline": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
+      "source": "GBAtemp",
+      "timestamp": "2025-12-09",
+      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/"
+    },
+    {
       "headline": "Nintendo Switch Online retro catalog games for December 2025 announced",
       "source": "GBAtemp",
       "timestamp": "2025-12-10",
       "url": "https://gbatemp.net/threads/nintendo-switch-online-retro-catalog-games-for-december-2025-announced.677937/"
     },
     {
-      "headline": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
+      "headline": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
       "source": "GBAtemp",
-      "timestamp": "2025-12-09",
-      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/"
+      "timestamp": "2026-02-04",
+      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/"
     },
     {
       "headline": "Digital Eclipse lied about the physical release of Mortal Kombat Kollection for Switch 2",
@@ -261,10 +241,16 @@
       "url": "https://gbatemp.net/threads/digital-eclipse-lied-about-the-physical-release-of-mortal-kombat-kollection-for-switch-2.678035/"
     },
     {
-      "headline": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
+      "headline": "Nintendo Switch 2: The Current State of Physical Releases",
       "source": "GBAtemp",
-      "timestamp": "2026-02-04",
-      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/"
+      "timestamp": "2025-12-13",
+      "url": "https://gbatemp.net/threads/nintendo-switch-2-the-current-state-of-physical-releases.678010/"
+    },
+    {
+      "headline": "NSO Gamecube Controller Bluetooth PC Support",
+      "source": "GBAtemp",
+      "timestamp": "2025-12-28",
+      "url": "https://gbatemp.net/threads/nso-gamecube-controller-bluetooth-pc-support.678409/"
     },
     {
       "headline": "DBI 866 - Russian version only",
@@ -362,6 +348,13 @@
       "subreddit": "r/SwitchHacks"
     },
     {
+      "title": "Nice try nintendo, that never stopped us before (meme)",
+      "upvotes": 433,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r4clkx/nice_try_nintendo_that_never_stopped_us_before/",
+      "timestamp": "2026-02-14",
+      "subreddit": "r/SwitchPirates"
+    },
+    {
       "title": "Purchasing a new modded switch from eBay",
       "upvotes": 73,
       "url": "https://www.reddit.com/r/SwitchPirates/comments/1r331sl/purchasing_a_new_modded_switch_from_ebay/",
@@ -369,17 +362,10 @@
       "subreddit": "r/SwitchPirates"
     },
     {
-      "title": "Having a problema with rcm loader",
-      "upvotes": 12,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r2c02m/having_a_problema_with_rcm_loader/",
-      "timestamp": "2026-02-11",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "Finally finished my custom oled switch so I can finally post it. Think I’m the first to laser engrave the aluminum housing.",
-      "upvotes": 38,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r27b0i/finally_finished_my_custom_oled_switch_so_i_can/",
-      "timestamp": "2026-02-11",
+      "title": "I wanted to make another meme about this, you can't kill an emulator nintendo, it always gets duplicated after you kill it",
+      "upvotes": 33,
+      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r4dwj2/i_wanted_to_make_another_meme_about_this_you_cant/",
+      "timestamp": "2026-02-14",
       "subreddit": "r/SwitchPirates"
     },
     {
