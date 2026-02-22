@@ -21,3 +21,34 @@ Traceback (most recent call last):
     return loads(fp.read(),
 OSError: [Errno 11] Resource deadlock avoided
 Everything up-to-date
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:322: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 3168 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   1904940..4402b5d  main -> main
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:322: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 49886 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   3dbe5b7..f553ed4  main -> main
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:322: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 14956 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   f553ed4..eb686bf  main -> main
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:322: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 22194 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   eb686bf..3e56bff  main -> main
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:322: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 30020 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   3e56bff..18b97a6  main -> main
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:322: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 27967 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   18b97a6..d3b9e7b  main -> main
+/Users/lunt3/Documents/SwitchHack/scripts/autoupdate.sh: /Users/lunt3/Documents/SwitchHack/scripts/autoupdate.sh: Resource deadlock avoided
