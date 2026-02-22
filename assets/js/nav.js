@@ -4,11 +4,7 @@
   const isGuide = page === 'guide.html';
   const isIntel = page === 'intel.html';
   const isMonitor = page === 'hub.html';
-  const isAbout = page === 'about.html';
-  const isLegal = page === 'legal.html';
-
   const homeHref = isHome ? '#hero' : 'index.html';
-  const communityHref = isHome ? '#community' : 'index.html#community';
   const ctaText = isGuide ? 'Start Reading' : 'Get Started';
   const ctaHref = isGuide ? '#prerequisites' : 'guide.html';
 
@@ -25,11 +21,8 @@
       <div class="hidden md:flex items-center gap-8">
         <a href="${homeHref}" class="${isHome ? active : inactive}"${isHome ? ' aria-current="page"' : ''}>Home</a>
         <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
-        <a href="${communityHref}" class="${inactive}">Community</a>
         <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="hub.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Hub</a>
-        <a href="about.html" class="${isAbout ? active : inactive}"${isAbout ? ' aria-current="page"' : ''}>About</a>
-        <a href="legal.html" class="${isLegal ? active : inactive}"${isLegal ? ' aria-current="page"' : ''}>Legal</a>
       </div>
       <button id="mobile-menu-btn" class="md:hidden p-2 -mr-2 text-gray-400 hover:text-white" aria-label="Menu">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,11 +34,8 @@
       <div class="px-6 py-4 flex flex-col gap-4">
         <a href="${homeHref}" class="${isHome ? active : inactive}"${isHome ? ' aria-current="page"' : ''}>Home</a>
         <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
-        <a href="${communityHref}" class="${inactive}">Community</a>
         <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="hub.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Hub</a>
-        <a href="about.html" class="${isAbout ? active : inactive}"${isAbout ? ' aria-current="page"' : ''}>About</a>
-        <a href="legal.html" class="${isLegal ? active : inactive}"${isLegal ? ' aria-current="page"' : ''}>Legal</a>
       </div>
     </div>
   </nav>`;
