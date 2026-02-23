@@ -21,3 +21,6 @@ scrapers/debug/
 
 # Personal notes
 TODO.md
+
+# Environment variables / secrets
+.env
