@@ -52,3 +52,50 @@ Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles
 To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
    18b97a6..d3b9e7b  main -> main
 /Users/lunt3/Documents/SwitchHack/scripts/autoupdate.sh: /Users/lunt3/Documents/SwitchHack/scripts/autoupdate.sh: Resource deadlock avoided
+/Users/lunt3/Documents/SwitchHack/scrapers/gbatemp_scraper.py:323: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 8214 is closed
+Traceback (most recent call last):
+  File "/Users/lunt3/Documents/SwitchHack/scrapers/intel_processor.py", line 1585, in <module>
+    process_intel()
+    ~~~~~~~~~~~~~^^
+  File "/Users/lunt3/Documents/SwitchHack/scrapers/intel_processor.py", line 1581, in process_intel
+    save_history(final_data["dashboard_stats"])
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lunt3/Documents/SwitchHack/scrapers/intel_processor.py", line 1411, in save_history
+    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 11] Resource deadlock avoided: '/Users/lunt3/Documents/SwitchHack/data/monitor_history.json'
+fatal: cannot update the ref 'HEAD': unable to append to '.git/logs/HEAD': Resource deadlock avoided
+Everything up-to-date
+/Users/lunt3/SwitchHack/scrapers/gbatemp_scraper.py:323: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 12012 is closed
+/Users/lunt3/SwitchHack/scrapers/gbatemp_scraper.py:323: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 16520 is closed
+/Users/lunt3/SwitchHack/scrapers/gbatemp_scraper.py:323: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 16552 is closed
+/Users/lunt3/SwitchHack/scrapers/gbatemp_scraper.py:323: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 16602 is closed
+/Users/lunt3/SwitchHack/scrapers/gbatemp_scraper.py:323: DeprecationWarning: Call to deprecated function (or staticmethod) get_all_cookies. -- Deprecated since version 1.3.
+  cdp_cookies = await page.send(uc.cdp.network.get_all_cookies())
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 16633 is closed
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   7420918..ab2f469  main -> main
+Loop <_UnixSelectorEventLoop running=False closed=True debug=False> that handles pid 89163 is closed
+Traceback (most recent call last):
+  File "/Users/lunt3/SwitchHack/scrapers/scraper_main.py", line 289, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lunt3/SwitchHack/scrapers/scraper_main.py", line 248, in main
+    new_reddit, updated_reddit = scrape_reddit(known_urls, all_items)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lunt3/SwitchHack/scrapers/scraper_reddit.py", line 525, in scrape_reddit
+    and item.get("last_reply_date", "") >= rescrape_cutoff
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'NoneType' and 'str'
+To https://github.com/SwitchLibraryAdmin/SwitchLibraryArchive.git
+   ab2f469..7c15762  main -> main
