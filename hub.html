@@ -340,7 +340,7 @@
         <h2 class="text-base sm:text-lg font-bold text-white tracking-tight">Latest Releases</h2>
         <div class="flex-1 h-px bg-white/10"></div>
       </div>
-      <div id="news-list" class="flex flex-wrap gap-2">
+      <div id="news-list" class="flex flex-col gap-4">
         <div class="glass rounded-md px-3 py-2"><div class="h-3 w-32 skel mb-1.5"></div><div class="h-2.5 w-10 skel"></div></div>
         <div class="glass rounded-md px-3 py-2"><div class="h-3 w-40 skel mb-1.5"></div><div class="h-2.5 w-12 skel"></div></div>
         <div class="glass rounded-md px-3 py-2"><div class="h-3 w-36 skel mb-1.5"></div><div class="h-2.5 w-10 skel"></div></div>
@@ -739,10 +739,10 @@
         return new Date(b.timestamp || 0).getTime() - new Date(a.timestamp || 0).getTime();
       });
 
-      // dedupe: keep only the latest release per project (first word of headline)
+      // dedupe: keep only the latest release per project (first whitespace-delimited word)
       var seen = {};
       ghReleases = ghReleases.filter(function(n) {
-        var project = (n.headline || '').split(/[\s\-_]/)[0].toLowerCase()
+        var project = (n.headline || '').split(/\s+/)[0].toLowerCase()
           .normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
         if (!project) return true;
         if (seen[project]) return false;
@@ -750,18 +750,75 @@
         return true;
       });
 
-      var h = '';
+      // category definitions — order determines display order
+      var cats = [
+        { key: 'cfw',        label: 'Core CFW',         color: '#22d3ee' },  // cyan
+        { key: 'overlays',   label: 'Overlays',          color: '#a78bfa' },  // purple
+        { key: 'sysmodules', label: 'Sysmodules',        color: '#fb923c' },  // orange
+        { key: 'files',      label: 'File & Save Tools', color: '#4ade80' },  // green
+        { key: 'apps',       label: 'Apps & Utilities',  color: '#94a3b8' },  // slate
+      ];
+
+      // normalized first-word → category key
+      var catMap = {
+        'atmosphere': 'cfw', 'hekate': 'cfw',
+        'nx-ovlloader': 'overlays', 'tesla-menu': 'overlays', 'ovl-sysmodules': 'overlays',
+        'ultrahand-overlay': 'overlays', 'status-monitor-overlay': 'overlays', 'fpslocker': 'overlays',
+        'saltynx': 'sysmodules', 'sys-clk': 'sysmodules', 'sys-patch': 'sysmodules',
+        'missioncontrol': 'sysmodules', 'sys-con': 'sysmodules', 'ldn_mitm': 'sysmodules',
+        'dbi': 'files', 'goldleaf': 'files', 'ftpd': 'files',
+        'tegraexplorer': 'files', 'jksv': 'files', 'edizon-se': 'files',
+        'sphaira': 'apps', 'hb-appstore': 'apps', 'nx-hbmenu': 'apps', 'nx-hbloader': 'apps',
+        'sysdvr': 'apps', 'nxmp': 'apps', 'switchthemeinjector': 'apps',
+        'emuiibo': 'apps', 'aio-switch-updater': 'apps',
+      };
+
+      // bucket releases into categories
+      var buckets = {};
+      cats.forEach(function(c) { buckets[c.key] = []; });
+      buckets['_other'] = [];
       ghReleases.forEach(function(n) {
-        var fresh = isNew(n.timestamp);
-        h += '<a href="' + (n.url || '#') + '" target="_blank" rel="noopener" class="glass rounded-md px-3 py-2 transition-all hover:bg-white/[.07] border border-white/10 hover:border-white/20 group">';
-        h += '<div class="text-[12px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors">' + escHtml(n.headline);
-        if (fresh) h += ' <span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 ml-1 align-middle"></span>';
-        h += '</div>';
-        h += '<div class="flex items-center gap-1.5 mt-1">';
-        h += '<span class="text-[10px] font-mono text-gray-500">' + timeAgo(n.timestamp) + '</span>';
-        h += '</div>';
-        h += '</a>';
+        var proj = (n.headline || '').split(/\s+/)[0].toLowerCase()
+          .normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+        var key = catMap[proj] || '_other';
+        (buckets[key] || buckets['_other']).push(n);
       });
+
+      function renderCard(n) {
+        var fresh = isNew(n.timestamp);
+        var s = '<a href="' + (n.url || '#') + '" target="_blank" rel="noopener" class="glass rounded-md px-3 py-2 transition-all hover:bg-white/[.07] border border-white/10 hover:border-white/20 group">';
+        s += '<div class="text-[12px] leading-snug font-medium text-gray-200 group-hover:text-white transition-colors">' + escHtml(n.headline);
+        if (fresh) s += ' <span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 ml-1 align-middle"></span>';
+        s += '</div>';
+        s += '<div class="flex items-center gap-1.5 mt-1"><span class="text-[10px] font-mono text-gray-500">' + timeAgo(n.timestamp) + '</span></div>';
+        s += '</a>';
+        return s;
+      }
+
+      var h = '';
+      cats.forEach(function(c) {
+        var items = buckets[c.key];
+        if (!items.length) return;
+        h += '<div>';
+        h += '<div class="flex items-center gap-2 mb-2">';
+        h += '<span class="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:' + c.color + '"></span>';
+        h += '<span class="text-[10px] font-bold uppercase tracking-widest" style="color:' + c.color + ';opacity:.7">' + c.label + '</span>';
+        h += '<div class="flex-1 h-px bg-white/[.06]"></div>';
+        h += '</div>';
+        h += '<div class="flex flex-wrap gap-2">';
+        items.forEach(function(n) { h += renderCard(n); });
+        h += '</div>';
+        h += '</div>';
+      });
+
+      if (buckets['_other'].length) {
+        h += '<div>';
+        h += '<div class="flex items-center gap-2 mb-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-white/20 flex-shrink-0"></span><span class="text-[10px] font-bold uppercase tracking-widest text-white/25">Other</span><div class="flex-1 h-px bg-white/[.06]"></div></div>';
+        h += '<div class="flex flex-wrap gap-2">';
+        buckets['_other'].forEach(function(n) { h += renderCard(n); });
+        h += '</div></div>';
+      }
+
       newsList.innerHTML = h;
     }
 
