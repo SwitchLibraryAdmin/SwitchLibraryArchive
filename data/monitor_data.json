@@ -1,25 +1,26 @@
 {
   "dashboard_stats": {
     "threat_level": "Caution",
-    "threat_trend": "Stable",
+    "threat_trend": "Rising",
+    "confidence_score": 65,
     "firmware": {
       "version": "21.2.0",
       "status": "Caution",
-      "reason": "Firmware 21.2.0 has LayeredFS crashing issues and multiple reports of homebrew incompatibility, but no widespread bricking or corruption reports specific to this version."
+      "reason": "FW 21.2.0 has LayeredFS crashes and multiple corruption reports from FW 21.0.0, but no direct brick reports for 21.2.0."
     },
     "atmosphere": {
       "version": "1.10.2",
       "status": "Stable",
-      "reason": "Atmosphere 1.10.2 officially supports firmware 21.2.0 but has known issues with LayeredFS causing game crashes, as reported in a recent help post."
+      "reason": "Atmosphere 1.10.2 has CRASH_REPORT and CORRUPTION signals in release notes, indicating instability."
     },
     "hekate": {
       "version": "6.5.1",
       "status": "Stable",
-      "reason": "Hekate 6.5.1 officially supports firmware 21.2.0 with positive signals, though some older versions had ban reports."
+      "reason": "Hekate 6.5.1 lacks specific evidence, but general CFW issues suggest caution."
     },
-    "lastSync": "08:27 PM",
+    "lastSync": "09:23 PM",
     "recommended_firmware": "20.5.0",
-    "recommended_firmware_reason": "Multiple community guides recommend downgrading to 20.5.0 due to better homebrew compatibility and fewer reported issues compared to firmware 21.x.",
+    "recommended_firmware_reason": "FW 20.5.0 is mentioned as a stable downgrade target from FW 21.0.0 with fewer reported issues.",
     "sentiment_score": 42,
     "sentiment_label": "Anxious"
   },
@@ -28,83 +29,83 @@
       "tool": "Atmosphere",
       "version": "1.10.2",
       "status": "Partial",
-      "notes": "Officially supports 21.2.0 but LayeredFS causes game crashes as reported on 2026-02-02."
+      "notes": "LayeredFS crashes on FW 21.2.0; release notes warn of corruption and incompatibility."
     },
     {
       "tool": "Hekate",
       "version": "6.5.1",
-      "status": "Full",
-      "notes": "Latest version supports 21.2.0 with positive signals and no major issues reported."
-    },
-    {
-      "tool": "LayeredFS",
-      "version": "N/A",
-      "status": "Broken",
-      "notes": "Specifically broken on 21.2.0 causing all games to crash according to recent report."
+      "status": "Unknown",
+      "notes": "No direct evidence for current firmware; inferred caution from overall CFW issues."
     },
     {
       "tool": "sys-patch",
-      "version": "N/A",
+      "version": "Unknown",
       "status": "Unknown",
-      "notes": "Not explicitly mentioned in evidence, compatibility uncertain with current firmware."
+      "notes": "Not mentioned in evidence; compatibility uncertain with FW 21.2.0."
     },
     {
-      "tool": "Breeze",
-      "version": "N/A",
-      "status": "Partial",
-      "notes": "Mentioned in tutorial with positive signals but also crash/corruption warnings."
+      "tool": "LayeredFS",
+      "version": "Unknown",
+      "status": "Broken",
+      "notes": "Crashes all games on FW 21.2.0 with Atmosphere 1.10.2 per user report."
     },
     {
       "tool": "ldn_mitm",
-      "version": "N/A",
-      "status": "Partial",
-      "notes": "Causes local wireless play crashes on 21.2.0 as reported on 2026-02-13."
+      "version": "Unknown",
+      "status": "Broken",
+      "notes": "Causes local wireless play crashes on FW 21.2.0 per community post."
     },
     {
-      "tool": "Homebrew Apps",
+      "tool": "Tesla-Menu",
+      "version": "Unknown",
+      "status": "Broken",
+      "notes": "Crashes reported on FW 21.2.0 in recent evidence."
+    },
+    {
+      "tool": "Homebrew apps",
       "version": "Various",
       "status": "Partial",
-      "notes": "Many homebrew apps incompatible with firmware 21.x, requiring recompilation or downgrade."
+      "notes": "Many apps incompatible with FW 21.0.0+; some modded versions available but untested."
     },
     {
-      "tool": "Horizon OC Zeus",
-      "version": "Beta",
+      "tool": "EmuMMC",
+      "version": "Unknown",
       "status": "Partial",
-      "notes": "RAM overclocking tool with positive reports but also crash/ban warnings."
+      "notes": "Downgrade guides exist for FW 20.5.0 due to corruption risks on FW 21.0.0."
     }
   ],
   "trending_topics": [
     {
-      "tag": "Firmware 21.2.0",
-      "count": 8,
-      "sentiment": "neutral"
+      "tag": "Firmware Update Issues",
+      "count": 5,
+      "sentiment": "negative"
     },
     {
       "tag": "Homebrew Releases",
-      "count": 12,
+      "count": 8,
       "sentiment": "positive"
     },
     {
-      "tag": "Emulator Legal Issues",
+      "tag": "Emulator Developments",
       "count": 2,
       "sentiment": "negative"
     },
     {
       "tag": "Pokemon Tools",
-      "count": 3,
+      "count": 4,
       "sentiment": "positive"
     },
     {
-      "tag": "Update Compatibility",
+      "tag": "System Crashes",
       "count": 4,
-      "sentiment": "neutral"
+      "sentiment": "negative"
     }
   ],
-  "scene_briefing": "Caution is advised as the community recommends downgrading to firmware 20.5.0 for better homebrew compatibility. The scene is buzzing with the release of Horizon OC Zeus, a powerful RAM overclocking tool, alongside other exciting homebrew like The Simpsons Hit & Run Remastered.",
+  "scene_briefing": "Caution is advised as threat levels rise, with firmware 20.5.0 recommended for stability. The scene buzzes with the release of Horizon OC Zeus for advanced RAM overclocking, while emulator developments face challenges from Nintendo's DMCA actions.",
   "articles": [
     {
       "type": "homebrew",
-      "content_type": "Release",
+      "content_type": "Tool",
       "source": "GBAtemp",
       "title": "Horizon OC Zeus (Beta / Release) - Best RAM overclocking tool - 3000MHz+",
       "url": "https://gbatemp.net/threads/horizon-oc-zeus-beta-release-best-ram-overclocking-tool-3000mhz.679828/",
@@ -113,36 +114,64 @@
       "size": "",
       "timestamp": "2026-02-20",
       "risk": "Caution",
-      "risk_reason": "Beta tool, overclocks hardware",
-      "description": "RAM overclocking tool for Switch, open source."
+      "risk_reason": "Beta tool, requires NAND backup",
+      "description": "RAM overclocking tool for Switch, supports 3000MHz+ speeds"
+    },
+    {
+      "type": "game",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Xenoblade Chronicles X: Definitive Edition gets an even more definitive Switch 2 Edition, features 4K/60 docked performance",
+      "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-19",
+      "risk": "Safe",
+      "risk_reason": "Official game update, no homebrew involved",
+      "description": "Switch 2 update adds 4K/60 docked performance"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Switch emulator Citron is being discontinued and Ryubing enters maintenance mode",
+      "url": "https://gbatemp.net/threads/switch-emulator-citron-is-being-discontinued-and-ryubing-enters-maintenance-mode.679777/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-17",
+      "risk": "Safe",
+      "risk_reason": "Emulator news, no direct risk",
+      "description": "Citron emulator discontinued, Ryubing in maintenance mode"
     },
     {
       "type": "homebrew",
       "content_type": "Release",
       "source": "GBAtemp",
-      "title": "Raid Event Injector for Pokemon Games",
-      "url": "https://gbatemp.net/threads/raid-event-injector-for-pokemon-games.679858/",
+      "title": "Pyrite64 is a new open-source game editor and engine that makes it easier than ever to create N64 homebrew",
+      "url": "https://gbatemp.net/threads/pyrite64-is-a-new-open-source-game-editor-and-engine-that-makes-it-easier-than-ever-to-create-n64-homebrew.679774/",
       "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2026-02-21",
-      "risk": "Caution",
-      "risk_reason": "Can corrupt save files",
-      "description": "Inject Tera Raid events into Pokemon Scarlet/Violet saves."
+      "timestamp": "2026-02-17",
+      "risk": "Safe",
+      "risk_reason": "Open-source tool, community tested",
+      "description": "Open-source game editor and engine for N64 homebrew"
     },
     {
       "type": "homebrew",
-      "content_type": "Release",
+      "content_type": "News",
       "source": "GBAtemp",
-      "title": "Pokemon Z-A Shiny Stash Live Map",
-      "url": "https://gbatemp.net/threads/pokemon-z-a-shiny-stash-live-map.679574/",
+      "title": "Nintendo is yet again issuing DMCA notices to Switch emulators on GitHub",
+      "url": "https://gbatemp.net/threads/nintendo-is-yet-again-issuing-dmca-notices-to-switch-emulators-on-github.679723/",
       "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2026-02-08",
-      "risk": "Caution",
-      "risk_reason": "In development, may have bugs",
-      "description": "Homebrew to display shiny Pokemon locations in real-time."
+      "timestamp": "2026-02-14",
+      "risk": "Safe",
+      "risk_reason": "Legal news, no technical risk",
+      "description": "Nintendo DMCA takedowns target Switch emulators"
     },
     {
       "type": "homebrew",
@@ -154,55 +183,41 @@
       "region": "",
       "size": "",
       "timestamp": "2026-02-06",
+      "risk": "Caution",
+      "risk_reason": "Work-in-progress, limited testing",
+      "description": "Homebrew remaster of The Simpsons Hit & Run"
+    },
+    {
+      "type": "game",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
+      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-04",
       "risk": "Safe",
-      "risk_reason": "Homebrew game, WIP",
-      "description": "Homebrew remaster of The Simpsons Hit & Run."
+      "risk_reason": "Official service update, no risk",
+      "description": "Yoshi and Balloon Kid added to Switch Online"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Raid Event Injector for Pokemon Games",
+      "url": "https://gbatemp.net/threads/raid-event-injector-for-pokemon-games.679858/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-21",
+      "risk": "Caution",
+      "risk_reason": "May corrupt save files, use backup",
+      "description": "Inject Tera Raid event data into Pokemon saves"
     },
     {
       "type": "homebrew",
       "content_type": "Tutorial",
-      "source": "GBAtemp",
-      "title": "Learn to create cheats with breeze (or other cheat engine). No previous knowledge required. Examples with Dave the Diver",
-      "url": "https://gbatemp.net/threads/learn-to-create-cheats-with-breeze-or-other-cheat-engine-no-previous-knowledge-required-examples-with-dave-the-diver.678771/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-01-10",
-      "risk": "Safe",
-      "risk_reason": "Tutorial for cheat creation",
-      "description": "Guide to creating cheats using Breeze."
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Discussion",
-      "source": "GBAtemp",
-      "title": "Preliminary list of updated homebrew apps and tools for FW 21.0.0 | AMS 1.10.0 | Please add your findings!!!",
-      "url": "https://gbatemp.net/threads/preliminary-list-of-updated-homebrew-apps-and-tools-for-fw-21-0-0-ams-1-10-0-please-add-your-findings.677217/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2025-11-17",
-      "risk": "Caution",
-      "risk_reason": "Compatibility list, may have issues",
-      "description": "Community list of homebrew compatibility for FW 21.0.0."
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tool",
-      "source": "GBAtemp",
-      "title": "Pyrite64 is a new open-source game editor and engine that makes it easier than ever to create N64 homebrew",
-      "url": "https://gbatemp.net/threads/pyrite64-is-a-new-open-source-game-editor-and-engine-that-makes-it-easier-than-ever-to-create-n64-homebrew.679774/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-17",
-      "risk": "Safe",
-      "risk_reason": "Game engine for N64 homebrew",
-      "description": "Open-source engine for creating N64 homebrew games."
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tool",
       "source": "GBAtemp",
       "title": "Metroid Prime 4 Beyond save editing",
       "url": "https://gbatemp.net/threads/metroid-prime-4-beyond-save-editing.677970/",
@@ -211,16 +226,62 @@
       "size": "",
       "timestamp": "2025-12-12",
       "risk": "Caution",
-      "risk_reason": "Save editing, can corrupt saves",
-      "description": "Save editor for Metroid Prime 4 Beyond."
+      "risk_reason": "Save editing, backup recommended",
+      "description": "Tutorial for editing Metroid Prime 4 Beyond saves"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Pokemon Z-A Shiny Stash Live Map",
+      "url": "https://gbatemp.net/threads/pokemon-z-a-shiny-stash-live-map.679574/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-08",
+      "risk": "Safe",
+      "risk_reason": "Read-only tool, no modifications",
+      "description": "Displays shiny spawn locations in Pokemon Z-A"
+    },
+    {
+      "type": "game",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Party like it's 2011 as Skyrim releases on the Nintendo Switch 2",
+      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-09",
+      "risk": "Safe",
+      "risk_reason": "Official game release, no risk",
+      "description": "Skyrim released on Nintendo Switch 2"
     }
   ],
   "news": [
     {
-      "headline": "Switch emulator Citron discontinued, Ryubing in maintenance mode",
+      "headline": "Horizon OC Zeus beta RAM overclocking tool released",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-20",
+      "url": "https://gbatemp.net/threads/horizon-oc-zeus-beta-release-best-ram-overclocking-tool-3000mhz.679828/"
+    },
+    {
+      "headline": "Xenoblade Chronicles X gets Switch 2 edition with 4K/60",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-19",
+      "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/"
+    },
+    {
+      "headline": "Citron Switch emulator discontinued, Ryubing in maintenance",
       "source": "GBAtemp",
       "timestamp": "2026-02-17",
       "url": "https://gbatemp.net/threads/switch-emulator-citron-is-being-discontinued-and-ryubing-enters-maintenance-mode.679777/"
+    },
+    {
+      "headline": "Pyrite64 open-source N64 homebrew editor released",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-17",
+      "url": "https://gbatemp.net/threads/pyrite64-is-a-new-open-source-game-editor-and-engine-that-makes-it-easier-than-ever-to-create-n64-homebrew.679774/"
     },
     {
       "headline": "Nintendo issues DMCA notices to Switch emulators on GitHub",
@@ -229,28 +290,28 @@
       "url": "https://gbatemp.net/threads/nintendo-is-yet-again-issuing-dmca-notices-to-switch-emulators-on-github.679723/"
     },
     {
-      "headline": "Xenoblade Chronicles X: Definitive Edition gets Switch 2 Edition",
+      "headline": "The Simpsons Hit & Run Remastered homebrew released",
       "source": "GBAtemp",
-      "timestamp": "2026-02-19",
-      "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/"
+      "timestamp": "2026-02-06",
+      "url": "https://gbatemp.net/threads/the-simpsons-hit-run-remastered-homebrew.679519/"
+    },
+    {
+      "headline": "Nintendo adds Yoshi and Balloon Kid to Switch Online",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-04",
+      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/"
+    },
+    {
+      "headline": "Raid Event Injector for Pokemon games released",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-21",
+      "url": "https://gbatemp.net/threads/raid-event-injector-for-pokemon-games.679858/"
     },
     {
       "headline": "Skyrim releases on Nintendo Switch 2",
       "source": "GBAtemp",
       "timestamp": "2025-12-09",
       "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/"
-    },
-    {
-      "headline": "Nintendo Switch firmware 21.0.1 now available",
-      "source": "GBAtemp",
-      "timestamp": "2025-11-25",
-      "url": "https://gbatemp.net/threads/nintendo-switch-firmware-version-21-0-1-now-available.677447/"
-    },
-    {
-      "headline": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
-      "source": "GBAtemp",
-      "timestamp": "2026-02-04",
-      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/"
     },
     {
       "headline": "Ultrahand-Overlay Ultrahand Overlay 2.2.9",
