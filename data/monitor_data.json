@@ -18,7 +18,7 @@
       "status": "Stable",
       "reason": "Hekate 6.5.1 has mixed signals (3 positive, 4 negative) with mentions of issues in tool_compat_intel."
     },
-    "lastSync": "06:10 PM",
+    "lastSync": "07:11 PM",
     "recommended_firmware": "20.5.0",
     "recommended_firmware_reason": "Firmware 20.5.0 is mentioned as stable in downgrade guides, avoiding the LayeredFS and crash issues reported in 21.2.0.",
     "sentiment_score": 40,
@@ -362,6 +362,12 @@
       "url": "https://gbatemp.net/threads/nintendo-switch-firmware-21-2-0-released.678863/"
     },
     {
+      "headline": "FPSLocker 3.3.1",
+      "source": "GitHub",
+      "timestamp": "2026-02-23",
+      "url": "https://github.com/masagrator/FPSLocker/releases/tag/3.3.1"
+    },
+    {
       "headline": "Ultrahand-Overlay Ultrahand Overlay 2.2.9",
       "source": "GitHub",
       "timestamp": "2026-02-22",
@@ -374,16 +380,22 @@
       "url": "https://github.com/rashevskyv/dbi/releases/tag/871ru"
     },
     {
-      "headline": "FPSLocker 3.3.0",
+      "headline": "SaltyNX 1.7.4",
       "source": "GitHub",
       "timestamp": "2026-02-14",
-      "url": "https://github.com/masagrator/FPSLocker/releases/tag/3.3.0"
+      "url": "https://github.com/masagrator/SaltyNX/releases/tag/1.7.4"
     },
     {
       "headline": "SysDVR Version 6.3",
       "source": "GitHub",
       "timestamp": "2026-02-10",
       "url": "https://github.com/exelix11/SysDVR/releases/tag/v6.3"
+    },
+    {
+      "headline": "ldn_mitm v1.24.0",
+      "source": "GitHub",
+      "timestamp": "2026-02-10",
+      "url": "https://github.com/spacemeowx2/ldn_mitm/releases/tag/v1.24.0"
     },
     {
       "headline": "hekate v6.5.1 & Nyx v1.9.1",
@@ -428,10 +440,106 @@
       "url": "https://github.com/proconsule/nxmp/releases/tag/v0.9.3"
     },
     {
+      "headline": "EdiZon-SE 3.8.37a",
+      "source": "GitHub",
+      "timestamp": "2025-12-10",
+      "url": "https://github.com/tomvita/EdiZon-SE/releases/tag/3.8.37a"
+    },
+    {
       "headline": "JKSV 12/02/2025",
       "source": "GitHub",
       "timestamp": "2025-12-02",
       "url": "https://github.com/J-D-K/JKSV/releases/tag/12/02/2025"
+    },
+    {
+      "headline": "sphaira 1.0.0",
+      "source": "GitHub",
+      "timestamp": "2025-11-18",
+      "url": "https://github.com/ITotalJustice/sphaira/releases/tag/1.0.0"
+    },
+    {
+      "headline": "SwitchThemeInjector Version 4.8.3 & NXThemesInstaller 2.8.3",
+      "source": "GitHub",
+      "timestamp": "2025-11-17",
+      "url": "https://github.com/exelix11/SwitchThemeInjector/releases/tag/v4.8.3"
+    },
+    {
+      "headline": "aio-switch-updater AMS 1.10.0 compatibility",
+      "source": "GitHub",
+      "timestamp": "2025-11-17",
+      "url": "https://github.com/HamletDuFromage/aio-switch-updater/releases/tag/2.23.3"
+    },
+    {
+      "headline": "nx-hbmenu v3.6.1",
+      "source": "GitHub",
+      "timestamp": "2025-11-15",
+      "url": "https://github.com/switchbrew/nx-hbmenu/releases/tag/v3.6.1"
+    },
+    {
+      "headline": "nx-hbloader v2.4.5",
+      "source": "GitHub",
+      "timestamp": "2025-11-15",
+      "url": "https://github.com/switchbrew/nx-hbloader/releases/tag/v2.4.5"
+    },
+    {
+      "headline": "Status-Monitor-Overlay Status Monitor Overlay 1.3.2",
+      "source": "GitHub",
+      "timestamp": "2025-11-15",
+      "url": "https://github.com/masagrator/Status-Monitor-Overlay/releases/tag/1.3.2"
+    },
+    {
+      "headline": "ftpd pro v3.2.1",
+      "source": "GitHub",
+      "timestamp": "2024-11-17",
+      "url": "https://github.com/mtheall/ftpd/releases/tag/v3.2.1"
+    },
+    {
+      "headline": "sys-con 0.6.5",
+      "source": "GitHub",
+      "timestamp": "2024-11-06",
+      "url": "https://github.com/cathery/sys-con/releases/tag/v0.6.5"
+    },
+    {
+      "headline": "sys-clk 2.0.1",
+      "source": "GitHub",
+      "timestamp": "2024-10-14",
+      "url": "https://github.com/retronx-team/sys-clk/releases/tag/2.0.1"
+    },
+    {
+      "headline": "TegraExplorer More proper implementation of system wipe",
+      "source": "GitHub",
+      "timestamp": "2024-07-07",
+      "url": "https://github.com/suchmememanyskill/TegraExplorer/releases/tag/4.2.0"
+    },
+    {
+      "headline": "nxdumptool-rewrite (latest commit build)",
+      "source": "GitHub",
+      "timestamp": "2023-10-15",
+      "url": "https://github.com/DarkMatterCore/nxdumptool/releases/tag/rewrite-prerelease"
+    },
+    {
+      "headline": "Tesla-Menu libtelsa update",
+      "source": "GitHub",
+      "timestamp": "2023-05-27",
+      "url": "https://github.com/WerWolv/Tesla-Menu/releases/tag/v1.2.3"
+    },
+    {
+      "headline": "nx-ovlloader 16.0.0 Support",
+      "source": "GitHub",
+      "timestamp": "2023-05-05",
+      "url": "https://github.com/WerWolv/nx-ovlloader/releases/tag/v1.0.7"
+    },
+    {
+      "headline": "hb-appstore HB App Store 2.3.2",
+      "source": "GitHub",
+      "timestamp": "2023-03-23",
+      "url": "https://github.com/fortheusers/hb-appstore/releases/tag/v2.3.2"
+    },
+    {
+      "headline": "ovl-sysmodules 16.0.0 Support",
+      "source": "GitHub",
+      "timestamp": "2023-03-16",
+      "url": "https://github.com/WerWolv/ovl-sysmodules/releases/tag/v1.3.1"
     }
   ],
   "reddit": [
