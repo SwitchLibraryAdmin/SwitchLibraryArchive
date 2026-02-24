@@ -1,26 +1,26 @@
 {
   "dashboard_stats": {
     "threat_level": "Caution",
-    "threat_trend": "Rising",
+    "threat_trend": "Stable",
     "confidence_score": 65,
     "firmware": {
       "version": "21.2.0",
       "status": "Caution",
-      "reason": "Firmware 21.2.0 has multiple crash reports with LayeredFS and homebrew, plus corruption warnings, but no confirmed bricks."
+      "reason": "Firmware 21.2.0 has LayeredFS crashes and JKSV issues, but no brick reports, making it risky for mods but not catastrophic."
     },
     "atmosphere": {
       "version": "1.10.2",
       "status": "Stable",
-      "reason": "Atmosphere 1.10.2 has more negative signals (8) than positive (4) in tool_compat_intel, with reports of crashes and corruption."
+      "reason": "Atmosphere 1.10.2 has corruption and crash signals from GitHub releases, but positive user reports indicate partial functionality."
     },
     "hekate": {
       "version": "6.5.1",
       "status": "Stable",
-      "reason": "Hekate 6.5.1 has mixed signals (3 positive, 4 negative) with mentions of issues in tool_compat_intel."
+      "reason": "Hekate 6.5.1 has mixed signals with equal positive and negative mentions, suggesting it works but may have stability issues."
     },
-    "lastSync": "07:11 PM",
-    "recommended_firmware": "20.5.0",
-    "recommended_firmware_reason": "Firmware 20.5.0 is mentioned as stable in downgrade guides, avoiding the LayeredFS and crash issues reported in 21.2.0.",
+    "lastSync": "11:10 PM",
+    "recommended_firmware": "21.2.0",
+    "recommended_firmware_reason": "It is the latest firmware with Atmosphere and Hekate support, and while LayeredFS has issues, no brick reports exist.",
     "sentiment_score": 40,
     "sentiment_label": "Anxious"
   },
@@ -29,69 +29,74 @@
       "tool": "Atmosphere",
       "version": "1.10.2",
       "status": "Partial",
-      "notes": "Works but has crash and corruption reports; negative signals outweigh positives."
+      "notes": "Supports firmware 21.2.0 but has crash and corruption reports; use with caution."
     },
     {
       "tool": "Hekate",
       "version": "6.5.1",
       "status": "Partial",
-      "notes": "Mixed compatibility; negative signals slightly higher than positives."
-    },
-    {
-      "tool": "sys-patch",
-      "version": "Latest",
-      "status": "Partial",
-      "notes": "Equal positive and negative signals; may have issues with current firmware."
-    },
-    {
-      "tool": "Tinfoil",
-      "version": "Latest",
-      "status": "Partial",
-      "notes": "Equal positive and negative signals; requires recompilation for FW 21."
-    },
-    {
-      "tool": "DBI",
-      "version": "Latest",
-      "status": "Full",
-      "notes": "More positive signals than negative; generally stable."
+      "notes": "Mixed signals with crashes and positive reports; functional but may have stability problems."
     },
     {
       "tool": "LayeredFS",
-      "version": "Latest",
+      "version": "Unknown",
       "status": "Broken",
-      "notes": "Equal positive and negative signals, but specific crash reports on FW 21.2.0."
+      "notes": "Reports of system-wide crashes on firmware 21.2.0; avoid for now."
+    },
+    {
+      "tool": "sys-patch",
+      "version": "1.5.9",
+      "status": "Partial",
+      "notes": "Mentions indicate support for 21.2.0, but mixed signals suggest potential issues."
     },
     {
       "tool": "JKSV",
-      "version": "Latest",
+      "version": "Unknown",
       "status": "Broken",
-      "notes": "Negative signals dominate with crash reports on FW 21.2.0."
+      "notes": "Multiple crash reports on firmware 21.2.0; not recommended for current use."
     },
     {
-      "tool": "Tesla",
-      "version": "Latest",
+      "tool": "DBI",
+      "version": "Unknown",
       "status": "Partial",
-      "notes": "Negative signals present; crash reports on FW 21.2.0."
+      "notes": "Mixed signals with positive and negative mentions; may work but with limitations."
+    },
+    {
+      "tool": "Checkpoint",
+      "version": "Unknown",
+      "status": "Broken",
+      "notes": "Negative signals dominate with no positive mentions; likely incompatible."
+    },
+    {
+      "tool": "ldn_mitm",
+      "version": "1.23.0",
+      "status": "Partial",
+      "notes": "Supports 21.1.0 with crash fixes, but limited data for 21.2.0."
     }
   ],
   "trending_topics": [
     {
-      "tag": "Pokemon Homebrew Tools",
+      "tag": "Pokemon homebrew tools",
       "count": 6,
       "sentiment": "positive"
     },
     {
-      "tag": "Firmware and CFW Updates",
+      "tag": "Firmware and CFW updates",
       "count": 8,
       "sentiment": "neutral"
     },
     {
-      "tag": "Emulator Legal Issues",
-      "count": 2,
+      "tag": "Emulator developments",
+      "count": 3,
       "sentiment": "negative"
+    },
+    {
+      "tag": "Overlay and sysmodule releases",
+      "count": 7,
+      "sentiment": "positive"
     }
   ],
-  "scene_briefing": "Caution is advised as threat levels rise; firmware 20.5.0 is recommended for stability. The scene buzzes with the release of Horizon OC Zeus for RAM overclocking, while Nintendo's DMCA actions against emulators spark ongoing legal concerns.",
+  "scene_briefing": "Caution is advised as the scene remains stable with firmware 21.2.0 recommended for Atmosphere and Hekate support. The release of Horizon OC Zeus enables advanced RAM overclocking, while Nintendo continues to target emulators with DMCA notices.",
   "articles": [
     {
       "type": "homebrew",
@@ -104,7 +109,7 @@
       "size": "",
       "timestamp": "2026-02-20",
       "risk": "Caution",
-      "risk_reason": "Beta tool, requires NAND backup",
+      "risk_reason": "Requires NAND and PRODINFO backup",
       "description": "RAM overclocking tool for Switch up to 3100MHz"
     },
     {
@@ -118,7 +123,7 @@
       "size": "",
       "timestamp": "2026-02-19",
       "risk": "Safe",
-      "risk_reason": "Official game update, no reported issues",
+      "risk_reason": "Official update, no risk signals",
       "description": "Switch 2 update enables 4K/60fps docked performance"
     },
     {
@@ -132,8 +137,8 @@
       "size": "",
       "timestamp": "2026-02-17",
       "risk": "Safe",
-      "risk_reason": "No risk, just news about emulator status",
-      "description": "Citron emulator discontinued, Ryubing in maintenance mode"
+      "risk_reason": "No risk signals, informational news",
+      "description": "Switch emulator Citron discontinued, Ryubing in maintenance"
     },
     {
       "type": "homebrew",
@@ -146,7 +151,7 @@
       "size": "",
       "timestamp": "2026-02-17",
       "risk": "Safe",
-      "risk_reason": "Open-source tool, no reported issues",
+      "risk_reason": "Open-source release, no risk signals",
       "description": "Open-source game editor and engine for N64 homebrew"
     },
     {
@@ -160,8 +165,8 @@
       "size": "",
       "timestamp": "2026-02-14",
       "risk": "Safe",
-      "risk_reason": "Legal news, no technical risk",
-      "description": "Nintendo DMCA takedowns target Switch emulators"
+      "risk_reason": "Legal news, no risk to users",
+      "description": "Nintendo DMCA takedowns target Switch emulators on GitHub"
     },
     {
       "type": "homebrew",
@@ -174,8 +179,22 @@
       "size": "",
       "timestamp": "2026-02-06",
       "risk": "Safe",
-      "risk_reason": "Homebrew game, work-in-progress",
-      "description": "Homebrew remaster of The Simpsons Hit & Run"
+      "risk_reason": "Work-in-progress, no risk signals",
+      "description": "Homebrew remaster of The Simpsons Hit & Run announced"
+    },
+    {
+      "type": "game",
+      "content_type": "News",
+      "source": "GBAtemp",
+      "title": "Nintendo adds 2 Game Boy games to Nintendo Switch Online",
+      "url": "https://gbatemp.net/threads/nintendo-adds-2-game-boy-games-to-nintendo-switch-online.679464/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-04",
+      "risk": "Safe",
+      "risk_reason": "Official service update, no risk",
+      "description": "Yoshi and Balloon Kid added to Switch Online Game Boy"
     },
     {
       "type": "homebrew",
@@ -188,8 +207,8 @@
       "size": "",
       "timestamp": "2026-02-02",
       "risk": "Caution",
-      "risk_reason": "Reported system-wide crashes after update",
-      "description": "LayeredFS crashes after firmware and Atmosphere update"
+      "risk_reason": "Reports crashing after firmware update",
+      "description": "LayeredFS causing game crashes on firmware 21.2.0"
     },
     {
       "type": "update",
@@ -206,6 +225,34 @@
       "description": "Firmware 21.2.0 released with CFW support"
     },
     {
+      "type": "game",
+      "content_type": "Tutorial",
+      "source": "GBAtemp",
+      "title": "Metroid Prime 4 Beyond save editing",
+      "url": "https://gbatemp.net/threads/metroid-prime-4-beyond-save-editing.677970/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2025-12-12",
+      "risk": "Caution",
+      "risk_reason": "Modifies save files, potential data loss",
+      "description": "Tutorial and save editor for Metroid Prime 4 Beyond"
+    },
+    {
+      "type": "game",
+      "content_type": "Release",
+      "source": "GBAtemp",
+      "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
+      "url": "https://gbatemp.net/threads/d3hack-diablo-iii-eternal-collection-4k-1440p-1080p-seasonal-events-challenge-rifts-more-mod-menu-v2-7-6.678660/",
+      "version": "v3.0 (RC1)",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-06",
+      "risk": "Caution",
+      "risk_reason": "Modifies game files, could cause issues",
+      "description": "D3Hack v3.0 RC1 with touch screen GUI support"
+    },
+    {
       "type": "homebrew",
       "content_type": "Tool",
       "source": "GBAtemp",
@@ -216,22 +263,8 @@
       "size": "",
       "timestamp": "2026-02-21",
       "risk": "Caution",
-      "risk_reason": "May corrupt save data, bugs possible",
-      "description": "Tool to inject Tera Raid events into Pokemon saves"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tool",
-      "source": "GBAtemp",
-      "title": "pkTeraRaid - View Tera Raid details Live in Pokemon SV",
-      "url": "https://gbatemp.net/threads/pkteraraid-view-tera-raid-details-live-in-pokemon-sv.679706/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-14",
-      "risk": "Safe",
-      "risk_reason": "Homebrew app, no reported issues",
-      "description": "App to view Tera Raid details in Pokemon games"
+      "risk_reason": "Could corrupt or delete save data",
+      "description": "Tool for injecting Tera Raid events into Pokemon saves"
     },
     {
       "type": "homebrew",
@@ -244,8 +277,22 @@
       "size": "",
       "timestamp": "2026-02-12",
       "risk": "Safe",
-      "risk_reason": "Local bank system, no reported issues",
+      "risk_reason": "No risk signals, community tool",
       "description": "Local bank system for Pokemon games on Switch"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "pkTeraRaid - View Tera Raid details Live in Pokemon SV",
+      "url": "https://gbatemp.net/threads/pkteraraid-view-tera-raid-details-live-in-pokemon-sv.679706/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-14",
+      "risk": "Safe",
+      "risk_reason": "No risk signals, informational tool",
+      "description": "View Tera Raid details live in Pokemon games"
     },
     {
       "type": "homebrew",
@@ -257,8 +304,8 @@
       "region": "",
       "size": "",
       "timestamp": "2026-02-08",
-      "risk": "Caution",
-      "risk_reason": "In development, may have bugs",
+      "risk": "Safe",
+      "risk_reason": "No risk signals, homebrew app",
       "description": "App to read Shiny Stash and display spawn map"
     },
     {
@@ -272,8 +319,8 @@
       "size": "",
       "timestamp": "2026-02-15",
       "risk": "Caution",
-      "risk_reason": "May corrupt save data, bugs possible",
-      "description": "App to edit donuts in Pokemon Legends Z-A saves"
+      "risk_reason": "Could corrupt or delete save data",
+      "description": "Editor for donuts in Pokemon Legends Z-A saves"
     },
     {
       "type": "homebrew",
@@ -286,53 +333,53 @@
       "size": "",
       "timestamp": "2026-01-27",
       "risk": "Safe",
-      "risk_reason": "News about developer retirement",
-      "description": "SciresM, Atmosphere developer, retires from modding"
+      "risk_reason": "No risk signals, community news",
+      "description": "SciresM retires from Switch modding scene"
     },
     {
       "type": "homebrew",
-      "content_type": "News",
+      "content_type": "Tutorial",
       "source": "GBAtemp",
-      "title": "Dangerous Syswipe in HATS pack",
-      "url": "https://gbatemp.net/threads/dangerous-syswipe-in-hats-pack.679902/",
-      "version": "4.2.1",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-23",
-      "risk": "Danger",
-      "risk_reason": "Dangerous syswipe script found in pack",
-      "description": "Dangerous syswipe script in HATS pack for TegraExplorer"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Release",
-      "source": "GBAtemp",
-      "title": "Re-Volt RVGL Switch homebrew port new test version with improvements",
-      "url": "https://gbatemp.net/threads/re-volt-rvgl-switch-homebrew-port-new-test-version-with-improvements.679752/",
+      "title": "Learn to create cheats with breeze (or other cheat engine). No previous knowledge required. Examples with Dave the Diver",
+      "url": "https://gbatemp.net/threads/learn-to-create-cheats-with-breeze-or-other-cheat-engine-no-previous-knowledge-required-examples-with-dave-the-diver.678771/",
       "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2026-02-16",
-      "risk": "Safe",
-      "risk_reason": "Test version, no reported issues",
-      "description": "New test version of Re-Volt RVGL port with improvements"
+      "timestamp": "2026-01-10",
+      "risk": "Caution",
+      "risk_reason": "Modifies game memory, potential instability",
+      "description": "Tutorial for creating cheats with Breeze cheat engine"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tool",
+      "source": "GBAtemp",
+      "title": "Switch 2 nand explorer",
+      "url": "https://gbatemp.net/threads/switch-2-nand-explorer.679663/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-02-12",
+      "risk": "Caution",
+      "risk_reason": "Explores NAND, could cause data loss",
+      "description": "NAND explorer tool for Switch 2 announced"
     }
   ],
   "news": [
     {
-      "headline": "Horizon OC Zeus beta released for RAM overclocking up to 3100MHz",
+      "headline": "Horizon OC Zeus RAM overclocking tool released in beta",
       "source": "GBAtemp",
       "timestamp": "2026-02-20",
       "url": "https://gbatemp.net/threads/horizon-oc-zeus-beta-release-best-ram-overclocking-tool-3000mhz.679828/"
     },
     {
-      "headline": "Xenoblade Chronicles X gets Switch 2 update with 4K/60fps docked",
+      "headline": "Xenoblade Chronicles X gets Switch 2 update with 4K/60fps",
       "source": "GBAtemp",
       "timestamp": "2026-02-19",
       "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/"
     },
     {
-      "headline": "Switch emulator Citron discontinued, Ryubing in maintenance mode",
+      "headline": "Switch emulator Citron discontinued, Ryubing in maintenance",
       "source": "GBAtemp",
       "timestamp": "2026-02-17",
       "url": "https://gbatemp.net/threads/switch-emulator-citron-is-being-discontinued-and-ryubing-enters-maintenance-mode.679777/"
@@ -344,22 +391,16 @@
       "url": "https://gbatemp.net/threads/nintendo-is-yet-again-issuing-dmca-notices-to-switch-emulators-on-github.679723/"
     },
     {
-      "headline": "Dangerous syswipe script found in HATS pack for TegraExplorer",
-      "source": "GBAtemp",
-      "timestamp": "2026-02-23",
-      "url": "https://gbatemp.net/threads/dangerous-syswipe-in-hats-pack.679902/"
-    },
-    {
-      "headline": "SciresM, Atmosphere developer, retires from Switch modding scene",
-      "source": "GBAtemp",
-      "timestamp": "2026-01-27",
-      "url": "https://gbatemp.net/threads/creator-of-atmosphere-retiring.679223/"
-    },
-    {
       "headline": "Nintendo Switch firmware 21.2.0 released with CFW support",
       "source": "GBAtemp",
       "timestamp": "2026-01-13",
       "url": "https://gbatemp.net/threads/nintendo-switch-firmware-21-2-0-released.678863/"
+    },
+    {
+      "headline": "Creator of Atmosphere CFW, SciresM, announces retirement",
+      "source": "GBAtemp",
+      "timestamp": "2026-01-27",
+      "url": "https://gbatemp.net/threads/creator-of-atmosphere-retiring.679223/"
     },
     {
       "headline": "FPSLocker 3.3.1",
@@ -386,16 +427,16 @@
       "url": "https://github.com/masagrator/SaltyNX/releases/tag/1.7.4"
     },
     {
-      "headline": "SysDVR Version 6.3",
-      "source": "GitHub",
-      "timestamp": "2026-02-10",
-      "url": "https://github.com/exelix11/SysDVR/releases/tag/v6.3"
-    },
-    {
       "headline": "ldn_mitm v1.24.0",
       "source": "GitHub",
       "timestamp": "2026-02-10",
       "url": "https://github.com/spacemeowx2/ldn_mitm/releases/tag/v1.24.0"
+    },
+    {
+      "headline": "SysDVR Version 6.3",
+      "source": "GitHub",
+      "timestamp": "2026-02-10",
+      "url": "https://github.com/exelix11/SysDVR/releases/tag/v6.3"
     },
     {
       "headline": "hekate v6.5.1 & Nyx v1.9.1",
@@ -544,60 +585,39 @@
   ],
   "reddit": [
     {
-      "title": "Games started lagging after installing firmware 21.0",
-      "upvotes": 23,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r8rbrb/games_started_lagging_after_installing_firmware/",
-      "timestamp": "2026-02-19",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "Triforce on Switch - pretty good experience!",
-      "upvotes": 15,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r7yqtw/triforce_on_switch_pretty_good_experience/",
-      "timestamp": "2026-02-18",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "Dispatch Censorship Mod Update v1.0.5",
-      "upvotes": 31,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r73k8u/dispatch_censorship_mod_update_v105/",
-      "timestamp": "2026-02-17",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "SD Card broke, how to get as much files back as possible? Rawnand restored but games show cloud icon",
-      "upvotes": 363,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1rasfop/sd_card_broke_how_to_get_as_much_files_back_as/",
-      "timestamp": "2026-02-21",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "Leaf Green and Fire Red doesn't support cloud backup of save files",
-      "upvotes": 321,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1rancsm/leaf_green_and_fire_red_doesnt_support_cloud/",
-      "timestamp": "2026-02-21",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "How come some modded switches have different \"No SD\" screens",
-      "upvotes": 236,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1razccs/how_come_some_modded_switches_have_different_no/",
-      "timestamp": "2026-02-21",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "Nice try nintendo, that never stopped us before (meme)",
-      "upvotes": 1820,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1r4clkx/nice_try_nintendo_that_never_stopped_us_before/",
-      "timestamp": "2026-02-14",
-      "subreddit": "r/SwitchPirates"
-    },
-    {
-      "title": "Atmosphere Dev is retiring, good sailing, SciresM.",
-      "upvotes": 841,
-      "url": "https://www.reddit.com/r/SwitchPirates/comments/1qo12cv/atmosphere_dev_is_retiring_good_sailing_sciresm/",
+      "title": "I made a native Linux app for compressing/decompressing Switch ROMs",
+      "upvotes": 140,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1qosrje/i_made_a_native_linux_app_for/",
       "timestamp": "2026-01-27",
-      "subreddit": "r/SwitchPirates"
+      "subreddit": "r/SwitchHacks"
+    },
+    {
+      "title": "uLaunch v1.2.3 released (21.2.0 support)",
+      "upvotes": 32,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1qm33mm/ulaunch_v123_released_2120_support/",
+      "timestamp": "2026-01-24",
+      "subreddit": "r/SwitchHacks"
+    },
+    {
+      "title": "Amiigo 2.4.0 - Supports Latest Firmware",
+      "upvotes": 24,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1pubjnz/amiigo_240_supports_latest_firmware/",
+      "timestamp": "2025-12-24",
+      "subreddit": "r/SwitchHacks"
+    },
+    {
+      "title": "Atmosphere 1.10.1 is now in released (21.1.0 support)",
+      "upvotes": 179,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1phvmgq/atmosphere_1101_is_now_in_released_2110_support/",
+      "timestamp": "2025-12-09",
+      "subreddit": "r/SwitchHacks"
+    },
+    {
+      "title": "tico (formely tiicu) alpha 0.5.0 is out (emulator frontend for nintendo switch)",
+      "upvotes": 52,
+      "url": "https://www.reddit.com/r/SwitchHacks/comments/1r81nz7/tico_formely_tiicu_alpha_050_is_out_emulator/",
+      "timestamp": "2026-02-18",
+      "subreddit": "r/SwitchHacks"
     }
   ]
 }
