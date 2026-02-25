@@ -6,7 +6,7 @@
     "firmware": {
       "version": "21.2.0",
       "status": "Caution",
-      "reason": "Firmware 21.2.0 has LayeredFS crashing issues and some homebrew incompatibilities, but no brick reports."
+      "reason": "Firmware 21.2.0 has LayeredFS crashing issues and multiple crash reports with homebrew, but no brick or ban reports."
     },
     "atmosphere": {
       "version": "1.10.2",
@@ -16,11 +16,11 @@
     "hekate": {
       "version": "6.5.1",
       "status": "Stable",
-      "reason": "Hekate 6.5.1 has balanced signals with 3 positive and 3 negative mentions, indicating partial stability."
+      "reason": "Hekate 6.5.1 has balanced signals with 3 positive and 3 negative mentions, indicating partial compatibility."
     },
-    "lastSync": "05:03 PM",
+    "lastSync": "07:13 AM",
     "recommended_firmware": "21.2.0",
-    "recommended_firmware_reason": "Latest firmware with Atmosphere and Hekate support despite LayeredFS issues, as no brick reports exist.",
+    "recommended_firmware_reason": "Despite LayeredFS issues, it's the latest with Atmosphere support and no brick reports, making it the best option for CFW stability.",
     "sentiment_score": 42,
     "sentiment_label": "Anxious"
   },
@@ -29,49 +29,49 @@
       "tool": "Atmosphere",
       "version": "1.10.2",
       "status": "Partial",
-      "notes": "Corruption warnings in release notes and mixed community reports with crashes."
+      "notes": "Works but has corruption warnings and LayeredFS issues on FW 21.2.0."
     },
     {
       "tool": "Hekate",
       "version": "6.5.1",
       "status": "Partial",
-      "notes": "Balanced positive and negative signals, some users report issues."
-    },
-    {
-      "tool": "LayeredFS",
-      "version": "Unknown",
-      "status": "Broken",
-      "notes": "Specific reports of system-wide crashes on FW 21.2.0 with Atmosphere 1.10.2."
+      "notes": "Mixed signals with equal positive and negative mentions; may have stability issues."
     },
     {
       "tool": "sys-patch",
       "version": "1.5.9",
       "status": "Partial",
-      "notes": "Mixed signals with 1 positive and 1 negative mention, likely works with caveats."
+      "notes": "Mentions show mixed compatibility; supports FW 21.2.0 but with some issues."
+    },
+    {
+      "tool": "LayeredFS",
+      "version": "Unknown",
+      "status": "Broken",
+      "notes": "Reports of system-wide crashes on FW 21.2.0 with Atmosphere 1.10.2."
     },
     {
       "tool": "DBI",
       "version": "Unknown",
       "status": "Partial",
-      "notes": "Mixed signals with 1 positive and 1 negative mention, may have compatibility issues."
+      "notes": "10 mentions with balanced positive and negative signals; may work with updates."
     },
     {
       "tool": "JKSV",
       "version": "Unknown",
       "status": "Broken",
-      "notes": "4 negative signals including crash reports on FW 21.2.0, no positive mentions."
+      "notes": "6 mentions with 4 negative signals; crashes reported on FW 21.2.0."
     },
     {
       "tool": "Tesla",
       "version": "Unknown",
       "status": "Partial",
-      "notes": "1 negative signal for crash fixes, no positive mentions, likely unstable."
+      "notes": "5 mentions with 1 negative signal; likely works but may have crash issues."
     },
     {
-      "tool": "ldn_mitm",
-      "version": "1.23.0",
-      "status": "Partial",
-      "notes": "1 negative signal for crashing issues, supports 21.1.0 but stability uncertain."
+      "tool": "Checkpoint",
+      "version": "Unknown",
+      "status": "Broken",
+      "notes": "3 mentions with 3 negative signals; appears incompatible or problematic."
     }
   ],
   "trending_topics": [
@@ -91,7 +91,7 @@
       "sentiment": "negative"
     }
   ],
-  "scene_briefing": "Caution is advised as Nintendo issues DMCA notices to Switch emulators, but the scene remains stable with Atmosphere and Hekate supported on firmware 21.2.0. Excitement builds with the release of Horizon OC Zeus, enabling advanced RAM overclocking for enhanced performance.",
+  "scene_briefing": "Caution is advised as Nintendo issues DMCA notices to Switch emulators, but the scene remains stable with Atmosphere support on firmware 21.2.0. The release of Horizon OC Zeus enables advanced RAM overclocking, while Pyrite64 simplifies N64 homebrew creation.",
   "articles": [
     {
       "type": "homebrew",
@@ -104,8 +104,8 @@
       "size": "",
       "timestamp": "2026-02-20",
       "risk": "Caution",
-      "risk_reason": "Requires NAND and PRODINFO backup",
-      "description": "RAM overclocking tool for Switch, beta release."
+      "risk_reason": "Beta tool, requires NAND and PRODINFO backups",
+      "description": "RAM overclocking tool for Switch, reaches 2800-3100MHz."
     },
     {
       "type": "game",
@@ -132,7 +132,7 @@
       "size": "",
       "timestamp": "2026-02-17",
       "risk": "Safe",
-      "risk_reason": "No risk, just project status change",
+      "risk_reason": "No risk signals, just news",
       "description": "Citron emulator discontinued, Ryubing in maintenance mode."
     },
     {
@@ -146,7 +146,7 @@
       "size": "",
       "timestamp": "2026-02-17",
       "risk": "Safe",
-      "risk_reason": "Open-source tool, no reported issues",
+      "risk_reason": "Open-source release, no reported issues",
       "description": "Open-source game editor and engine for N64 homebrew."
     },
     {
@@ -160,8 +160,8 @@
       "size": "",
       "timestamp": "2026-02-14",
       "risk": "Safe",
-      "risk_reason": "Legal action, no technical risk",
-      "description": "DMCA takedowns targeting Switch emulators on GitHub."
+      "risk_reason": "Legal news, no technical risk",
+      "description": "Nintendo issues DMCA takedowns for Switch emulators."
     },
     {
       "type": "homebrew",
@@ -174,8 +174,8 @@
       "size": "",
       "timestamp": "2026-02-06",
       "risk": "Safe",
-      "risk_reason": "Homebrew release, no reported issues",
-      "description": "Homebrew remaster of The Simpsons Hit & Run, WIP."
+      "risk_reason": "Homebrew release, work-in-progress",
+      "description": "Homebrew remaster of The Simpsons Hit & Run."
     },
     {
       "type": "game",
@@ -189,7 +189,7 @@
       "timestamp": "2026-02-04",
       "risk": "Safe",
       "risk_reason": "Official service update, no risk",
-      "description": "Yoshi and Balloon Kid added to NSO Game Boy library."
+      "description": "Yoshi and Balloon Kid added to Switch Online."
     },
     {
       "type": "homebrew",
@@ -202,8 +202,8 @@
       "size": "",
       "timestamp": "2026-02-02",
       "risk": "Caution",
-      "risk_reason": "Reports of crashes after update",
-      "description": "LayeredFS causing game crashes after firmware update."
+      "risk_reason": "Crashes reported after firmware update",
+      "description": "LayeredFS causes game crashes on FW 21.2.0."
     },
     {
       "type": "update",
@@ -230,11 +230,11 @@
       "size": "",
       "timestamp": "2025-12-12",
       "risk": "Caution",
-      "risk_reason": "Modifies save files, potential data loss",
+      "risk_reason": "Save editing, potential data loss",
       "description": "Tutorial and save editor for Metroid Prime 4 Beyond."
     },
     {
-      "type": "homebrew",
+      "type": "game",
       "content_type": "Tool",
       "source": "GBAtemp",
       "title": "[D3Hack] Diablo III: Eternal Collection | 4K/1440p/1080p + Seasonal/Events/Challenge Rifts & more | Mod Menu (v2.7.6)",
@@ -244,8 +244,8 @@
       "size": "",
       "timestamp": "2026-01-06",
       "risk": "Caution",
-      "risk_reason": "Modifies game files, risk of bans",
-      "description": "D3Hack v3.0 RC1 with touch screen support for Diablo III."
+      "risk_reason": "Mod tool, may cause bans",
+      "description": "D3Hack v3.0 RC1 for Diablo III with touch support."
     },
     {
       "type": "homebrew",
@@ -258,8 +258,8 @@
       "size": "",
       "timestamp": "2026-02-21",
       "risk": "Caution",
-      "risk_reason": "Could corrupt or delete save data",
-      "description": "Homebrew app to inject Tera Raid events into Pokemon saves."
+      "risk_reason": "May corrupt or delete save data",
+      "description": "Homebrew app for injecting Tera Raid events."
     },
     {
       "type": "homebrew",
@@ -272,7 +272,7 @@
       "size": "",
       "timestamp": "2026-02-12",
       "risk": "Safe",
-      "risk_reason": "Local tool, no reported issues",
+      "risk_reason": "Tool release, no reported issues",
       "description": "Local bank system for Pokemon games on Switch."
     },
     {
@@ -286,8 +286,8 @@
       "size": "",
       "timestamp": "2026-02-14",
       "risk": "Safe",
-      "risk_reason": "Read-only tool, no modifications",
-      "description": "Homebrew app to view Tera Raid details in Pokemon games."
+      "risk_reason": "Tool release, no risk signals",
+      "description": "View Tera Raid details in Pokemon games."
     },
     {
       "type": "homebrew",
@@ -299,9 +299,9 @@
       "region": "",
       "size": "",
       "timestamp": "2026-02-08",
-      "risk": "Safe",
-      "risk_reason": "Read-only tool, no reported issues",
-      "description": "App to read Shiny Stash and display spawn locations."
+      "risk": "Caution",
+      "risk_reason": "In development, may have bugs",
+      "description": "App for reading Shiny Stash in Pokemon Z-A."
     },
     {
       "type": "homebrew",
@@ -314,8 +314,8 @@
       "size": "",
       "timestamp": "2026-02-15",
       "risk": "Caution",
-      "risk_reason": "Could corrupt or delete save data",
-      "description": "Homebrew app for editing donuts in Pokemon Z-A saves."
+      "risk_reason": "May corrupt or delete save data",
+      "description": "Homebrew app for editing donuts in Pokemon Z-A."
     },
     {
       "type": "homebrew",
@@ -328,47 +328,33 @@
       "size": "",
       "timestamp": "2026-01-27",
       "risk": "Safe",
-      "risk_reason": "No technical risk, just developer news",
-      "description": "SciresM, Atmosphere developer, announces retirement."
+      "risk_reason": "News announcement, no technical risk",
+      "description": "SciresM retires from Switch modding scene."
     },
     {
-      "type": "homebrew",
+      "type": "game",
       "content_type": "Release",
       "source": "GBAtemp",
-      "title": "Re-Volt RVGL Switch homebrew port new test version with improvements",
-      "url": "https://gbatemp.net/threads/re-volt-rvgl-switch-homebrew-port-new-test-version-with-improvements.679752/",
+      "title": "Official Thai language mod for The Legend of Zelda Breath of The Wild",
+      "url": "https://gbatemp.net/threads/official-thai-language-mod-for-the-legend-of-zelda-breath-of-the-wild.679791/",
       "version": "",
       "region": "",
       "size": "",
-      "timestamp": "2026-02-16",
+      "timestamp": "2026-02-18",
       "risk": "Safe",
-      "risk_reason": "Test release, no reported issues",
-      "description": "New test version of Re-Volt RVGL port for Switch."
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Tutorial",
-      "source": "GBAtemp",
-      "title": "Learn to create cheats with breeze (or other cheat engine). No previous knowledge required. Examples with Dave the Diver",
-      "url": "https://gbatemp.net/threads/learn-to-create-cheats-with-breeze-or-other-cheat-engine-no-previous-knowledge-required-examples-with-dave-the-diver.678771/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-01-10",
-      "risk": "Caution",
-      "risk_reason": "Modifies game memory, potential instability",
-      "description": "Tutorial on creating cheats using Breeze with examples."
+      "risk_reason": "Official mod, tested on Switch 1",
+      "description": "Thai language mod for Breath of the Wild."
     }
   ],
   "news": [
     {
-      "headline": "Horizon OC Zeus beta released for Switch RAM overclocking",
+      "headline": "Horizon OC Zeus beta released for RAM overclocking up to 3100MHz",
       "source": "GBAtemp",
       "timestamp": "2026-02-20",
       "url": "https://gbatemp.net/threads/horizon-oc-zeus-beta-release-best-ram-overclocking-tool-3000mhz.679828/"
     },
     {
-      "headline": "Xenoblade Chronicles X gets Switch 2 update with 4K/60fps",
+      "headline": "Xenoblade Chronicles X gets Switch 2 update with 4K/60fps docked",
       "source": "GBAtemp",
       "timestamp": "2026-02-19",
       "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/"
@@ -396,6 +382,18 @@
       "source": "GBAtemp",
       "timestamp": "2026-01-27",
       "url": "https://gbatemp.net/threads/creator-of-atmosphere-retiring.679223/"
+    },
+    {
+      "headline": "Pyrite64 open-source N64 homebrew editor and engine released",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-17",
+      "url": "https://gbatemp.net/threads/pyrite64-is-a-new-open-source-game-editor-and-engine-that-makes-it-easier-than-ever-to-create-n64-homebrew.679774/"
+    },
+    {
+      "headline": "Raid Event Injector for Pokemon games released with save risk",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-21",
+      "url": "https://gbatemp.net/threads/raid-event-injector-for-pokemon-games.679858/"
     },
     {
       "headline": "FPSLocker 3.3.1",
