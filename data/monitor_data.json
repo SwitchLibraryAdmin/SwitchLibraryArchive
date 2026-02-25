@@ -18,7 +18,7 @@
       "status": "Stable",
       "reason": "Hekate 6.5.1 has balanced signals with 3 positive and 3 negative mentions, indicating partial compatibility."
     },
-    "lastSync": "07:13 AM",
+    "lastSync": "05:00 PM",
     "recommended_firmware": "21.2.0",
     "recommended_firmware_reason": "Despite LayeredFS issues, it's the latest with Atmosphere support and no brick reports, making it the best option for CFW stability.",
     "sentiment_score": 42,
