@@ -12,45 +12,45 @@ const MONITOR_JSON = 'data/monitor_data.json';
 const CATEGORIES = [
   {
     key: 'core', label: 'Core System',
-    textClass: 'text-cyan-400', dotClass: 'bg-cyan-400',
-    avatarBgClass: 'bg-cyan-900/30', avatarBorderClass: 'border-cyan-500/50',
-    rowBorderClass: 'border-cyan-500/40',
+    color: '#22d3ee',       // cyan-400
+    colorMid: '#06b6d4',    // cyan-500
+    colorDark: '#164e63',   // cyan-900
   },
   {
     key: 'overlays', label: 'Overlays & Performance',
-    textClass: 'text-fuchsia-400', dotClass: 'bg-fuchsia-400',
-    avatarBgClass: 'bg-fuchsia-900/30', avatarBorderClass: 'border-fuchsia-500/50',
-    rowBorderClass: 'border-fuchsia-500/40',
+    color: '#e879f9',       // fuchsia-400
+    colorMid: '#d946ef',    // fuchsia-500
+    colorDark: '#701a75',   // fuchsia-900
   },
   {
     key: 'system', label: 'System Modules',
-    textClass: 'text-amber-400', dotClass: 'bg-amber-400',
-    avatarBgClass: 'bg-amber-900/30', avatarBorderClass: 'border-amber-500/50',
-    rowBorderClass: 'border-amber-500/40',
+    color: '#fbbf24',       // amber-400
+    colorMid: '#f59e0b',    // amber-500
+    colorDark: '#78350f',   // amber-900
   },
   {
     key: 'files', label: 'File & Save Tools',
-    textClass: 'text-sky-400', dotClass: 'bg-sky-400',
-    avatarBgClass: 'bg-sky-900/30', avatarBorderClass: 'border-sky-500/50',
-    rowBorderClass: 'border-sky-500/40',
+    color: '#38bdf8',       // sky-400
+    colorMid: '#0ea5e9',    // sky-500
+    colorDark: '#0c4a6e',   // sky-900
   },
   {
     key: 'apps', label: 'Apps & Utilities',
-    textClass: 'text-violet-400', dotClass: 'bg-violet-400',
-    avatarBgClass: 'bg-violet-900/30', avatarBorderClass: 'border-violet-500/50',
-    rowBorderClass: 'border-violet-500/40',
+    color: '#a78bfa',       // violet-400
+    colorMid: '#8b5cf6',    // violet-500
+    colorDark: '#4c1d95',   // violet-900
   },
   {
     key: 'media', label: 'Streaming & Media',
-    textClass: 'text-rose-400', dotClass: 'bg-rose-400',
-    avatarBgClass: 'bg-rose-900/30', avatarBorderClass: 'border-rose-500/50',
-    rowBorderClass: 'border-rose-500/40',
+    color: '#fb7185',       // rose-400
+    colorMid: '#f43f5e',    // rose-500
+    colorDark: '#881337',   // rose-900
   },
   {
     key: 'emulation', label: 'Emulation',
-    textClass: 'text-emerald-400', dotClass: 'bg-emerald-400',
-    avatarBgClass: 'bg-emerald-900/30', avatarBorderClass: 'border-emerald-500/50',
-    rowBorderClass: 'border-emerald-500/40',
+    color: '#34d399',       // emerald-400
+    colorMid: '#10b981',    // emerald-500
+    colorDark: '#064e3b',   // emerald-900
   },
 ];
 
@@ -886,8 +886,8 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
 
     html += `<div class="mb-6${groupSpacing}">
       <div class="flex items-center gap-2 mb-2">
-        <span class="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${cat.dotClass}"></span>
-        <span class="text-sm font-bold uppercase tracking-wider ${cat.textClass}" style="opacity:.7">${cat.label}</span>
+        <span class="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:${cat.color}"></span>
+        <span class="text-sm font-bold uppercase tracking-wider" style="color:${cat.color};opacity:.7">${cat.label}</span>
         <div class="flex-1 h-px bg-white/[.06]"></div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">`;
@@ -913,11 +913,12 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
 
       html += `
         <a href="${ghUrl}" target="_blank" rel="noopener"
-           class="group glass relative overflow-hidden rounded-md p-3 transition-all border border-white/10 hover:border-white/20 border-l-2 ${cat.rowBorderClass} flex items-start gap-3 min-h-[85px]">
+           class="group glass relative overflow-hidden rounded-md p-3 transition-all border border-white/10 hover:border-white/20 flex items-start gap-3 min-h-[85px]"
+           style="border-left:2px solid ${cat.colorMid}66">
 
           <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
 
-          <div class="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 text-sm ${cat.avatarBgClass} border ${cat.avatarBorderClass} overflow-hidden z-10">
+          <div class="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 text-sm overflow-hidden z-10" style="background:${cat.colorDark}4D;border:1px solid ${cat.colorMid}80">
             ${avatarHtml}
           </div>
 
