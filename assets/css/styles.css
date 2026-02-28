@@ -47,3 +47,28 @@
   height: 12px;
   border-radius: 50%;
 }
+
+/* ── SVG Switch Circuit Animations ── */
+.circuit-architecture {
+  offset-anchor: 100% 50%; /* Anchors the glowing head to the path */
+  animation-name: animation-path;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.75, -0.01, 0, 0.99);
+  animation-fill-mode: both;
+}
+
+.circuit-line-1 { offset-path: path("M 10 20 h 79.5 q 5 0 5 5 v 30"); animation-duration: 5s; animation-delay: 1s; }
+.circuit-line-2 { offset-path: path("M 180 10 h -69.7 q -5 0 -5 5 v 30"); animation-duration: 2s; animation-delay: 6s; }
+.circuit-line-3 { offset-path: path("M 130 20 v 21.8 q 0 5 -5 5 h -10"); animation-duration: 6s; animation-delay: 4s; }
+.circuit-line-4 { offset-path: path("M 170 80 v -21.8 q 0 -5 -5 -5 h -50"); animation-duration: 3s; animation-delay: 3s; }
+.circuit-line-5 { offset-path: path("M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20"); animation-duration: 4s; animation-delay: 9s; }
+.circuit-line-6 { offset-path: path("M 94.8 95 v -36"); animation-duration: 7s; animation-delay: 3s; }
+.circuit-line-7 { offset-path: path("M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14"); animation-duration: 4s; animation-delay: 4s; }
+.circuit-line-8 { offset-path: path("M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20"); animation-duration: 3s; animation-delay: 3s; }
+
+@keyframes animation-path {
+  0% { offset-distance: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}

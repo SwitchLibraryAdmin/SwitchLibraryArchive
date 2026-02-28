@@ -1,4 +1,4 @@
-var CACHE_NAME = 'switchhack-v1';
+var CACHE_NAME = 'switchhack-v2';
 var PRECACHE = [
   '/',
   '/index.html',
@@ -42,8 +42,14 @@ self.addEventListener('fetch', function(e) {
   // Only cache same-origin GET requests
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Network-first for data files (always want fresh data)
-  if (url.pathname.startsWith('/data/')) {
+  // Network-first for HTML, JS, CSS, and data (avoid stale UI after updates)
+  if (
+    url.pathname.startsWith('/data/') ||
+    url.pathname.startsWith('/assets/js/') ||
+    url.pathname.startsWith('/assets/css/') ||
+    url.pathname.endsWith('.html') ||
+    url.pathname === '/'
+  ) {
     e.respondWith(
       fetch(e.request).then(function(res) {
         var clone = res.clone();
