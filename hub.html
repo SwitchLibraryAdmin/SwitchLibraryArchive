@@ -89,20 +89,20 @@
 
     /* Filter pill */
     .filter-pill {
-      padding: 4px 10px;
+      padding: 5px 14px;
       font-size: 11px;
       font-weight: 500;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(100,116,139,1);
+      border-radius: 9999px;
+      border: none;
+      color: rgba(148,163,184,1);
       background: transparent;
       cursor: pointer;
       white-space: nowrap;
-      transition: all .15s;
+      transition: all .2s ease;
     }
     .filter-pill:hover {
-      color: rgba(200,210,220,1);
-      border-color: rgba(255,255,255,.15);
+      color: rgba(226,232,240,1);
+      background: rgba(255,255,255,.07);
     }
 
     /* ── row grid (Finder list view) ── */
@@ -174,7 +174,7 @@
   <!-- ══════════════════════════════════════════════════════════ -->
   <!--  ZONE 1: STATUS BAR                                       -->
   <!-- ══════════════════════════════════════════════════════════ -->
-  <div class="border-b border-white/[.07] bg-slate-900/80 backdrop-blur sticky top-16 z-10">
+  <div class="border-b border-white/[.07] bg-slate-900/80 backdrop-blur z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2">
       <div id="status-bar-inner" class="flex items-center gap-3 overflow-x-auto">
         <!-- Populated by hub.js renderStatusBar() -->
@@ -232,7 +232,7 @@
 
       <!-- ── Communities ── -->
       <div class="mb-8">
-        <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-white/40 mb-3 glass rounded px-3 py-1.5" style="letter-spacing:.15em">Communities</div>
+        <div class="text-[13px] font-mono font-bold uppercase tracking-widest mb-4 pb-2" style="letter-spacing:.18em;color:rgba(255,255,255,.6);border-bottom:1px solid rgba(255,255,255,.08)">Communities</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
           <a href="https://discord.gg/C29hYvh" target="_blank" rel="noopener"
@@ -324,7 +324,7 @@
 
       <!-- ── Essential Guides ── -->
       <div class="mb-8">
-        <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-white/40 mb-3 glass rounded px-3 py-1.5" style="letter-spacing:.15em">Essential Guides</div>
+        <div class="text-[13px] font-mono font-bold uppercase tracking-widest mb-4 pb-2" style="letter-spacing:.18em;color:rgba(255,255,255,.6);border-bottom:1px solid rgba(255,255,255,.08)">Essential Guides</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">
 
           <a href="https://switchgui.de/switch-guide/" target="_blank" rel="noopener"
@@ -348,9 +348,10 @@
 
       <!-- ── Software Directory ── -->
       <div class="mb-8">
-        <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-white/40 mb-3 glass rounded px-3 py-1.5" style="letter-spacing:.15em">Software Directory</div>
+        <div class="text-[13px] font-mono font-bold uppercase tracking-widest mb-4 pb-2" style="letter-spacing:.18em;color:rgba(255,255,255,.6);border-bottom:1px solid rgba(255,255,255,.08)">Software Directory</div>
         <div id="directory-filter-bar" class="flex items-center gap-1.5 overflow-x-auto mb-3 scrollbar-hide">
           <button class="filter-pill" data-cat="all">All</button>
+          <button class="filter-pill" data-cat="rec" style="background:rgba(59,130,246,.12);color:#60a5fa;font-weight:700">REC</button>
           <button class="filter-pill" data-cat="core">Core System</button>
           <button class="filter-pill" data-cat="overlays">Overlays &amp; Perf</button>
           <button class="filter-pill" data-cat="system">System Modules</button>
@@ -358,7 +359,6 @@
           <button class="filter-pill" data-cat="apps">Apps &amp; Utils</button>
           <button class="filter-pill" data-cat="media">Streaming &amp; Media</button>
           <button class="filter-pill" data-cat="emulation">Emulation</button>
-          <button class="filter-pill" data-cat="rec" style="background:rgba(59,130,246,.15);color:#60a5fa;border-color:rgba(59,130,246,.4);font-weight:700">REC</button>
         </div>
         <div id="dir-repos">
           <!-- Populated by hub.js renderCoreReposDirectory() -->
