@@ -536,12 +536,12 @@ function renderStatusBar(allRepoData, monitorData) {
 
   const lastSync = monitorData?.dashboard_stats?.lastSync;
   html += `
-    <div class="ml-auto flex items-center gap-3 pl-4 border-l border-white/10">
+    <div class="ml-auto flex flex-col items-end justify-center gap-0.5 pl-4 flex-shrink-0">
       <div class="flex items-center gap-1.5">
         <span class="pulse-dot" style="background:${overallColor}"></span>
-        <span class="text-[10px] font-mono uppercase tracking-wide" style="color:${overallColor}">${overallLabel}</span>
+        <span class="text-[10px] font-mono font-semibold uppercase tracking-wide" style="color:${overallColor}">${overallLabel}</span>
       </div>
-      ${lastSync ? `<span class="text-[10px] font-mono text-gray-400">synced ${isNaN(new Date(lastSync).getTime()) ? 'recently' : timeAgo(lastSync)}</span>` : ''}
+      ${lastSync ? `<span class="text-[9px] font-mono text-gray-500">synced ${isNaN(new Date(lastSync).getTime()) ? 'recently' : timeAgo(lastSync)}</span>` : ''}
     </div>`;
 
   bar.innerHTML = html;
@@ -562,23 +562,19 @@ function initFeedFilters(repoData) {
 
     bar.querySelectorAll('[data-cat]').forEach(b => {
       if (b.dataset.cat === 'rec') {
-        b.style.background = 'rgba(59,130,246,.15)';
+        b.style.background = 'rgba(59,130,246,.12)';
         b.style.color = '#60a5fa';
-        b.style.borderColor = 'rgba(59,130,246,.4)';
       } else {
         b.style.background = 'transparent';
-        b.style.color = 'rgba(100,116,139,1)';
-        b.style.borderColor = 'rgba(255,255,255,.10)';
+        b.style.color = 'rgba(148,163,184,1)';
       }
     });
     if (btn.dataset.cat === 'rec') {
-      btn.style.background = 'rgba(59,130,246,.35)';
-      btn.style.color = '#93bbfd';
-      btn.style.borderColor = 'rgba(59,130,246,.6)';
+      btn.style.background = 'rgba(59,130,246,.30)';
+      btn.style.color = '#ffffff';
     } else {
-      btn.style.background = 'rgba(255,255,255,.1)';
-      btn.style.color = 'rgba(255,255,255,.9)';
-      btn.style.borderColor = 'rgba(255,255,255,.15)';
+      btn.style.background = 'rgba(255,255,255,.15)';
+      btn.style.color = '#ffffff';
     }
 
     renderCoreReposDirectory(repoData, btn.dataset.cat);
@@ -587,9 +583,8 @@ function initFeedFilters(repoData) {
   // Style the default active button
   const allBtn = bar.querySelector('[data-cat="all"]');
   if (allBtn) {
-    allBtn.style.background = 'rgba(255,255,255,.08)';
-    allBtn.style.color = 'rgba(255,255,255,.9)';
-    allBtn.style.borderColor = 'rgba(255,255,255,.15)';
+    allBtn.style.background = 'rgba(255,255,255,.15)';
+    allBtn.style.color = '#ffffff';
   }
 }
 
@@ -885,10 +880,10 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
     firstGroup = false;
 
     html += `<div class="mb-6${groupSpacing}">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:${cat.color}"></span>
-        <span class="text-sm font-bold uppercase tracking-wider" style="color:${cat.color};opacity:.7">${cat.label}</span>
-        <div class="flex-1 h-px bg-white/[.06]"></div>
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-block w-2 h-2 rounded-full flex-shrink-0" style="background:${cat.color};box-shadow:0 0 6px ${cat.color}88"></span>
+        <span class="text-sm font-bold uppercase tracking-wider" style="color:${cat.color};opacity:.85">${cat.label}</span>
+        <div class="flex-1 h-px" style="background:linear-gradient(to right,${cat.color}22,transparent)"></div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">`;
 
@@ -904,21 +899,21 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
         : '';
 
       const avatarHtml = logoUrl 
-        ? `<img src="${logoUrl}" alt="${escHtml(r.name)} logo" class="w-full h-full object-contain p-1" loading="lazy">`
+        ? `<img src="${logoUrl}" alt="${escHtml(r.name)} logo" class="w-full h-full object-cover" loading="lazy">`
         : `<span class="text-[14px] font-bold text-gray-100">${escHtml(repoLetter)}</span>`;
 
       const dateHtml = updatedAt
-        ? `<span class="text-[10px] font-mono text-gray-300">${timeAgo(updatedAt)}</span>`
+        ? `<span class="text-[9px] font-mono text-slate-500">${timeAgo(updatedAt)}</span>`
         : '';
 
       html += `
         <a href="${ghUrl}" target="_blank" rel="noopener"
-           class="group glass relative overflow-hidden rounded-md p-3 transition-all border border-white/10 hover:border-white/20 flex items-start gap-3 min-h-[85px]"
+           class="group glass relative overflow-hidden rounded-md p-3 transition-all border border-white/10 hover:border-white/20 h-full flex items-start gap-3 min-h-[85px]"
            style="border-left:2px solid ${cat.colorMid}66">
 
           <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
 
-          <div class="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 text-sm overflow-hidden z-10" style="background:${cat.colorDark}4D;border:1px solid ${cat.colorMid}80">
+          <div class="w-10 h-10 flex items-center justify-center flex-shrink-0 text-sm overflow-hidden z-10" style="background:${cat.colorDark}4D;border:1px solid ${cat.colorMid}80;border-radius:22% 22% 22% 22%;-webkit-mask-image:-webkit-radial-gradient(white,black)">
             ${avatarHtml}
           </div>
 
@@ -927,12 +922,11 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
               <span class="text-[13px] font-medium text-gray-100 group-hover:text-white transition-colors truncate">${escHtml(r.name)}</span>
               ${recBadge}
             </div>
-            <p class="text-[11px] text-gray-400 leading-relaxed pr-2 pb-5">${escHtml(r.desc)}</p>
+            <p class="text-[11px] text-slate-400 leading-relaxed pr-2 pb-5">${escHtml(r.desc)}</p>
           </div>
 
-          <div class="absolute flex items-center gap-2 z-10 pointer-events-none" style="top:8px;right:12px">
+          <div class="absolute z-10 pointer-events-none" style="top:8px;right:12px">
             ${dateHtml}
-            <svg class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 text-gray-500 group-hover:text-cyan-400 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </div>
         </a>`;
     });
