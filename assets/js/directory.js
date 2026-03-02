@@ -105,6 +105,11 @@ const REPOS = [
     desc: 'Lock games to 30fps to reduce battery drain and heat.',
   },
   {
+    owner: 'proferabg', repo: 'EdiZon-Overlay',
+    name: 'EdiZon Overlay', category: 'overlays',
+    desc: 'In-game overlay for managing cheats and memory tools via Tesla-style UI.',
+  },
+  {
     owner: 'retronx-team', repo: 'sys-clk',
     name: 'sys-clk', category: 'overlays',
     desc: 'Overclock/underclock CPU, GPU, and memory per game.',
@@ -123,7 +128,7 @@ const REPOS = [
   },
   {
     owner: 'exelix11', repo: 'SysDVR',
-    name: 'SysDVR', category: 'system',
+    name: 'SysDVR', category: 'media',
     desc: 'Stream Switch video and audio to your PC over USB or WiFi.',
   },
   {
@@ -143,8 +148,8 @@ const REPOS = [
   },
   {
     owner: 'HookedBehemoth', repo: 'sys-tune',
-    name: 'sys-tune', category: 'system',
-    desc: 'Background music player. Play audio while using other apps.',
+    name: 'sys-tune', category: 'media',
+    desc: 'Minimalist low-memory sysmodule focused on background music playback while gaming.',
   },
   {
     owner: 'masagrator', repo: 'sys-ticon',
@@ -182,6 +187,11 @@ const REPOS = [
     owner: 'J-D-K', repo: 'JKSV',
     name: 'JKSV', category: 'files', tags: ['rec'],
     desc: 'Save manager. Back up, restore, and transfer game saves.',
+  },
+  {
+    owner: 'BernardoGiordano', repo: 'Checkpoint',
+    name: 'Checkpoint', category: 'files',
+    desc: 'Open-source save manager for backing up and restoring game saves.',
   },
   {
     owner: 'DarkMatterCore', repo: 'nxdumptool',
@@ -271,6 +281,11 @@ const REPOS = [
     owner: 'dragonflylee', repo: 'switchfin',
     name: 'Switchfin', category: 'media',
     desc: 'Jellyfin media client for Switch.',
+  },
+  {
+    owner: 'DefenderOfHyrule', repo: 'TriPlayer',
+    name: 'TriPlayer', category: 'media',
+    desc: 'Complete music suite with a full library app plus in-game overlay controls.',
   },
   {
     owner: 'ursusworks', repo: 'libnxbox',
