@@ -1,11 +1,12 @@
 (function () {
-  const page = window.location.pathname.split('/').pop() || 'index.html';
-  const isGuide = page === 'guide.html';
-  const isIntel = page === 'intel.html';
-  const isMonitor = page === 'directory.html';
-  const isHub = page === 'community.html';
-  const isHome = page === '' || page === 'index.html';
-  const homeHref = isHome ? '#hero' : 'index.html';
+  const path = window.location.pathname.replace(/\/+$/, '');
+  const firstSegment = path.split('/').filter(Boolean)[0] || '';
+  const isGuide = firstSegment === 'guide';
+  const isIntel = firstSegment === 'intel';
+  const isMonitor = firstSegment === 'directory';
+  const isHub = firstSegment === 'community';
+  const isHome = firstSegment === '' || firstSegment === 'index.html';
+  const homeHref = '/';
 
   const linkClass = 'text-sm transition-colors';
   const active = linkClass + ' text-white border-b-2 border-cyan-400 pb-0.5';
@@ -38,18 +39,18 @@
           <!-- pt-3 acts as an invisible bridge so the mouse doesn't fall off -->
           <div class="absolute left-0 top-full pt-3 hidden nav-dropdown w-52 z-50">
             <div class="bg-slate-800 border border-white/10 rounded-xl py-1.5 shadow-xl shadow-black/50">
-              <a href="about.html" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">About Me</a>
-              <a href="404.html" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">The Showcase</a>
-              <a href="prep.html" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">Prerequisites</a>
-              <a href="guide.html" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">The Manual</a>
+              <a href="/about/" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">About Me</a>
+              <a href="/404/" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">The Showcase</a>
+              <a href="/prep/" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">Prerequisites</a>
+              <a href="/guide/" class="block px-4 py-2.5 text-sm text-gray-400 hover:text-cyan-400 hover:bg-white/5 transition-colors">The Manual</a>
             </div>
           </div>
         </div>
 
-        <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
-        <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
-        <a href="directory.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
-        <a href="community.html" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
+        <a href="/guide/" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
+        <a href="/intel/" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
+        <a href="/directory/" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
+        <a href="/community/" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
       </div>
 
       <!-- Mobile hamburger -->
@@ -73,17 +74,17 @@
             </svg>
           </button>
           <div id="start-here-menu" class="hidden mt-2 ml-1 pl-3 border-l border-white/10 flex flex-col gap-1">
-            <a href="about.html" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">About Me</a>
-            <a href="404.html" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">The Showcase</a>
-            <a href="prep.html" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">Prerequisites</a>
-            <a href="guide.html" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">The Manual</a>
+            <a href="/about/" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">About Me</a>
+            <a href="/404/" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">The Showcase</a>
+            <a href="/prep/" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">Prerequisites</a>
+            <a href="/guide/" class="block py-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors">The Manual</a>
           </div>
         </div>
 
-        <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
-        <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
-        <a href="directory.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
-        <a href="community.html" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
+        <a href="/guide/" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
+        <a href="/intel/" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
+        <a href="/directory/" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
+        <a href="/community/" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
       </div>
     </div>
   </nav>`;

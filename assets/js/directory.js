@@ -789,7 +789,7 @@ function renderCoreReposDirectory(repoData, filter = 'all', query = '') {
   });
 
   if (!html) {
-    container.innerHTML = `<div class="rounded-xl border border-white/[.08] bg-white/[.03] px-4 py-6 text-center text-sm text-slate-400">That repository is dead, missing, or currently the subject of federal litigation.<br>For more information see <a href="legal.html" class="text-cyan-400 hover:text-cyan-300 underline">here</a>.</div>`;
+    container.innerHTML = `<div class="rounded-xl border border-white/[.08] bg-white/[.03] px-4 py-6 text-center text-sm text-slate-400">That repository is dead, missing, or currently the subject of federal litigation.<br>For more information see <a href="/legal/" class="text-cyan-400 hover:text-cyan-300 underline">here</a>.</div>`;
     return;
   }
   container.innerHTML = html;
