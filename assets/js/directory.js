@@ -760,18 +760,18 @@ function renderCoreReposDirectory(repoData, filter = 'all', query = '') {
       const ghUrl = r.url || `https://github.com/${r.owner}/${r.repo}`;
       const repoLabel = (r.name || r.repo || '').trim();
       const repoLetter = repoLabel ? repoLabel[0].toUpperCase() : '?';
-      const logoUrl = r.owner ? `https://github.com/${encodeURIComponent(r.owner)}.png?size=64` : '';
+      const logoUrl = r.owner ? `https://avatars.githubusercontent.com/${encodeURIComponent(r.owner)}?size=64` : '';
 
       const recPill = hasTag(r, 'rec')
         ? '<span class="rec-pill" style="position:absolute;top:18px;right:18px">REC</span>'
         : '';
 
       const avatarContent = logoUrl
-        ? `<img src="${logoUrl}" alt="${escHtml(r.name)} logo" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
+        ? `<img src="${logoUrl}" alt="${escHtml(r.name)} logo" style="width:100%;height:100%;object-fit:cover" decoding="async" referrerpolicy="no-referrer">`
         : `<span style="font-size:18px;font-weight:700;color:rgba(255,255,255,.7)">${escHtml(repoLetter)}</span>`;
 
       const avatarImg = r.owner
-        ? `<img src="https://github.com/${encodeURIComponent(r.owner)}.png?size=32" style="width:14px;height:14px;border-radius:50%;object-fit:cover;flex-shrink:0;opacity:.8" loading="lazy">`
+        ? `<img src="https://avatars.githubusercontent.com/${encodeURIComponent(r.owner)}?size=32" style="width:14px;height:14px;border-radius:50%;object-fit:cover;flex-shrink:0;opacity:.8" decoding="async" referrerpolicy="no-referrer">`
         : '';
       const ownerText = r.owner
         ? `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:rgba(255,255,255,.72);font-family:ui-monospace,monospace">${avatarImg}${escHtml(r.owner)}</span>`
