@@ -12,45 +12,45 @@ const MONITOR_JSON = 'data/monitor_data.json';
 const CATEGORIES = [
   {
     key: 'core', label: 'Core System',
-    color: '#22d3ee',       // cyan-400
+    color: '#22d3ee',       // cyan-400 (brand — full saturation)
     colorMid: '#06b6d4',    // cyan-500
     colorDark: '#164e63',   // cyan-900
   },
   {
-    key: 'overlays', label: 'Overlays & Performance',
-    color: '#e879f9',       // fuchsia-400
-    colorMid: '#d946ef',    // fuchsia-500
-    colorDark: '#701a75',   // fuchsia-900
-  },
-  {
-    key: 'system', label: 'System Modules',
+    key: 'files', label: 'File & Save Tools',
     color: '#fbbf24',       // amber-400
     colorMid: '#f59e0b',    // amber-500
     colorDark: '#78350f',   // amber-900
   },
   {
-    key: 'files', label: 'File & Save Tools',
-    color: '#38bdf8',       // sky-400
-    colorMid: '#0ea5e9',    // sky-500
-    colorDark: '#0c4a6e',   // sky-900
-  },
-  {
-    key: 'apps', label: 'Apps & Utilities',
+    key: 'overlays', label: 'Overlays & Performance',
     color: '#a78bfa',       // violet-400
     colorMid: '#8b5cf6',    // violet-500
     colorDark: '#4c1d95',   // violet-900
   },
   {
-    key: 'media', label: 'Streaming & Media',
-    color: '#fb7185',       // rose-400
-    colorMid: '#f43f5e',    // rose-500
-    colorDark: '#881337',   // rose-900
-  },
-  {
-    key: 'emulation', label: 'Emulation',
+    key: 'system', label: 'System Modules',
     color: '#34d399',       // emerald-400
     colorMid: '#10b981',    // emerald-500
     colorDark: '#064e3b',   // emerald-900
+  },
+  {
+    key: 'apps', label: 'Apps & Utilities',
+    color: '#60a5fa',       // blue-400
+    colorMid: '#3b82f6',    // blue-500
+    colorDark: '#1e3a8a',   // blue-900
+  },
+  {
+    key: 'media', label: 'Streaming & Media',
+    color: '#f472b6',       // pink-400
+    colorMid: '#ec4899',    // pink-500
+    colorDark: '#831843',   // pink-900
+  },
+  {
+    key: 'emulation', label: 'Emulation',
+    color: '#fb923c',       // orange-400
+    colorMid: '#f97316',    // orange-500
+    colorDark: '#7c2d12',   // orange-900
   },
 ];
 
@@ -71,6 +71,11 @@ const REPOS = [
     owner: 'impeeza', repo: 'sys-patch',
     name: 'sys-patch', category: 'core', tags: ['rec'],
     desc: 'Patches signature checks on the fly. Replaces sigpatches files.',
+  },
+  {
+    owner: 'mentalblank', repo: 'PYXIS',
+    name: 'PYXIS', category: 'core',
+    desc: 'Automated all-in-one CFW and homebrew deployment package.',
   },
 
   // Overlays
@@ -118,7 +123,7 @@ const REPOS = [
   },
   {
     owner: 'exelix11', repo: 'SysDVR',
-    name: 'SysDVR', category: 'media',
+    name: 'SysDVR', category: 'system',
     desc: 'Stream Switch video and audio to your PC over USB or WiFi.',
   },
   {
@@ -137,21 +142,26 @@ const REPOS = [
     desc: 'Force handheld or docked rendering mode regardless of physical state.',
   },
   {
-    owner: 'olliz0r', repo: 'sys-botbase',
-    name: 'sys-botbase', category: 'system',
-    desc: 'Remote control sysmodule used for automation bots.',
-  },
-  {
     owner: 'HookedBehemoth', repo: 'sys-tune',
     name: 'sys-tune', category: 'system',
     desc: 'Background music player. Play audio while using other apps.',
+  },
+  {
+    owner: 'masagrator', repo: 'sys-ticon',
+    name: 'sys-ticon', category: 'system',
+    desc: 'Home Menu icon/title replacement sysmodule based on rendering pipeline hooks.',
+  },
+  {
+    owner: 'XorTroll', repo: 'uLaunch',
+    name: 'uLaunch', category: 'system',
+    desc: 'Custom home menu alternative for advanced users and UI customization.',
   },
 
   // File & Save Tools
   {
     owner: 'ITotalJustice', repo: 'sphaira',
-    name: 'Sphaira', category: 'files', tags: ['rec'],
-    desc: 'Modern homebrew launcher and NSP installer. Recommended for most users.',
+    name: 'Sphaira', category: 'core', tags: ['rec'],
+    desc: 'The definitive homebrew menu replacement. Features direct file associations for ROMs and native theme downloading.',
   },
   {
     owner: 'rashevskyv', repo: 'dbi',
@@ -161,12 +171,12 @@ const REPOS = [
   {
     owner: 'luketanti', repo: 'CyberFoil',
     name: 'CyberFoil', category: 'files', tags: ['rec'],
-    desc: 'Title manager and installer with a clean, modern UI.',
+    desc: 'Offline-first title installer and successor to Tinfoil. Features advanced cloud save backup and version control.',
   },
   {
     owner: 'XorTroll', repo: 'Goldleaf',
     name: 'Goldleaf', category: 'files',
-    desc: 'Full-featured title manager, ticket editor, and account manager.',
+    desc: 'Multi-purpose tool essential for deep file browsing, ticket management, and fixing archive bits on SD cards.',
   },
   {
     owner: 'J-D-K', repo: 'JKSV',
@@ -178,11 +188,6 @@ const REPOS = [
     name: 'nxdumptool', category: 'files',
     desc: 'Dump game cartridges and installed titles to NSP/XCI files.',
   },
-  {
-    owner: 'mtheall', repo: 'ftpd',
-    name: 'ftpd PRO', category: 'files',
-    desc: 'FTP server sysmodule. Transfer files wirelessly from your PC.',
-  },
 
   // Homebrew Apps
   {
@@ -192,13 +197,18 @@ const REPOS = [
   },
   {
     owner: 'HamletDuFromage', repo: 'AIO-switch-updater',
-    name: 'AIO Switch Updater', category: 'apps',
+    name: 'AIO Switch Updater', category: 'core',
     desc: 'Update Atmosphere, Hekate, sigpatches, and cheats all in one place.',
   },
   {
     owner: 'exelix11', repo: 'SwitchThemeInjector',
     name: 'NXThemes Installer', category: 'apps',
     desc: 'Install custom home menu themes.',
+  },
+  {
+    owner: 'suchmememanyskill', repo: 'themezer-nx',
+    name: 'themezer-nx', category: 'apps',
+    desc: 'Browse and download Themezer themes directly from your Switch.',
   },
   {
     owner: 'tomvita', repo: 'EdiZon-SE',
@@ -221,6 +231,11 @@ const REPOS = [
     desc: 'Quickly reboot between stock and CFW without long boot flows.',
   },
   {
+    owner: 'WerWolv', repo: 'Hekate-Toolbox',
+    name: 'Hekate Toolbox', category: 'apps',
+    desc: 'Utility app for common Hekate-related maintenance and configuration tasks.',
+  },
+  {
     owner: 'XorTroll', repo: 'emuiibo',
     name: 'Emuiibo', category: 'apps',
     desc: 'Virtual Amiibo emulation. Use any amiibo without the physical figure.',
@@ -240,11 +255,6 @@ const REPOS = [
     name: 'Fizeau', category: 'apps',
     desc: 'Screen color temperature control. Reduces blue light at night.',
   },
-  {
-    owner: 'tomvita', repo: 'Breeze-Beta',
-    name: 'Breeze', category: 'apps',
-    desc: 'Memory editor and cheat creator for advanced users.',
-  },
 
   // Streaming & Media
   {
@@ -261,6 +271,11 @@ const REPOS = [
     owner: 'dragonflylee', repo: 'switchfin',
     name: 'Switchfin', category: 'media',
     desc: 'Jellyfin media client for Switch.',
+  },
+  {
+    owner: 'ursusworks', repo: 'libnxbox',
+    name: 'libnxbox', category: 'media',
+    desc: 'Native Xbox Cloud Streaming client built to bypass browser WebRTC limits.',
   },
 
   // Emulation
@@ -282,6 +297,7 @@ const REPOS = [
   {
     owner: 'hrydgard', repo: 'ppsspp',
     name: 'PPSSPP', category: 'emulation',
+    url: 'https://buildbot.libretro.com/nightly/nintendo/switch/libnx/latest/',
     desc: 'PSP emulator. Good performance for most titles.',
   },
   {
@@ -323,7 +339,28 @@ function getStaleCache(key) {
 function setCache(key, data) {
   try {
     localStorage.setItem(key, JSON.stringify({ data, ts: Date.now() }));
+    localStorage.setItem('sh_last_gh_sync', new Date().toISOString());
   } catch (e) { /* localStorage full or unavailable */ }
+}
+
+function getLastGithubSync() {
+  try {
+    const direct = localStorage.getItem('sh_last_gh_sync');
+    if (direct) return direct;
+
+    let latestTs = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith('gh:')) continue;
+      const raw = localStorage.getItem(key);
+      if (!raw) continue;
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed.ts === 'number' && parsed.ts > latestTs) latestTs = parsed.ts;
+    }
+    return latestTs ? new Date(latestTs).toISOString() : null;
+  } catch (e) {
+    return null;
+  }
 }
 
 
@@ -361,12 +398,58 @@ async function fetchLatestRelease(owner, repo) {
   }
 }
 
+async function fetchRepoUpdatedAt(owner, repo) {
+  const key = `ghmeta:${owner}/${repo}`;
+  const cached = getCache(key);
+  if (cached?.pushed_at) return cached.pushed_at;
+
+  try {
+    const res = await fetch(`${GH_API}/repos/${owner}/${repo}`, {
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if (!res.ok) {
+      const stale = getStaleCache(key);
+      return stale?.pushed_at || null;
+    }
+    const data = await res.json();
+    const meta = { pushed_at: data?.pushed_at || null };
+    setCache(key, meta);
+    return meta.pushed_at;
+  } catch (e) {
+    const stale = getStaleCache(key);
+    return stale?.pushed_at || null;
+  }
+}
+
+const CATEGORY_SEARCH_HINTS = {
+  core: ['cfw', 'custom firmware', 'boot', 'bootloader', 'firmware', 'sigpatches'],
+  overlays: ['overlay', 'fps', 'performance', 'tesla', 'ultrahand', 'monitor'],
+  system: ['sysmodule', 'controller', 'stream', 'module', 'home menu'],
+  files: ['installer', 'file manager', 'save', 'backup', 'dump', 'transfer'],
+  apps: ['homebrew', 'tool', 'utility', 'theme', 'mods', 'cheats'],
+  media: ['streaming', 'cloud', 'media', 'remote play', 'video'],
+  emulation: ['emulator', 'retro', 'rom', 'arcade', 'psp', 'ps1', 'dreamcast'],
+};
+
+function buildRepoKeywords(repo) {
+  const out = new Set((repo.tags || []).map(String));
+  const hints = CATEGORY_SEARCH_HINTS[repo.category] || [];
+  hints.forEach(h => out.add(h));
+
+  const text = `${repo.name || ''} ${repo.repo || ''} ${repo.owner || ''} ${repo.desc || ''}`.toLowerCase();
+  const tokens = text.match(/[a-z0-9]+(?:-[a-z0-9]+)*/g) || [];
+  tokens.forEach((t) => { if (t.length > 2) out.add(t); });
+
+  return Array.from(out);
+}
+
 async function fetchAllReleases() {
   // Fetch all repos in parallel — much faster than sequential
   const results = await Promise.all(
     REPOS.map(async (repo) => {
       const { release, stale, rateLimited } = await fetchLatestRelease(repo.owner, repo.repo);
-      return { ...repo, release, stale, rateLimited };
+      const repoUpdatedAt = release ? null : await fetchRepoUpdatedAt(repo.owner, repo.repo);
+      return { ...repo, keywords: buildRepoKeywords(repo), release, repoUpdatedAt, stale, rateLimited };
     })
   );
   return results;
@@ -379,10 +462,11 @@ async function fetchAllReleases() {
 
 function timeAgo(isoString) {
   const s = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
-  if (s < 60)     return 'just now';
-  if (s < 3600)   return Math.floor(s / 60) + 'm ago';
-  if (s < 86400)  return Math.floor(s / 3600) + 'h ago';
-  if (s < 604800) return Math.floor(s / 86400) + 'd ago';
+  if (s < 60)      return 'just now';
+  if (s < 3600)    return Math.floor(s / 60) + 'm ago';
+  if (s < 86400)   return Math.floor(s / 3600) + 'h ago';
+  if (s < 604800)  return Math.floor(s / 86400) + 'd ago';
+  if (s < 2592000) return Math.floor(s / 604800) + 'w ago';
   return new Date(isoString).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
@@ -452,96 +536,26 @@ function renderStatusBar(allRepoData, monitorData) {
   const bar = document.getElementById('status-bar-inner');
   if (!bar) return;
 
-  // Get Atmosphere and Hekate from release data
-  const atmo  = allRepoData.find(r => r.repo === 'Atmosphere');
-  const hekate = allRepoData.find(r => r.repo === 'hekate');
+  const lastSync = getLastGithubSync();
+  const parsedLastSync = lastSync ? new Date(lastSync) : null;
+  const hasValidLastSync = !!parsedLastSync && !isNaN(parsedLastSync.getTime());
+  const isSyncFresh = hasValidLastSync && (Date.now() - parsedLastSync.getTime() <= CACHE_TTL_MS);
 
-  // Helper to clean up version prefixes for the bold text
-  const formatTag = (tag) => {
-    if (!tag) return '—';
-    return tag.replace(/^v/i, '').replace(/^hekate_ctcaer_/i, '');
-  };
+  const dotColor = isSyncFresh ? '#34d399' : '#64748b';
+  const textClass = isSyncFresh ? 'text-emerald-400' : 'text-slate-400';
+  const syncText = (() => {
+    if (!isSyncFresh) return 'Refresh Page';
+    if (!hasValidLastSync) return `synced ${String(lastSync || 'unknown')}`;
+    return `synced ${parsedLastSync.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })}`;
+  })();
 
-  // Helper to force strictly "X ago" format for the tooltips
-  const timeAgoStrict = (dateString) => {
-    if (!dateString) return 'Could not fetch';
-    const parsedDate = new Date(dateString);
-    if (isNaN(parsedDate)) return 'Could not fetch';
-    const diffMs = new Date() - parsedDate;
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    if (diffDays === 0) return 'Released today';
-    if (diffDays < 30) return `Released ${diffDays} day${diffDays === 1 ? '' : 's'} ago`;
-    const diffMonths = Math.floor(diffDays / 30);
-    return `Released ${diffMonths} month${diffMonths === 1 ? '' : 's'} ago`;
-  };
-
-  const fw = monitorData?.dashboard_stats?.recommended_firmware || '—';
-
-  // Determine overall status
-  const anyRateLimited = allRepoData.some(r => r.rateLimited);
-  const anyStale = allRepoData.some(r => r.stale);
-
-  const chips = [
-    {
-      label: 'FIRMWARE',
-      value: fw,
-      status: fw === '—' ? 'unknown' : 'stable',
-      tip: 'Latest recommended Switch firmware',
-    },
-    {
-      label: 'ATMOSPHERE',
-      value: formatTag(atmo?.release?.tag_name),
-      status: atmo?.release ? 'stable' : 'unknown',
-      stale: atmo?.stale,
-      tip: atmo?.release?.published_at ? timeAgoStrict(atmo.release.published_at) : 'Could not fetch',
-    },
-    {
-      label: 'HEKATE',
-      value: formatTag(hekate?.release?.tag_name),
-      status: hekate?.release ? 'stable' : 'unknown',
-      stale: hekate?.stale,
-      tip: hekate?.release?.published_at ? timeAgoStrict(hekate.release.published_at) : 'Could not fetch',
-    },
-  ];
-
-  const colors = {
-    stable:  { dot: '#34d399', text: 'text-emerald-400', border: 'border-l-emerald-500', bg: 'bg-emerald-500/[.06]' },
-    unknown: { dot: '#64748b', text: 'text-slate-400',   border: 'border-l-slate-600',   bg: 'bg-white/[.05]'       },
-    caution: { dot: '#2dd4bf', text: 'text-teal-400',    border: 'border-l-teal-500',    bg: 'bg-teal-500/[.06]'    },
-  };
-
-  let html = '';
-  chips.forEach(chip => {
-    const c = colors[chip.status] || colors.unknown;
-    html += `
-      <div class="${c.bg} border-l-4 ${c.border} rounded-sm px-3.5 py-2 w-36 h-14 flex flex-col justify-center flex-shrink-0 relative group cursor-default">
-        <div class="flex items-center gap-2">
-          <span class="text-lg font-bold font-mono text-gray-100 leading-tight tracking-tight">${escHtml(chip.value)}</span>
-          <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:${c.dot}"></span>
-          ${chip.stale ? '<span class="text-[9px] font-mono text-teal-400 uppercase">stale</span>' : ''}
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="text-[10px] font-mono font-semibold text-gray-400 uppercase tracking-[.12em]">${chip.label}</span>
-        </div>
-        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-slate-800 border border-white/10 rounded text-[10px] text-gray-300 whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20">
-          ${escHtml(chip.tip)}
-        </div>
-      </div>`;
-  });
-
-  // Overall status chip
-  let overallColor = '#34d399', overallLabel = 'Scene OK';
-  if (anyRateLimited) { overallColor = '#2dd4bf'; overallLabel = 'Rate Limited'; }
-  if (anyStale)       { overallColor = '#2dd4bf'; overallLabel = 'Some Stale';  }
-
-  const lastSync = monitorData?.dashboard_stats?.lastSync;
-  html += `
-    <div class="ml-auto flex flex-col items-end justify-center gap-0.5 pl-4 flex-shrink-0">
-      <div class="flex items-center gap-1.5">
-        <span class="pulse-dot" style="background:${overallColor}"></span>
-        <span class="text-[10px] font-mono font-semibold uppercase tracking-wide" style="color:${overallColor}">${overallLabel}</span>
-      </div>
-      ${lastSync ? `<span class="text-[9px] font-mono text-gray-500">synced ${isNaN(new Date(lastSync).getTime()) ? 'recently' : timeAgo(lastSync)}</span>` : ''}
+  const html = `
+    <div class="inline-flex items-center whitespace-nowrap" style="margin-left:auto;gap:8px">
+      <span class="w-2 h-2 rounded-full" style="background:${dotColor}"></span>
+      <span class="text-[11px] font-mono font-bold uppercase tracking-[.1em] ${textClass}">${escHtml(syncText)}</span>
     </div>`;
 
   bar.innerHTML = html;
@@ -554,30 +568,29 @@ function renderStatusBar(allRepoData, monitorData) {
 
 function initFeedFilters(repoData) {
   const bar = document.getElementById('directory-filter-bar');
+  const searchInput = document.getElementById('directory-repo-search');
   if (!bar) return;
+
+  let activeFilter = 'all';
+  let searchQuery = '';
+
+  const rerenderDirectory = () => {
+    renderCoreReposDirectory(repoData, activeFilter, searchQuery);
+  };
 
   bar.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-cat]');
     if (!btn) return;
 
     bar.querySelectorAll('[data-cat]').forEach(b => {
-      if (b.dataset.cat === 'rec') {
-        b.style.background = 'rgba(59,130,246,.12)';
-        b.style.color = '#60a5fa';
-      } else {
-        b.style.background = 'transparent';
-        b.style.color = 'rgba(148,163,184,1)';
-      }
+      b.style.background = 'transparent';
+      b.style.color = 'rgba(148,163,184,1)';
     });
-    if (btn.dataset.cat === 'rec') {
-      btn.style.background = 'rgba(59,130,246,.30)';
-      btn.style.color = '#ffffff';
-    } else {
-      btn.style.background = 'rgba(255,255,255,.15)';
-      btn.style.color = '#ffffff';
-    }
+    btn.style.background = 'rgba(255,255,255,.15)';
+    btn.style.color = '#ffffff';
 
-    renderCoreReposDirectory(repoData, btn.dataset.cat);
+    activeFilter = btn.dataset.cat;
+    rerenderDirectory();
   });
 
   // Style the default active button
@@ -585,6 +598,13 @@ function initFeedFilters(repoData) {
   if (allBtn) {
     allBtn.style.background = 'rgba(255,255,255,.15)';
     allBtn.style.color = '#ffffff';
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      rerenderDirectory();
+    });
   }
 }
 
@@ -644,184 +664,8 @@ function renderScenePulse(monitorData) {
 
   if (scoredPosts.length) {
     html += `<div>
-      <div class="w-full flex justify-center items-center py-4">
-        <svg class="text-gray-600 w-full h-auto max-w-sm" viewBox="0 0 200 100">
-          
-          <g stroke="currentColor" fill="none" stroke-width="0.3" stroke-dasharray="100 100" pathLength="100" marker-start="url(#circuit-circle-marker)" opacity="0">
-            <path stroke-dasharray="100 100" pathLength="100" d="M 10 20 h 79.5 q 5 0 5 5 v 30" />
-            <path stroke-dasharray="100 100" pathLength="100" d="M 180 10 h -69.7 q -5 0 -5 5 v 30" />
-            <path d="M 130 20 v 21.8 q 0 5 -5 5 h -10" />
-            <path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" />
-            <path stroke-dasharray="100 100" pathLength="100" d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" />
-            <path d="M 94.8 95 v -36" />
-            <path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" />
-            <path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" />
-            <animate attributeName="stroke-dashoffset" from="100" to="0" dur="1s" repeatCount="indefinite" calcMode="spline" keySplines="0.25,0.1,0.5,1" keyTimes="0; 1" />
-          </g>
-      
-          <g mask="url(#circuit-mask-1)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-blue-grad)">
-              <animateMotion dur="5s" repeatCount="indefinite" begin="1s">
-                <mpath href="#circuit-path-1" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-2)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-yellow-grad)">
-              <animateMotion dur="2s" repeatCount="indefinite" begin="6s">
-                <mpath href="#circuit-path-2" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-3)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-pinkish-grad)">
-              <animateMotion dur="6s" repeatCount="indefinite" begin="4s">
-                <mpath href="#circuit-path-3" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-4)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-white-grad)">
-              <animateMotion dur="3s" repeatCount="indefinite" begin="3s">
-                <mpath href="#circuit-path-4" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-5)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-green-grad)">
-              <animateMotion dur="4s" repeatCount="indefinite" begin="9s">
-                <mpath href="#circuit-path-5" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-6)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-orange-grad)">
-              <animateMotion dur="7s" repeatCount="indefinite" begin="3s">
-                <mpath href="#circuit-path-6" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-7)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-cyan-grad)">
-              <animateMotion dur="4s" repeatCount="indefinite" begin="4s">
-                <mpath href="#circuit-path-7" />
-              </animateMotion>
-            </circle>
-          </g>
-          <g mask="url(#circuit-mask-8)">
-            <circle cx="0" cy="0" r="8" fill="url(#circuit-rose-grad)">
-              <animateMotion dur="3s" repeatCount="indefinite" begin="3s">
-                <mpath href="#circuit-path-8" />
-              </animateMotion>
-            </circle>
-          </g>
-      
-          <g filter="url(#circuit-light-shadow)">
-            <rect x="76" y="38" width="12" height="24" rx="4" fill="#00c3e3" />
-            <circle cx="82" cy="44" r="2" fill="#222" /> <circle cx="82" cy="52" r="1.2" fill="#222" /> <circle cx="80" cy="50" r="1.2" fill="#222" />
-            <circle cx="84" cy="50" r="1.2" fill="#222" />
-            <circle cx="82" cy="48" r="1.2" fill="#222" />
-            
-            <rect x="112" y="38" width="12" height="24" rx="4" fill="#f5343f" />
-            <circle cx="118" cy="54" r="2" fill="#222" /> <circle cx="118" cy="46" r="1.2" fill="#222" /> <circle cx="116" cy="44" r="1.2" fill="#222" />
-            <circle cx="120" cy="44" r="1.2" fill="#222" />
-            <circle cx="118" cy="42" r="1.2" fill="#222" />
-      
-            <rect x="85" y="36" width="30" height="28" rx="2" fill="#181818" />
-            <rect x="87" y="38" width="26" height="24" rx="1" fill="#050505" />
-      
-            <text x="100" y="52" font-size="5" fill="url(#circuit-text-gradient)" font-weight="bold" letter-spacing="0.1em" text-anchor="middle">
-              NX
-            </text>
-          </g>
-      
-          <defs>
-            <path id="circuit-path-1" d="M 10 20 h 79.5 q 5 0 5 5 v 30" />
-            <path id="circuit-path-2" d="M 180 10 h -69.7 q -5 0 -5 5 v 30" />
-            <path id="circuit-path-3" d="M 130 20 v 21.8 q 0 5 -5 5 h -10" />
-            <path id="circuit-path-4" d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" />
-            <path id="circuit-path-5" d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" />
-            <path id="circuit-path-6" d="M 94.8 95 v -36" />
-            <path id="circuit-path-7" d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" />
-            <path id="circuit-path-8" d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" />
-
-            <mask id="circuit-mask-1" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 10 20 h 79.5 q 5 0 5 5 v 24" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-2" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 180 10 h -69.7 q -5 0 -5 5 v 24" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-3" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 130 20 v 21.8 q 0 5 -5 5 h -10" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-4" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-5" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-6" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 94.8 95 v -36" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-7" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14" stroke-width="0.5" stroke="white" /></mask>
-            <mask id="circuit-mask-8" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse"><path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20" stroke-width="0.5" stroke="white" /></mask>
-      
-            <radialGradient id="circuit-blue-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#00E8ED" stop-opacity="1" />
-              <stop offset="50%" stop-color="#0088FF" stop-opacity="0.8" />
-              <stop offset="100%" stop-color="#0088FF" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-yellow-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#FFD800" stop-opacity="1" />
-              <stop offset="100%" stop-color="#FFD800" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-pinkish-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#830CD1" stop-opacity="1" />
-              <stop offset="50%" stop-color="#FF008B" stop-opacity="0.8" />
-              <stop offset="100%" stop-color="#FF008B" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-white-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-              <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-green-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#22c55e" stop-opacity="1" />
-              <stop offset="100%" stop-color="#22c55e" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-orange-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#f97316" stop-opacity="1" />
-              <stop offset="100%" stop-color="#f97316" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-cyan-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#06b6d4" stop-opacity="1" />
-              <stop offset="100%" stop-color="#06b6d4" stop-opacity="0" />
-            </radialGradient>
-            
-            <radialGradient id="circuit-rose-grad" cx="50%" cy="50%" r="50%" fx="100%" fy="50%">
-              <stop offset="0%" stop-color="#f43f5e" stop-opacity="1" />
-              <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
-            </radialGradient>
-      
-            <linearGradient id="circuit-text-gradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#666">
-                <animate attributeName="offset" values="-2; -1; 0" dur="5s" repeatCount="indefinite" calcMode="spline" keyTimes="0; 0.5; 1" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-              </stop>
-              <stop offset="25%" stop-color="white">
-                <animate attributeName="offset" values="-1; 0; 1" dur="5s" repeatCount="indefinite" calcMode="spline" keyTimes="0; 0.5; 1" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-              </stop>
-              <stop offset="50%" stop-color="#666">
-                <animate attributeName="offset" values="0; 1; 2;" dur="5s" repeatCount="indefinite" calcMode="spline" keyTimes="0; 0.5; 1" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
-              </stop>
-            </linearGradient>
-      
-            <filter id="circuit-light-shadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow dx="1.5" dy="1.5" stdDeviation="2" flood-color="black" flood-opacity="0.3" />
-            </filter>
-      
-            <marker id="circuit-circle-marker" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="18" markerHeight="18">
-              <circle cx="5" cy="5" r="2" fill="black" stroke="#333" stroke-width="0.5">
-                <animate attributeName="r" values="0; 3; 2" dur="0.5s" />
-              </circle>
-            </marker>
-          </defs>
-        </svg>
-      </div>
-      <div class="text-[10px] font-mono text-white/30 uppercase tracking-wider mb-2">Scene Chatter</div>
-      <div class="space-y-1.5">`;
+      <div class="text-[11px] font-mono font-semibold uppercase tracking-widest mb-3 pb-2" style="letter-spacing:.15em;color:rgba(255,255,255,.58);border-bottom:1px solid rgba(255,255,255,.08)">Scene Chatter</div>
+      <div class="grid grid-cols-1 gap-2">`;
 
     scoredPosts.forEach(p => {
       const url = p.url || p.link || '#';
@@ -830,12 +674,14 @@ function renderScenePulse(monitorData) {
       const source = p.subreddit || p.source || 'GBAtemp';
       html += `
         <a href="${escHtml(url)}" target="_blank" rel="noopener"
-           class="block rounded-md p-3 transition-all hover:bg-white/[.07] group" style="background:rgba(255,255,255,.025)">
-          <div class="text-[12.5px] leading-snug font-medium text-gray-100 group-hover:text-white transition-colors mb-1.5 line-clamp-2">${escHtml(title)}</div>
-          <div class="flex items-center gap-2 flex-wrap">
-            ${upvotes ? `<span class="inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold" style="color:#60a5fa;background:rgba(59,130,246,.12)"><svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 12 12"><path d="M6 1L1 7h3.5v4h3V7H11z"/></svg>${upvotes}</span>` : ''}
-            <span class="text-[10px] font-mono text-gray-400">${escHtml(source)}</span>
-            <span class="text-[10px] font-mono text-gray-400">${timeAgo(p.timestamp)}</span>
+           class="group content-card rounded-xl px-4 py-3.5 flex items-start gap-3 h-full min-h-[70px]">
+          <div class="flex-1 min-w-0">
+            <div class="text-[13px] font-semibold leading-snug mb-2 line-clamp-2" style="color:#eeeeee">${escHtml(title)}</div>
+            <div class="flex items-center gap-2 flex-wrap">
+              ${upvotes ? `<span class="inline-flex items-center gap-1 text-[9px] font-mono" style="color:rgba(255,255,255,.7)"><svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 12 12"><path d="M6 1L1 7h3.5v4h3V7H11z"/></svg>${upvotes}</span>` : ''}
+              <span class="text-[9px] font-mono" style="color:rgba(255,255,255,.7)">${escHtml(source)}</span>
+              <span class="text-[9px] font-mono" style="color:rgba(255,255,255,.7)">${timeAgo(p.timestamp)}</span>
+            </div>
           </div>
         </a>`;
     });
@@ -859,16 +705,23 @@ function renderDirectory(repoData) {
   renderCoreReposDirectory(repoData);
 }
 
-function renderCoreReposDirectory(repoData, filter = 'all') {
+function renderCoreReposDirectory(repoData, filter = 'all', query = '') {
   const container = document.getElementById('dir-repos');
   if (!container) return;
 
   let html = '';
+  const normalizedQuery = (query || '').trim().toLowerCase();
   let firstGroup = true;
   CATEGORIES.forEach(cat => {
     if (filter !== 'all' && filter !== 'rec' && cat.key !== filter) return;
     let items = repoData.filter(r => r.category === cat.key);
     if (filter === 'rec') items = items.filter(r => hasTag(r, 'rec'));
+    if (normalizedQuery) {
+      items = items.filter((r) => {
+        const searchText = `${r.name || ''} ${r.repo || ''} ${r.owner || ''} ${r.desc || ''} ${(r.keywords || []).join(' ')}`.toLowerCase();
+        return searchText.includes(normalizedQuery);
+      });
+    }
     if (!items.length) return;
     items.sort((a, b) => {
       const aRec = hasTag(a, 'rec') ? 0 : 1;
@@ -880,53 +733,54 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
     firstGroup = false;
 
     html += `<div class="mb-6${groupSpacing}">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="inline-block w-2 h-2 rounded-full flex-shrink-0" style="background:${cat.color};box-shadow:0 0 6px ${cat.color}88"></span>
-        <span class="text-sm font-bold uppercase tracking-wider" style="color:${cat.color};opacity:.85">${cat.label}</span>
-        <div class="flex-1 h-px" style="background:linear-gradient(to right,${cat.color}22,transparent)"></div>
+      <div class="flex items-center gap-3 mb-4">
+        <span style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:${cat.color};box-shadow:0 0 6px ${cat.color}99"></span>
+        <span class="text-[11px] font-mono font-semibold uppercase tracking-widest" style="letter-spacing:.15em;color:rgba(255,255,255,.58)">${cat.label}</span>
+        <div class="flex-1 h-px" style="background:linear-gradient(to right,${cat.color} 0%,rgba(255,255,255,.05) 10%,rgba(255,255,255,.05) 100%)"></div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">`;
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3" style="gap:16px">`;
 
     items.forEach(r => {
-      const updatedAt = r.release?.published_at || null;
+      const updatedAt = r.release?.published_at || r.repoUpdatedAt || null;
       const ghUrl = r.url || `https://github.com/${r.owner}/${r.repo}`;
       const repoLabel = (r.name || r.repo || '').trim();
       const repoLetter = repoLabel ? repoLabel[0].toUpperCase() : '?';
       const logoUrl = r.owner ? `https://github.com/${encodeURIComponent(r.owner)}.png?size=64` : '';
-      
-      const recBadge = hasTag(r, 'rec')
-        ? '<span class="text-[9px] px-1.5 py-px rounded font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 backdrop-blur-sm flex-shrink-0">REC</span>'
+
+      const recPill = hasTag(r, 'rec')
+        ? '<span class="rec-pill" style="position:absolute;top:18px;right:18px">REC</span>'
         : '';
 
-      const avatarHtml = logoUrl 
-        ? `<img src="${logoUrl}" alt="${escHtml(r.name)} logo" class="w-full h-full object-cover" loading="lazy">`
-        : `<span class="text-[14px] font-bold text-gray-100">${escHtml(repoLetter)}</span>`;
+      const avatarContent = logoUrl
+        ? `<img src="${logoUrl}" alt="${escHtml(r.name)} logo" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
+        : `<span style="font-size:18px;font-weight:700;color:rgba(255,255,255,.7)">${escHtml(repoLetter)}</span>`;
 
-      const dateHtml = updatedAt
-        ? `<span class="text-[9px] font-mono text-slate-500">${timeAgo(updatedAt)}</span>`
+      const avatarImg = r.owner
+        ? `<img src="https://github.com/${encodeURIComponent(r.owner)}.png?size=32" style="width:14px;height:14px;border-radius:50%;object-fit:cover;flex-shrink:0;opacity:.8" loading="lazy">`
+        : '';
+      const ownerText = r.owner
+        ? `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:rgba(255,255,255,.72);font-family:ui-monospace,monospace">${avatarImg}${escHtml(r.owner)}</span>`
+        : '';
+      const clockIcon = `<svg style="width:11px;height:11px;flex-shrink:0;opacity:.7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+      const dateText = updatedAt
+        ? `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:rgba(255,255,255,.72);font-family:ui-monospace,monospace">${clockIcon}${timeAgo(updatedAt)}</span>`
+        : '';
+      const dotSep = ownerText && dateText
+        ? '<span style="width:1px;height:10px;background:rgba(255,255,255,.18);flex-shrink:0;border-radius:1px;margin:0 2px"></span>'
         : '';
 
       html += `
-        <a href="${ghUrl}" target="_blank" rel="noopener"
-           class="group glass relative overflow-hidden rounded-md p-3 transition-all border border-white/10 hover:border-white/20 h-full flex items-start gap-3 min-h-[85px]"
-           style="border-left:2px solid ${cat.colorMid}66">
-
-          <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
-
-          <div class="w-10 h-10 flex items-center justify-center flex-shrink-0 text-sm overflow-hidden z-10" style="background:${cat.colorDark}4D;border:1px solid ${cat.colorMid}80;border-radius:22% 22% 22% 22%;-webkit-mask-image:-webkit-radial-gradient(white,black)">
-            ${avatarHtml}
-          </div>
-
-          <div class="flex-1 min-w-0 z-10">
-            <div class="flex items-center gap-2 mb-1 min-w-0">
-              <span class="text-[13px] font-medium text-gray-100 group-hover:text-white transition-colors truncate">${escHtml(r.name)}</span>
-              ${recBadge}
+        <a href="${ghUrl}" target="_blank" rel="noopener" class="dir-card">
+          ${recPill}
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;padding-right:${hasTag(r, 'rec') ? '44px' : '0'}">
+            <div style="width:48px;height:48px;border-radius:14px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+              ${avatarContent}
             </div>
-            <p class="text-[11px] text-slate-400 leading-relaxed pr-2 pb-5">${escHtml(r.desc)}</p>
+            <span style="font-size:15px;font-weight:800;color:#ffffff;line-height:1.25;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-shadow:0 0 20px rgba(255,255,255,.2)">${escHtml(r.name)}</span>
           </div>
-
-          <div class="absolute z-10 pointer-events-none" style="top:8px;right:12px">
-            ${dateHtml}
+          <p style="font-size:12px;color:rgba(255,255,255,.7);line-height:1.55;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0;padding:0">${escHtml(r.desc)}</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:10px;flex-shrink:0">
+            ${ownerText}${dotSep}${dateText}
           </div>
         </a>`;
     });
@@ -934,6 +788,10 @@ function renderCoreReposDirectory(repoData, filter = 'all') {
     html += `</div></div>`;
   });
 
+  if (!html) {
+    container.innerHTML = `<div class="rounded-xl border border-white/[.08] bg-white/[.03] px-4 py-6 text-center text-sm text-slate-400">That repository is dead, missing, or currently the subject of federal litigation.<br>For more information see <a href="legal.html" class="text-cyan-400 hover:text-cyan-300 underline">here</a>.</div>`;
+    return;
+  }
   container.innerHTML = html;
 }
 
@@ -946,9 +804,7 @@ function showStatusBarSkeleton() {
   const bar = document.getElementById('status-bar-inner');
   if (!bar) return;
   bar.innerHTML = `
-    <div class="h-14 w-32 skel rounded-sm flex-shrink-0"></div>
-    <div class="h-14 w-32 skel rounded-sm flex-shrink-0"></div>
-    <div class="h-14 w-32 skel rounded-sm flex-shrink-0"></div>`;
+    <div class="h-4 w-44 skel rounded-sm" style="margin-left:auto"></div>`;
 }
 
 

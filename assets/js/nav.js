@@ -2,13 +2,14 @@
   const page = window.location.pathname.split('/').pop() || 'index.html';
   const isGuide = page === 'guide.html';
   const isIntel = page === 'intel.html';
-  const isMonitor = page === 'hub.html';
+  const isMonitor = page === 'directory.html';
+  const isHub = page === 'community.html';
   const isHome = page === '' || page === 'index.html';
   const homeHref = isHome ? '#hero' : 'index.html';
 
   const linkClass = 'text-sm transition-colors';
-  const active = linkClass + ' text-white';
-  const inactive = linkClass + ' text-gray-400 hover:text-white';
+  const active = linkClass + ' text-white border-b-2 border-cyan-400 pb-0.5';
+  const inactive = linkClass + ' text-gray-500 hover:text-gray-200';
 
   const navHTML = `
   <style>
@@ -19,7 +20,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
       <!-- Logo -->
-      <a href="${homeHref}" class="font-mono font-bold text-xl tracking-tight text-white glitch-hover">
+      <a href="${homeHref}" class="font-sans font-extrabold text-xl tracking-tight text-white glitch-hover" style="letter-spacing:-.03em">
         Switch<span class="text-cyan-400">Hack</span>
       </a>
 
@@ -47,7 +48,8 @@
 
         <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
         <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
-        <a href="hub.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Hub</a>
+        <a href="directory.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
+        <a href="community.html" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
       </div>
 
       <!-- Mobile hamburger -->
@@ -80,7 +82,8 @@
 
         <a href="guide.html" class="${isGuide ? active : inactive}"${isGuide ? ' aria-current="page"' : ''}>Guide</a>
         <a href="intel.html" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
-        <a href="hub.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Hub</a>
+        <a href="directory.html" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
+        <a href="community.html" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
       </div>
     </div>
   </nav>`;
