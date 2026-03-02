@@ -1,11 +1,14 @@
 (function () {
   const path = window.location.pathname.replace(/\/+$/, '');
-  const firstSegment = path.split('/').filter(Boolean)[0] || '';
-  const isGuide = firstSegment === 'guide';
-  const isIntel = firstSegment === 'intel';
-  const isMonitor = firstSegment === 'directory';
-  const isHub = firstSegment === 'community';
-  const isHome = firstSegment === '' || firstSegment === 'index.html';
+  const segments = path.split('/').filter(Boolean);
+  let section = segments[0] || '';
+  if (section.endsWith('.html')) section = section.replace(/\.html$/i, '');
+  if (section === 'index') section = '';
+  const isGuide = section === 'guide';
+  const isIntel = section === 'intel';
+  const isMonitor = section === 'directory';
+  const isHub = section === 'community';
+  const isHome = section === '';
   const homeHref = '/';
 
   const linkClass = 'text-sm transition-colors';
