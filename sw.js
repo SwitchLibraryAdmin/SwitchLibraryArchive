@@ -1,11 +1,14 @@
-var CACHE_NAME = 'switchhack-v2';
+var CACHE_NAME = 'switchhack-v3';
 var PRECACHE = [
   '/',
-  '/index.html',
-  '/guide.html',
-  '/intel.html',
-  '/directory.html',
-  '/404.html',
+  '/guide/',
+  '/intel/',
+  '/directory/',
+  '/community/',
+  '/about/',
+  '/legal/',
+  '/prep/',
+  '/404/',
   '/assets/css/tailwind.min.css',
   '/assets/css/styles.css',
   '/assets/js/nav.js',
@@ -47,8 +50,8 @@ self.addEventListener('fetch', function(e) {
     url.pathname.startsWith('/data/') ||
     url.pathname.startsWith('/assets/js/') ||
     url.pathname.startsWith('/assets/css/') ||
-    url.pathname.endsWith('.html') ||
-    url.pathname === '/'
+    e.request.mode === 'navigate' ||
+    e.request.destination === 'document'
   ) {
     e.respondWith(
       fetch(e.request).then(function(res) {
