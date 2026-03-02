@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwitchHack — Community</title>
+  <meta name="description" content="The Switch hacking scene community hub. Live scene updates, guides, and resources for modders.">
+  <meta property="og:title" content="SwitchHack — Community">
+  <meta property="og:description" content="Scene updates, community guides, and everything after the hack — all in one place.">
+  <meta property="og:url" content="https://switchhack.com/community.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SwitchHack">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preload" href="assets/css/tailwind.min.css" as="style">
+  <link rel="preload" href="assets/css/styles.css" as="style">
+  <link rel="preload" href="assets/js/nav.js" as="script">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset / base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #000000;
+      color: #ffffff;
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Display type ── */
+    .display-xl {
+      font-family: 'Inter', 'DM Sans', sans-serif;
+      font-size: clamp(60px, 10vw, 120px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.94;
+      color: #ffffff;
+    }
+    .display-lg {
+      font-family: 'Inter', 'DM Sans', sans-serif;
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: #ffffff;
+    }
+    .display-lg.on-light { color: #0f172a; }
+
+    /* ── Gradient text ── */
+    .cyan-gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #22d3ee 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cyan-gradient-text-dark {
+      background: linear-gradient(135deg, #0f172a 0%, #0891b2 55%, #1d4ed8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-family: ui-monospace, monospace;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(34,211,238,.85);
+      margin-bottom: 20px;
+    }
+    .section-label.on-light { color: #0891b2; }
+
+    /* ── Eyebrow badge ── */
+    .eyebrow-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px 5px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(34,211,238,.3);
+      background: rgba(34,211,238,.07);
+      font-size: 11px;
+      font-family: ui-monospace, monospace;
+      font-weight: 500;
+      color: rgba(165,243,252,.9);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Pulse dot ── */
+    @keyframes pulse-glow {
+      0%   { box-shadow: 0 0 0 0 rgba(34,211,238,.7); }
+      70%  { box-shadow: 0 0 0 6px rgba(34,211,238,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,211,238,0); }
+    }
+    .live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22d3ee;
+      animation: pulse-glow 2s ease-out infinite;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    /* ── Skeleton shimmer ── */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position:  400px 0; }
+    }
+    .skel {
+      background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: 3px;
+      display: block;
+    }
+
+    /* ── Line clamp ── */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.14); }
+
+    /* ── Buttons ── */
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.88);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn-solid {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #22d3ee, #3b82f6);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity .15s, transform .15s;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn-solid:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* ════════════════════════════════════
+       HERO
+    ════════════════════════════════════ */
+    .hero-section {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: #000000;
+      padding: 160px 0 100px;
+      text-align: center;
+    }
+    .hero-live-pill {
+      position: fixed;
+      top: 88px;
+      right: 24px;
+      z-index: 70;
+    }
+
+    /* ── Volumetric rift: three layered lights ── */
+    .hero-rift {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-globe-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-globe-wrap canvas {
+      width: min(900px, 92vw);
+      height: auto;
+      opacity: 0.55;
+      filter: blur(.1px);
+    }
+
+    /* Layer 1 — core */
+    .rift-core {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: rgba(99, 102, 241, 0.8);
+      filter: blur(4px);
+    }
+
+    /* Layer 2 — aura */
+    .rift-haze {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 800px;
+      background: radial-gradient(ellipse, rgba(79, 70, 229, 0.25) 0%, transparent 60%);
+      filter: blur(100px);
+    }
+
+    /* Layer 3 — base fan */
+    .rift-fan {
+      position: absolute;
+      bottom: -200px;
+      left: 0;
+      width: 100vw;
+      height: 400px;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(139, 92, 246, 0.2), transparent);
+      filter: blur(120px);
+    }
+
+    /* ── Hero headline — refined sans, fading gradient ── */
+    .hero-h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.5) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * {
+      animation: fadeUp .65s ease both;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: .05s; }
+    .hero-content > *:nth-child(2) { animation-delay: .15s; }
+    .hero-content > *:nth-child(3) { animation-delay: .25s; }
+    .hero-content > *:nth-child(4) { animation-delay: .35s; }
+
+    /* ════════════════════════════════════
+       SCENE CHATTER
+    ════════════════════════════════════ */
+    .scene-section {
+      background: #000000;
+      padding: 100px 0;
+    }
+
+    /* Dashboard shell (used by directory.js) */
+    .scene-shell {
+      position: relative;
+      background: rgba(8,12,22,.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(34,211,238,.14);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,.4),
+        0 24px 64px rgba(0,0,0,.55),
+        0 0 80px rgba(34,211,238,.04);
+    }
+    .scene-shell-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/images/Pokemon_cafe.jpg');
+      background-size: cover;
+      background-position: top center;
+      mix-blend-mode: normal;
+      opacity: 0.78;
+      filter: saturate(1.18) contrast(1.06) brightness(0.92);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .scene-shell-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9, 18, 50, 0.44) 0%, rgba(4, 9, 24, 0.40) 48%, rgba(0, 0, 0, 0.58) 100%);
+    }
+    .scene-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(34,211,238,.2);
+      background: rgba(2, 8, 24, 0.72);
+    }
+    .scene-body {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(2, 8, 24, 0.24) 0%, rgba(0, 0, 0, 0.36) 100%);
+      padding: 20px;
+    }
+    .scene-shell,
+    .scene-shell p,
+    .scene-shell span,
+    .scene-shell a {
+      text-shadow: 0 1px 2px rgba(0,0,0,.72);
+    }
+
+    /* ════════════════════════════════════
+       CREATORS
+    ════════════════════════════════════ */
+    .creators-section {
+      background: #000000;
+      padding: 100px 0;
+    }
+    .creator-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) { .creator-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px)  { .creator-grid { grid-template-columns: 1fr; } }
+
+    .creator-card { text-decoration: none; }
+    .creator-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .creator-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
+    .creator-desc {
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 10px;
+    }
+    /* platform badge base */
+    .plat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-family: ui-monospace, monospace;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid;
+      line-height: 1.7;
+    }
+    .plat-yt   { background:rgba(239,68,68,.1);  border-color:rgba(239,68,68,.3);  color:rgba(252,165,165,.9); }
+    .plat-x    { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18); color:rgba(255,255,255,.55); }
+    .plat-gh   { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18); color:rgba(255,255,255,.55); }
+    .plat-twitch { background:rgba(147,51,234,.1); border-color:rgba(147,51,234,.3); color:rgba(216,180,254,.9); }
+
+    /* ════════════════════════════════════
+       HULY CARD — core UI component
+    ════════════════════════════════════ */
+
+    .huly-card {
+      background: rgba(15, 17, 23, 0.4);
+      backdrop-filter: blur(48px);
+      -webkit-backdrop-filter: blur(48px);
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.15), inset 0px 24px 48px rgba(255, 255, 255, 0.02), 0px 8px 32px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px;
+    }
+    .huly-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hover lift — shared across all card variants */
+    .huly-card:hover {
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.12),
+        0 32px 60px rgba(0, 0, 0, 0.55);
+      transform: translateY(-2px);
+    }
+
+    /* ════════════════════════════════════
+       AMBIENT GLOW UTILITIES
+       Apply to any card element. The card's
+       position:relative + overflow:hidden
+       contains the pseudo-element.
+    ════════════════════════════════════ */
+
+    .glow-layer {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-purple-tr {
+      top: -100px;
+      right: -100px;
+      background: rgba(139, 92, 246, 0.3);
+    }
+    .glow-blue-bl {
+      bottom: -100px;
+      left: -100px;
+      background: rgba(59, 130, 246, 0.3);
+    }
+    .glow-cyan-tl {
+      top: -100px;
+      left: -100px;
+      background: rgba(34, 211, 238, 0.25);
+    }
+
+    /* ════════════════════════════════════
+       GUIDES
+    ════════════════════════════════════ */
+    .guides-section {
+      background: #000000;
+      padding: 100px 0;
+    }
+    .guide-card {
+      text-decoration: none;
+    }
+    .guide-card-top {
+      padding: 28px 24px 24px;
+      position: relative;
+      overflow: hidden;
+      min-height: 150px;
+    }
+    .guide-card-bottom {
+      padding: 18px 22px 22px;
+    }
+    .guide-card-bottom p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.45);
+      margin: 0;
+    }
+
+    /* REC pill */
+    .rec-pill {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      background: rgba(34,211,238,.07);
+      border-radius: 9999px;
+      padding: 3px 10px;
+      font-size: 10px;
+      letter-spacing: .04em;
+      font-weight: 600;
+      color: rgba(165,243,252,.9);
+      line-height: 1;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .rec-pill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      padding: 1px;
+      background: linear-gradient(to bottom, rgba(34,211,238,.5), rgba(34,211,238,.18));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ════════════════════════════════════
+       COMMUNITIES
+    ════════════════════════════════════ */
+    .communities-section {
+      background: #000000;
+      padding: 100px 0;
+    }
+    .community-card { text-decoration: none; }
+    .community-card > p { margin-top: 16px; }
+    .ecosystem-section {
+      background: #000000;
+      padding: 100px 0;
+    }
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .ecosystem-grid { grid-template-columns: 1fr; }
+    }
+    .stat-badge {
+      font-size: 9px;
+      font-family: ui-monospace, monospace;
+      color: rgba(255,255,255,.4);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 9999px;
+      padding: 2px 7px;
+      flex-shrink: 0;
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════════════
+       CTA
+    ════════════════════════════════════ */
+    .cta-section {
+      background: #000000;
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-glow-left {
+      position: absolute;
+      top: 50%; left: 0;
+      transform: translateY(-50%);
+      width: 45%; height: 100%;
+      background: radial-gradient(ellipse at 0% 50%,
+        rgba(234,88,12,.1) 0%,
+        rgba(249,115,22,.05) 30%,
+        transparent 65%
+      );
+      pointer-events: none;
+    }
+    .cta-glow-right {
+      position: absolute;
+      top: 50%; right: 0;
+      transform: translateY(-50%);
+      width: 45%; height: 100%;
+      background: radial-gradient(ellipse at 100% 50%,
+        rgba(34,211,238,.07) 0%,
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+    .cta-orb {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: radial-gradient(circle at 35% 35%,
+        rgba(99,102,241,.55) 0%,
+        rgba(34,211,238,.2) 35%,
+        rgba(8,12,22,.9) 70%
+      );
+      border: 1px solid rgba(255,255,255,.08);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow:
+        0 0 80px rgba(99,102,241,.2),
+        0 0 160px rgba(34,211,238,.08),
+        inset 0 0 50px rgba(0,0,0,.5);
+      position: relative;
+    }
+    .cta-orb::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .cta-orb::after {
+      content: '';
+      position: absolute;
+      inset: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.05);
+    }
+    .cta-orb-icon {
+      width: 80px; height: 80px;
+      border-radius: 22%;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════ */
+    .site-footer {
+      background: #000000;
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 36px 0;
+    }
+    .footer-link {
+      font-size: 14px;
+      color: rgba(255,255,255,.38);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-link:hover { color: rgba(255,255,255,.75); }
+
+    /* ── Responsive padding ── */
+    @media (max-width: 768px) {
+      .hero-live-pill { top: 80px; right: 12px; }
+      .hero-section   { padding: 120px 0 80px; }
+      .scene-section,
+      .guides-section,
+      .creators-section,
+      .communities-section { padding: 80px 0; }
+      .cta-section    { padding: 80px 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Skip to content -->
+  <a href="#scene-chatter" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">Skip to content</a>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <div id="nav-container"></div>
+  <script src="assets/js/nav.js"></script>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════ -->
+  <section class="hero-section">
+    <div class="hero-rift" aria-hidden="true">
+      <div class="rift-haze"></div>
+      <div class="rift-fan"></div>
+    </div>
+    <div class="hero-globe-wrap" aria-hidden="true">
+      <canvas id="hero-globe-canvas"></canvas>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 sm:px-8 relative z-10 w-full">
+      <div class="hero-content" style="display:flex;flex-direction:column;align-items:center;">
+
+        <!-- Eyebrow -->
+        <div class="hero-live-pill">
+          <span class="eyebrow-badge">
+            <span class="live-dot"></span>
+            Live &middot; Updated Automatically
+          </span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="hero-h1" style="margin-bottom:28px;max-width:820px;">
+          Community.<br>Resources.
+        </h1>
+
+        <!-- Subtitle -->
+        <p style="font-size:18px;line-height:1.72;color:rgba(255,255,255,.5);max-width:500px;margin-bottom:44px;letter-spacing:-.01em;">
+          Find live community updates, essential links, & connect with Scene Creators— all in one place.
+        </p>
+
+        <!-- CTAs -->
+        <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+          <a href="#scene-chatter" class="btn-outline">
+            Explore the Hub
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCENE CHATTER
+  ═══════════════════════════════════════════════════════ -->
+  <section id="scene-chatter" class="scene-section" style="scroll-margin-top:72px;">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
+
+        <!-- Left: sticky heading -->
+        <div class="lg:sticky" style="top:96px;">
+          <p class="section-label">
+            <span class="live-dot" style="width:6px;height:6px;"></span>
+            Live &middot; Scene Pulse
+          </p>
+          <h2 class="display-lg" style="margin-bottom:20px;">
+            What the<br>Scene is<br>Saying.
+          </h2>
+          <p style="font-size:15px;line-height:1.75;color:rgba(255,255,255,.48);max-width:280px;margin-bottom:24px;">
+            Top posts from r/SwitchHacks and GBAtemp, scored by engagement and refreshed hourly.
+          </p>
+          <p style="font-size:11px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.22);">
+            Powered by the SwitchHack Monitor
+          </p>
+        </div>
+
+        <!-- Right: live dashboard shell -->
+        <div class="scene-shell">
+          <div class="scene-shell-bg" aria-hidden="true"></div>
+          <div class="scene-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="live-dot"></span>
+              <span style="font-size:12px;font-family:ui-monospace,monospace;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(34,211,238,.85);">Scene Chatter</span>
+            </div>
+            <span style="font-size:10px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.28);letter-spacing:.1em;text-transform:uppercase;">r/SwitchHacks &middot; GBAtemp</span>
+          </div>
+          <div class="scene-body">
+            <div id="scene-pulse">
+              <!-- Loading skeletons — replaced by directory.js -->
+              <div style="margin-bottom:14px;">
+                <div class="h-3 w-28 skel rounded" style="margin-bottom:10px;"></div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div class="h-4 skel rounded" style="width:74%;"></div>
+                  <div class="h-4 skel rounded" style="width:50%;"></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div class="skel rounded-xl" style="height:70px;"></div>
+                <div class="skel rounded-xl" style="height:70px;"></div>
+                <div class="skel rounded-xl" style="height:70px;"></div>
+                <div class="skel rounded-xl" style="height:70px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ECOSYSTEM BENTO GRID
+  ═══════════════════════════════════════════════════════ -->
+  <section class="ecosystem-section">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+      <div class="ecosystem-grid">
+
+        <div id="guides" class="col-span-12" style="scroll-margin-top:72px;">
+          <p class="section-label">Resources</p>
+          <h2 class="display-lg" style="margin-bottom:20px;">Essential<br>Reading.</h2>
+          <p style="font-size:15px;line-height:1.75;color:rgba(255,255,255,.45);max-width:520px;">
+            Curated guides for every stage of the Switch modding journey — from first boot to advanced setup.
+          </p>
+        </div>
+
+        <a href="https://switchgui.de/switch-guide/" target="_blank" rel="noopener" class="guide-card huly-card col-span-12 md:col-span-8 min-h-[350px]">
+          <div class="glow-layer glow-cyan-tl"></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
+            <div style="width:30px;height:30px;border-radius:8px;background:rgba(34,211,238,.14);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" style="color:#22d3ee;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+            </div>
+            <span style="font-size:10px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;">WEB GUIDE</span>
+          </div>
+          <div style="font-family:'Inter','DM Sans',sans-serif;font-size:30px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px;">NH Switch Guide</div>
+          <span class="rec-pill" style="margin-bottom:16px;">RECOMMENDED</span>
+          <p style="font-size:14px;line-height:1.7;color:rgba(255,255,255,.62);max-width:620px;">The canonical CFW setup guide. Maintained by the Nintendo Homebrew community. Start here if you're helping someone new.</p>
+        </a>
+
+        <a href="guide.html" class="guide-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-purple-tr"></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;">
+            <div style="width:30px;height:30px;border-radius:8px;background:rgba(99,102,241,.14);display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" style="color:#818cf8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+            </div>
+            <span style="font-size:10px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;">THIS SITE</span>
+          </div>
+          <div style="font-family:'Inter','DM Sans',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px;">SwitchHack Guide</div>
+          <span style="display:inline-flex;align-items:center;font-size:10px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);border-radius:9999px;padding:3px 10px;color:rgba(165,180,252,.85);font-family:ui-monospace,monospace;font-weight:600;letter-spacing:.04em;margin-bottom:16px;">BEGINNER FRIENDLY</span>
+          <p style="font-size:14px;line-height:1.7;color:rgba(255,255,255,.62);">Our own beginner guide — curated for clarity. Covers exploit check, emuMMC setup, and essential tool installation.</p>
+        </a>
+
+        <div id="communities" class="col-span-12" style="scroll-margin-top:72px;margin-top:8px;">
+          <p class="section-label">Community</p>
+          <h2 class="display-lg">Find Your Crew.</h2>
+        </div>
+
+        <a href="https://discord.gg/C29hYvh" target="_blank" rel="noopener" class="community-card huly-card col-span-12 md:col-span-7">
+          <div class="glow-layer glow-cyan-tl"></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:22%;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/discord.png" alt="Discord" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div style="min-width:0;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Nintendo Homebrew</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="stat-badge">280k+</span>
+                <span style="font-size:9px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;">Discord</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:11px;line-height:1.65;color:rgba(255,255,255,.48);">All-purpose hub. Best starting point — structured support channels and direct access to developers.</p>
+        </a>
+
+        <a href="https://discord.gg/ZdqEhed" target="_blank" rel="noopener" class="community-card huly-card col-span-12 md:col-span-5">
+          <div class="glow-layer glow-purple-tr"></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:22%;overflow:hidden;flex-shrink:0;">
+              <img src="assets/images/discord.png" alt="Discord" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div style="min-width:0;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">ReSwitched</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="stat-badge">10k+</span>
+                <span style="font-size:9px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;">Discord</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:11px;line-height:1.65;color:rgba(255,255,255,.48);">Strictly technical. Home of the original exploit researchers. Kernel and firmware internals only.</p>
+        </a>
+
+        <a href="https://www.reddit.com/r/SwitchHacks/" target="_blank" rel="noopener" class="community-card huly-card col-span-12 md:col-span-5">
+          <div class="glow-layer glow-blue-bl"></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:22%;overflow:hidden;flex-shrink:0;">
+              <img src="https://b.thumbs.redditmedia.com/lofDMyBYgxPPa-GJuOmGlJCi_mda9dj6qN7tik2UeQA.png" alt="r/SwitchHacks" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div style="min-width:0;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">r/SwitchHacks</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="stat-badge">95k+</span>
+                <span style="font-size:9px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;">Reddit</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:11px;line-height:1.65;color:rgba(255,255,255,.48);">Practical modding support and troubleshooting. Good pinned FAQ and master guide thread.</p>
+        </a>
+
+        <a href="https://gbatemp.net/forums/nintendo-switch.283/" target="_blank" rel="noopener" class="community-card huly-card col-span-12 md:col-span-7">
+          <div class="glow-layer glow-purple-tr"></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:22%;overflow:hidden;flex-shrink:0;">
+              <img src="https://gbatemp.net/favicon.ico" alt="GBAtemp" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div style="min-width:0;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">GBAtemp</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="stat-badge">500k+</span>
+                <span style="font-size:9px;font-family:ui-monospace,monospace;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;">Forum</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:11px;line-height:1.65;color:rgba(255,255,255,.48);">Deep archival threads and release posts. Best for research and finding old information.</p>
+        </a>
+
+        <div id="creators" class="col-span-12" style="scroll-margin-top:72px;margin-top:8px;">
+          <p class="section-label">Scene Media</p>
+          <h2 class="display-lg">Scene Media<br>&amp; Creators.</h2>
+          <p style="font-size:15px;line-height:1.72;color:rgba(255,255,255,.45);max-width:520px;">
+            Trusted voices in the Switch homebrew space — tutorials, news, and developer commentary.
+          </p>
+        </div>
+
+        <a href="https://www.youtube.com/@sthetix" target="_blank" rel="noopener" class="creator-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-cyan-tl"></div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div class="creator-avatar" style="background:linear-gradient(135deg,#ef4444,#dc2626);">st</div>
+            <div style="min-width:0;flex:1;">
+              <div class="creator-name">sthetix</div>
+              <p class="creator-desc">Deep-dive CFW tutorials and homebrew walkthroughs. Best on YouTube for step-by-step Switch modding.</p>
+              <span class="plat-badge plat-yt"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 00-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>YouTube</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://twitter.com/SciresM" target="_blank" rel="noopener" class="creator-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-purple-tr"></div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div class="creator-avatar" style="background:linear-gradient(135deg,#22d3ee,#0891b2);">Sc</div>
+            <div style="min-width:0;flex:1;">
+              <div class="creator-name">SciresM</div>
+              <p class="creator-desc">Lead developer of Atmosphere CFW. Primary source for firmware compatibility and Atmosphere news.</p>
+              <span class="plat-badge plat-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://twitter.com/CTCaer" target="_blank" rel="noopener" class="creator-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-blue-bl"></div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div class="creator-avatar" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">CT</div>
+            <div style="min-width:0;flex:1;">
+              <div class="creator-name">CTCaer</div>
+              <p class="creator-desc">Developer of Hekate bootloader. Authoritative source for bootloader updates and emuMMC improvements.</p>
+              <span class="plat-badge plat-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/@ETAPRIME" target="_blank" rel="noopener" class="creator-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-purple-tr"></div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div class="creator-avatar" style="background:linear-gradient(135deg,#f97316,#ea580c);">EP</div>
+            <div style="min-width:0;flex:1;">
+              <div class="creator-name">ETA PRIME</div>
+              <p class="creator-desc">Retro gaming and homebrew coverage. Great for emulation performance comparisons on Switch hardware.</p>
+              <span class="plat-badge plat-yt"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 00-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>YouTube</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://github.com/Atmosphere-NX/Atmosphere" target="_blank" rel="noopener" class="creator-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-cyan-tl"></div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div class="creator-avatar" style="background:linear-gradient(135deg,#818cf8,#6366f1);">Atm</div>
+            <div style="min-width:0;flex:1;">
+              <div class="creator-name">Atmosphere-NX</div>
+              <p class="creator-desc">Official GitHub for Atmosphere CFW. Watch releases here for the latest firmware support and patches.</p>
+              <span class="plat-badge plat-gh"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://twitter.com/GaryOderNichts" target="_blank" rel="noopener" class="creator-card huly-card col-span-12 md:col-span-4">
+          <div class="glow-layer glow-blue-bl"></div>
+          <div style="display:flex;align-items:flex-start;gap:14px;">
+            <div class="creator-avatar" style="background:linear-gradient(135deg,#34d399,#059669);">Go</div>
+            <div style="min-width:0;flex:1;">
+              <div class="creator-name">GaryOderNichts</div>
+              <p class="creator-desc">Switch exploit and homebrew developer. Posts updates on research, tooling, and kernel-level work.</p>
+              <span class="plat-badge plat-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA — Join the Movement
+  ═══════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="cta-glow-left"  aria-hidden="true"></div>
+    <div class="cta-glow-right" aria-hidden="true"></div>
+
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:60px 80px;">
+
+        <!-- Orb -->
+        <div class="cta-orb" style="flex-shrink:0;">
+          <div class="cta-orb-icon">🎮</div>
+        </div>
+
+        <!-- Text -->
+        <div style="flex:1;min-width:260px;">
+          <p class="section-label" style="color:rgba(34,211,238,.65);">Ready to start?</p>
+          <h2 class="display-xl" style="margin-bottom:22px;">
+            Join the<br>
+            <span class="cyan-gradient-text">Movement.</span>
+          </h2>
+          <p style="font-size:17px;line-height:1.75;color:rgba(255,255,255,.48);max-width:400px;margin-bottom:36px;">
+            Unlock the full Switch modding experience. The community is waiting — this journey is just getting started.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;">
+            <a href="https://discord.gg/C29hYvh" target="_blank" rel="noopener noreferrer" class="btn-outline">
+              Join Discord
+            </a>
+            <a href="guide.html" class="btn-solid">
+              Start the Guide &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;letter-spacing:-0.03em;">Switch<span style="color:#22d3ee;">Hack</span></span>
+        <span style="color:rgba(255,255,255,.18);font-size:13px;">&copy; 2026</span>
+      </div>
+      <nav style="display:flex;align-items:center;gap:24px;">
+        <a href="index.html"     class="footer-link">Home</a>
+        <a href="guide.html"    class="footer-link">Guide</a>
+        <a href="intel.html"    class="footer-link">Intel</a>
+        <a href="directory.html" class="footer-link">Directory</a>
+        <a href="about.html"    class="footer-link">About</a>
+        <a href="legal.html"    class="footer-link">Legal</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <!-- directory.js handles renderScenePulse() → #scene-pulse -->
+  <script src="assets/js/directory.js?v=6"></script>
+  <script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+    const canvas = document.getElementById("hero-globe-canvas");
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      const state = {
+        width: 0,
+        height: 0,
+        radius: 0,
+        projection: null,
+        path: null,
+        land: null,
+        dots: [],
+        rotation: 0
+      };
+
+      const pointInPolygon = (point, polygon) => {
+        const [x, y] = point;
+        let inside = false;
+        for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+          const [xi, yi] = polygon[i];
+          const [xj, yj] = polygon[j];
+          if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+        }
+        return inside;
+      };
+
+      const pointInFeature = (point, feature) => {
+        const geometry = feature.geometry;
+        if (geometry.type === "Polygon") {
+          const coordinates = geometry.coordinates;
+          if (!pointInPolygon(point, coordinates[0])) return false;
+          for (let i = 1; i < coordinates.length; i++) if (pointInPolygon(point, coordinates[i])) return false;
+          return true;
+        }
+        if (geometry.type === "MultiPolygon") {
+          for (const polygon of geometry.coordinates) {
+            if (!pointInPolygon(point, polygon[0])) continue;
+            let inHole = false;
+            for (let i = 1; i < polygon.length; i++) if (pointInPolygon(point, polygon[i])) inHole = true;
+            if (!inHole) return true;
+          }
+        }
+        return false;
+      };
+
+      const generateDotsInFeature = (feature, spacing = 18) => {
+        const dots = [];
+        const [[minLng, minLat], [maxLng, maxLat]] = d3.geoBounds(feature);
+        const step = spacing * 0.08;
+        for (let lng = minLng; lng <= maxLng; lng += step) {
+          for (let lat = minLat; lat <= maxLat; lat += step) {
+            const point = [lng, lat];
+            if (pointInFeature(point, feature)) dots.push(point);
+          }
+        }
+        return dots;
+      };
+
+      const configureCanvas = () => {
+        const w = Math.min(900, window.innerWidth - 32);
+        const h = Math.min(560, Math.round(window.innerHeight * 0.72));
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = `${w}px`;
+        canvas.style.height = `${h}px`;
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.scale(dpr, dpr);
+
+        state.width = w;
+        state.height = h;
+        state.radius = (Math.min(w, h) / 2.7) * 1.3;
+        state.projection = d3
+          .geoOrthographic()
+          .scale(state.radius)
+          .translate([w / 2, h / 2])
+          .clipAngle(90);
+        state.path = d3.geoPath().projection(state.projection).context(context);
+      };
+
+      const render = () => {
+        if (!state.projection || !state.path) return;
+        context.clearRect(0, 0, state.width, state.height);
+        const scaleFactor = state.projection.scale() / state.radius;
+
+        context.beginPath();
+        context.arc(state.width / 2, state.height / 2, state.projection.scale(), 0, 2 * Math.PI);
+        context.fillStyle = "rgba(0, 0, 0, 0.55)";
+        context.fill();
+        context.strokeStyle = "rgba(255, 255, 255, 0.6)";
+        context.lineWidth = 1.2 * scaleFactor;
+        context.stroke();
+
+        if (!state.land) return;
+
+        context.beginPath();
+        state.path(d3.geoGraticule()());
+        context.strokeStyle = "rgba(255, 255, 255, 0.24)";
+        context.lineWidth = 0.8 * scaleFactor;
+        context.stroke();
+
+        context.beginPath();
+        state.land.features.forEach((feature) => state.path(feature));
+        context.strokeStyle = "rgba(255, 255, 255, 0.55)";
+        context.lineWidth = 0.9 * scaleFactor;
+        context.stroke();
+
+        state.dots.forEach((dot) => {
+          const projected = state.projection([dot[0], dot[1]]);
+          if (!projected) return;
+          if (projected[0] < 0 || projected[0] > state.width || projected[1] < 0 || projected[1] > state.height) return;
+          context.beginPath();
+          context.arc(projected[0], projected[1], 1.05 * scaleFactor, 0, 2 * Math.PI);
+          context.fillStyle = "rgba(216, 216, 216, 0.72)";
+          context.fill();
+        });
+      };
+
+      const loadLand = async () => {
+        const response = await fetch("https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json");
+        if (!response.ok) return;
+        state.land = await response.json();
+        state.dots = [];
+        state.land.features.forEach((feature) => {
+          generateDotsInFeature(feature, 16).forEach((point) => state.dots.push(point));
+        });
+        render();
+      };
+
+      configureCanvas();
+      loadLand();
+      d3.timer(() => {
+        if (!state.projection) return;
+        state.rotation += 0.17;
+        state.projection.rotate([state.rotation, -8]);
+        render();
+      });
+      window.addEventListener("resize", () => {
+        configureCanvas();
+        render();
+      });
+    }
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then((reg) => {
+        reg.update();
+      });
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
+      });
+    }
+  </script>
+
+</body>
+</html>
