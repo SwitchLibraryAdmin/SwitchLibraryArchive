@@ -83,20 +83,30 @@
     /* ─── Module Row ─── */
     .mod-row {
       display: flex;
-      align-items: flex-start;
-      gap: 14px;
+      align-items: center;
+      gap: 8px;
       border: 1px solid var(--border);
-      padding: 14px 16px;
+      border-bottom: 0;
+      padding: 5px 8px;
       cursor: pointer;
       user-select: none;
       border-left: 2px solid transparent;
       transition: background 0.12s ease;
     }
-    .mod-row:not(.last-in-group) { border-bottom: 0; }
     .mod-row:hover { background: var(--surface-2); }
     .mod-row.selected {
       border-left-color: var(--accent);
       background: var(--accent-tint);
+    }
+
+    /* ─── Module Grid ─── */
+    .mod-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      .mod-grid { grid-template-columns: 1fr; }
     }
 
     /* ─── Badges ─── */
@@ -106,8 +116,10 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      padding: 2px 6px;
+      padding: 1px 4px;
       line-height: 1.4;
+      white-space: nowrap;
+      vertical-align: middle;
     }
     .badge-required {
       color: var(--accent);
@@ -469,40 +481,12 @@
 
 
   <!-- ═══════════════════════════════════════════
-       DATA
-  ═══════════════════════════════════════════ -->
-  <script>
-    const MODULE_CATALOG = [
-      { id: 'atmosphere',     owner: 'Atmosphere-NX', repo: 'Atmosphere',             name: 'Atmosphere',        category: 'Core CFW',          tags: ['required'],    ram_kb: 0,    desc: 'The standard custom firmware. Required for everything. Start here.' },
-      { id: 'hekate',         owner: 'CTCaer',        repo: 'hekate',                 name: 'Hekate',            category: 'Core CFW',          tags: ['required'],    ram_kb: 0,    desc: 'Bootloader and partition manager. Boots CFW and manages emuMMC.' },
-      { id: 'sys-patch',      owner: 'impeeza',       repo: 'sys-patch',              name: 'sys-patch',         category: 'Core CFW',          tags: ['recommended'], ram_kb: 0,    desc: 'Patches signature checks on the fly. Replaces static sigpatches.' },
-      { id: 'nx-ovlloader',   owner: 'ppkantorski',   repo: 'nx-ovlloader',           name: 'nx-ovlloader',      category: 'Overlays',          tags: ['recommended'], ram_kb: 4096, desc: 'Required base layer for Ultrahand overlay menu. (Cost: 4.0 MB)' },
-      { id: 'ultrahand',      owner: 'ppkantorski',   repo: 'Ultrahand-Overlay',      name: 'Ultrahand Overlay', category: 'Overlays',          tags: ['recommended'], ram_kb: 0,    desc: 'Modern overlay manager with package support. Replaces Tesla.' },
-      { id: 'status-monitor', owner: 'masagrator',    repo: 'Status-Monitor-Overlay', name: 'Status Monitor',    category: 'Overlays',          tags: [],              ram_kb: 435,  desc: 'Real-time FPS, RAM, CPU/GPU usage overlay. (Cost: 435 KB)' },
-      { id: 'edizon-overlay', owner: 'proferabg',     repo: 'EdiZon-Overlay',         name: 'EdiZon Overlay',    category: 'Overlays',          tags: [],              ram_kb: 1024, desc: 'In-game overlay for managing cheats and memory tools. (Cost: 1.0 MB)' },
-      { id: 'missioncontrol', owner: 'ndeadly',       repo: 'MissionControl',         name: 'MissionControl',    category: 'Sysmodules',        tags: ['recommended'], ram_kb: 500,  desc: 'Use Bluetooth controllers from other platforms (PS5, Xbox, etc.). (Cost: 500 KB)' },
-      { id: 'sys-clk',        owner: 'retronx-team',  repo: 'sys-clk',                name: 'sys-clk',           category: 'Sysmodules',        tags: [],              ram_kb: 1024, desc: 'Overclock/underclock CPU, GPU, and memory per game. (Cost: 1.0 MB)' },
-      { id: 'sysdvr',         owner: 'exelix11',      repo: 'SysDVR',                 name: 'SysDVR',            category: 'Sysmodules',        tags: [],              ram_kb: 1524, desc: 'Stream Switch video and audio to your PC over USB or WiFi. (Cost: 1.5 MB)' },
-      { id: 'emuiibo',        owner: 'XorTroll',      repo: 'emuiibo',                name: 'Emuiibo',           category: 'Sysmodules',        tags: [],              ram_kb: 16,   desc: 'Virtual Amiibo emulation. Use any amiibo without the figure. (Cost: 16 KB)' },
-      { id: 'saltynx',        owner: 'masagrator',    repo: 'SaltyNX',                name: 'SaltyNX',           category: 'Sysmodules',        tags: [],              ram_kb: 404,  desc: 'Plugin framework that enables per-game cheats and patches. (Cost: 404 KB)' },
-      { id: 'dbi',            owner: 'rashevskyv',    repo: 'dbi',                    name: 'DBI',               category: 'File & Save Tools', tags: ['recommended'], ram_kb: 0,    desc: 'Reliable NSP/NSZ installer with USB and MTP support. Battle-tested.' },
-      { id: 'jksv',           owner: 'J-D-K',         repo: 'JKSV',                   name: 'JKSV',              category: 'File & Save Tools', tags: ['recommended'], ram_kb: 0,    desc: 'Save manager. Back up, restore, and transfer game saves.' },
-      { id: 'hb-appstore',    owner: 'fortheusers',   repo: 'hb-appstore',            name: 'HB Appstore',       category: 'Homebrew Apps',     tags: ['recommended'], ram_kb: 0,    desc: 'Browse and install homebrew apps directly on your Switch.' },
-      { id: 'edizon',         owner: 'tomvita',       repo: 'EdiZon-SE',              name: 'EdiZon-SE',         category: 'Homebrew Apps',     tags: [],              ram_kb: 0,    desc: 'In-game cheat manager and RAM editor app.' },
-      { id: 'moonlight',      owner: 'XITRIX',        repo: 'Moonlight-Switch',       name: 'Moonlight',         category: 'Streaming & Media', tags: [],              ram_kb: 0,    desc: 'Stream PC games via Sunshine or NVIDIA GameStream to your Switch.' },
-      { id: 'retroarch',      owner: 'libretro',      repo: 'RetroArch',              name: 'RetroArch',         category: 'Emulation',         tags: ['recommended'], ram_kb: 0,    desc: 'Multi-system emulation frontend. Covers most retro consoles.' },
-    ];
-
-    const MAX_RAM_KB = 32768; // 32 MB in KB
-  </script>
-
-
-  <!-- ═══════════════════════════════════════════
        LOGIC
   ═══════════════════════════════════════════ -->
   <script>
     /* ── State ── */
     const selected = new Set();
+    const MAX_RAM_KB = 32768;
 
     /* ─────────────────────────────────────────
        Helpers
@@ -566,15 +550,15 @@
                 ${esc(cat)}
               </h2>
             </div>
-            <div>
-              ${mods.map((m, i) => {
+            <div class="mod-grid">
+              ${mods.map(m => {
                 const isReq = m.tags.includes('required');
                 const isRec = m.tags.includes('recommended');
-                const isLast = i === mods.length - 1;
                 return `
                   <label
                     data-id="${esc(m.id)}"
-                    class="mod-row${isLast ? ' last-in-group' : ''}${isReq ? ' selected' : ''}"
+                    class="mod-row${isReq ? ' selected' : ''}"
+                    title="${esc(m.desc)}"
                   >
                     <input
                       type="checkbox"
@@ -583,24 +567,10 @@
                       ${isReq ? 'checked' : ''}
                       onchange="toggleModule('${esc(m.id)}', this.checked)"
                     />
-                    <div class="check-box" style="margin-top:2px;"></div>
-                    <div style="flex:1; min-width:0;">
-                      <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-                        <span style="font-weight:700; font-size:14px; color:rgba(255,255,255,0.95); letter-spacing:-0.01em;">
-                          ${esc(m.name)}
-                        </span>
-                        ${isReq ? '<span class="badge badge-required">Required</span>' : ''}
-                        ${isRec ? '<span class="badge badge-recommended">Recommended</span>' : ''}
-                      </div>
-                      <p style="font-size:12px; color:var(--muted); margin:4px 0 0; line-height:1.55; font-weight:300;">
-                        ${esc(m.desc)}
-                      </p>
-                    </div>
-                    <div style="flex-shrink:0; margin-top:2px;">
-                      <span class="${ramClass(m.ram_kb)}" style="font-family:'JetBrains Mono',monospace; font-size:11px;">
-                        ${fmtRam(m.ram_kb)}
-                      </span>
-                    </div>
+                    <div class="check-box"></div>
+                    <span style="flex:1; min-width:0; font-size:13px; color:rgba(255,255,255,0.9); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                      ${esc(m.name)}${isReq ? ' <span class="badge badge-required">req</span>' : ''}${isRec ? ' <span class="badge badge-recommended">rec</span>' : ''}
+                    </span>
                   </label>
                 `;
               }).join('')}
@@ -787,32 +757,45 @@
 
     document.getElementById('buildBtn').addEventListener('click', doBuild);
 
-    async function doBuild() {
+   async function doBuild() {
       const btn = document.getElementById('buildBtn');
       const modules = getSelectedModules(); // Array of full module objects
+      
+      // Extract just the string IDs for your Python backend
+      const moduleIds = modules.map(m => m.id);
 
       btn.textContent = 'BUILDING…';
       btn.disabled = true;
       btn.classList.remove('state-success', 'state-error');
 
       try {
-        // ── WIRE TO BACKEND: replace this block ──────────────────────────
-        //
-        // const res = await fetch('/api/builder/build', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     modules: modules.map(m => ({ id: m.id, owner: m.owner, repo: m.repo })),
-        //   }),
-        // });
-        // if (!res.ok) throw new Error(await res.text());
-        // const { downloadUrl } = await res.json();
-        // window.location.href = downloadUrl;
-        //
-        // ── END BACKEND BLOCK ─────────────────────────────────────────────
+        // ── LIVE RENDER BACKEND API ──
+        const res = await fetch('https://switchhack-backend.onrender.com/api/build', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            requested_modules: moduleIds,
+            heavy_mods_enabled: false 
+          }),
+        });
 
-        // Remove this mock when wiring real API:
-        await new Promise(r => setTimeout(r, 1500));
+        if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(`Server Error: ${res.status} - ${errText}`);
+        }
+
+        // The backend returns the raw ZIP file. Convert it to a blob and trigger download.
+        const blob = await res.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = 'switchhack_bundle.zip';
+        document.body.appendChild(a);
+        a.click();
+        
+        // Clean up
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
 
         btn.textContent = '✓ PACKAGE READY';
         btn.classList.add('state-success');
@@ -837,7 +820,20 @@
     /* ─────────────────────────────────────────
        Init
     ───────────────────────────────────────── */
-    renderModules();
+    async function init() {
+      const response = await fetch('https://switchhack-backend.onrender.com/api/catalog');
+      const data = await response.json();
+      
+      // Convert the JSON object into the array format your renderModules function expects
+      window.MODULE_CATALOG = Object.entries(data).map(([id, info]) => ({
+        id, ...info
+      }));
+      
+      renderModules();
+    }
+
+    init();
+
   </script>
 
 </body>
