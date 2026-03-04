@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwitchHack — SD Card Builder</title>
+  <meta name="description" content="Build your custom CFW SD card. Pick your modules, track your RAM budget, and download a ready-to-flash ZIP.">
+  <meta property="og:title" content="SwitchHack — SD Card Builder">
+  <meta property="og:description" content="Build your custom CFW SD card. Pick your modules, track your RAM budget, and download a ready-to-flash ZIP.">
+  <meta property="og:url" content="https://switchhack.com/builder/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SwitchHack">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preload" href="assets/css/tailwind.min.css" as="style">
+  <link rel="preload" href="assets/css/styles.css" as="style">
+  <link rel="preload" href="assets/js/nav.js" as="script">
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <style>
+    /* ─── Design Tokens ─── */
+    :root {
+      --bg:          #0a0a0b;
+      --surface:     #111113;
+      --surface-2:   #18181b;
+      --border:      #1e1e22;
+      --border-hi:   #2a2a2e;
+      --muted:       #71717a;
+      --text:        #e4e4e7;
+      --accent:      #06B6D4;
+      --accent-hi:   #22D3EE;
+      --accent-dim:  rgba(6, 182, 212, 0.09);
+      --accent-tint: rgba(6, 182, 212, 0.06);
+      --warn-mid:    #EAB308;
+      --warn:        #EF4444;
+    }
+
+    /* ─── Base Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── Custom Checkbox ─── */
+    .mod-check { display: none; }
+    .mod-check + .check-box {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border-hi);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      cursor: pointer;
+    }
+    .mod-check:checked + .check-box {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .mod-check:checked + .check-box::after {
+      content: '✓';
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+
+    /* ─── Module Row ─── */
+    .mod-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      border-left: 2px solid transparent;
+      transition: background 0.12s ease;
+    }
+    .mod-row:not(.last-in-group) { border-bottom: 0; }
+    .mod-row:hover { background: var(--surface-2); }
+    .mod-row.selected {
+      border-left-color: var(--accent);
+      background: var(--accent-tint);
+    }
+
+    /* ─── Badges ─── */
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
+      line-height: 1.4;
+    }
+    .badge-required {
+      color: var(--accent);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      background: rgba(6, 182, 212, 0.06);
+    }
+    .badge-recommended {
+      color: var(--muted);
+      border: 1px solid var(--border-hi);
+    }
+
+    /* ─── RAM display helpers ─── */
+    .ram-high { color: var(--warn);     font-weight: 700; }
+    .ram-mid  { color: var(--warn-mid); font-weight: 700; }
+    .ram-low  { color: var(--muted);    opacity: 0.55; }
+
+    /* ─── Sidebar dot ─── */
+    .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-high { background: var(--warn); }
+    .dot-mid  { background: var(--warn-mid); }
+    .dot-low  { background: var(--accent); }
+
+    /* ─── RAM Bar ─── */
+    .ram-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.38s cubic-bezier(0.4, 0, 0.2, 1), background 0.38s ease;
+    }
+
+    /* ─── Search Input ─── */
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 44px 10px 16px;
+      outline: none;
+      transition: border-color 0.15s ease;
+      -webkit-appearance: none;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(6, 182, 212, 0.45); }
+
+    /* ─── Filter Buttons ─── */
+    .filter-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      background: transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .filter-btn:hover {
+      color: var(--accent);
+      border-color: rgba(6, 182, 212, 0.35);
+    }
+
+    /* ─── Category Header ─── */
+    .cat-line {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .cat-line::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: 14px;
+    }
+
+    /* ─── Build Button ─── */
+    @keyframes buildPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.5); }
+      50%       { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+    }
+
+    .build-btn {
+      width: 100%;
+      padding: 15px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 2px solid var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent);
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+    .build-btn:not(:disabled):hover {
+      background: var(--accent);
+      color: var(--bg);
+      animation: buildPulse 1.5s ease-in-out infinite;
+    }
+    .build-btn:disabled {
+      border-color: var(--border-hi);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: not-allowed;
+      animation: none;
+    }
+    .build-btn.state-success {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--bg);
+      animation: none;
+    }
+    .build-btn.state-error {
+      border-color: var(--warn);
+      background: rgba(239, 68, 68, 0.08);
+      color: var(--warn);
+      animation: none;
+    }
+
+    /* ─── Sidebar selected item ─── */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .sel-item { animation: slideIn 0.18s ease-out; }
+
+    .sel-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(30, 30, 34, 0.8);
+      transition: background 0.1s ease;
+    }
+    .sel-item-row:hover { background: var(--surface-2); }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 0 2px;
+      opacity: 0;
+      transition: color 0.12s ease, opacity 0.12s ease;
+      line-height: 1;
+    }
+    .sel-item-row:hover .remove-btn { opacity: 1; }
+    .remove-btn:hover { color: var(--warn); }
+
+    /* ─── Sidebar divider ─── */
+    .sidebar-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 22px;
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-hi); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ─── Layout ─── */
+    .layout-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+    }
+
+    .left-panel {
+      width: 100%;
+      padding: 32px 0;
+      min-height: 100vh;
+    }
+
+    .right-panel {
+      display: none;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 1024px) {
+      .left-panel {
+        width: 70%;
+        padding-right: 36px;
+        border-right: 1px solid var(--border);
+      }
+      .right-panel {
+        display: block;
+        width: 30%;
+        padding: 32px 0 32px 36px;
+      }
+    }
+
+    /* ─── Page Header ─── */
+    .page-header {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(17,17,19,0.7) 0%, transparent 100%);
+    }
+    .page-header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 24px;
+    }
+
+    /* ─── Mobile Bottom Bar ─── */
+    .mobile-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(17, 17, 19, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transform: translateY(100%);
+      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mobile-bar.visible { transform: translateY(0); }
+    @media (min-width: 1024px) { .mobile-bar { display: none; } }
+
+    .mobile-build-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 9px 20px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .mobile-build-btn:hover { background: var(--accent-hi); }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Site Nav ─── -->
+  <div id="nav-container"></div>
+  <script src="assets/js/nav.js"></script>
+
+  <!-- ─── Page Header ─── -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.22em; margin:0 0 8px;">
+        SD Card Builder
+      </p>
+      <h1 style="font-size:22px; font-weight:800; color:#fff; letter-spacing:-0.025em; margin:0 0 5px; line-height:1.2;">
+        Build your custom SD card
+      </h1>
+      <p style="font-size:14px; color:var(--muted); font-weight:300; margin:0; line-height:1.5;">
+        Select the modules you want. RAM cost is tracked live. Download a ready-to-flash ZIP.
+      </p>
+    </div>
+  </div>
+
+  <!-- ─── Two-Column Layout ─── -->
+  <div class="layout-container">
+
+    <!-- LEFT: Module list -->
+    <main class="left-panel">
+
+      <!-- Search / Filter Bar -->
+      <div style="display:flex; gap:10px; align-items:stretch; margin-bottom:28px;">
+        <div style="position:relative; flex:1;">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Filter modules…"
+            class="search-input"
+            aria-label="Filter modules"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); border:1px solid var(--border); padding:2px 6px; pointer-events:none;">/</span>
+        </div>
+        <button class="filter-btn" onclick="selectAll()">SELECT ALL</button>
+        <button class="filter-btn" onclick="deselectAll()">CLEAR</button>
+      </div>
+
+      <!-- Module categories (injected by JS) -->
+      <div id="moduleList"></div>
+
+    </main>
+
+    <!-- RIGHT: Sticky Sidebar -->
+    <aside class="right-panel">
+      <div style="position:sticky; top:72px;">
+
+        <!-- RAM Budget -->
+        <div style="margin-bottom:22px;">
+          <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
+              <span id="ramUsed" style="color:#fff; font-weight:700;">0 KB</span>
+              <span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
+            </span>
+          </div>
+          <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
+            <div id="ramBar" class="ram-fill" style="width:0%;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:5px;">
+            <span id="ramPercent" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0%</span>
+            <span id="ramWarning" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--warn); opacity:0; transition:opacity 0.25s ease;">⚠ HIGH RAM</span>
+          </div>
+        </div>
+
+        <hr class="sidebar-rule">
+
+        <!-- Selected Modules -->
+        <div style="margin-bottom:22px;">
+          <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:11px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">Selected</span>
+            <span id="selCount" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0 modules</span>
+          </div>
+          <div id="selectedList" style="max-height:calc(100vh - 390px); overflow-y:auto;">
+            <div id="emptyState" style="font-size:13px; color:rgba(113,113,122,0.45); font-weight:300; padding:28px 0; text-align:center; line-height:1.65;">
+              No modules selected.<br>
+              <span style="font-size:11px; color:rgba(113,113,122,0.3);">Check items on the left to begin.</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="sidebar-rule">
+
+        <!-- Build Button -->
+        <button id="buildBtn" class="build-btn" disabled>Build SD Card →</button>
+        <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(113,113,122,0.4); margin:8px 0 0;">
+          ZIP archive · FAT32 ready
+        </p>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ─── Mobile Sticky Bottom Bar ─── -->
+  <div id="mobileBar" class="mobile-bar">
+    <div>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#fff; font-weight:700;">
+        <span id="mobRam">0 KB</span><span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
+      </span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); margin-left:10px;">
+        <span id="mobCount">0</span> selected
+      </span>
+    </div>
+    <button class="mobile-build-btn" onclick="doBuild()">BUILD →</button>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       DATA
+  ═══════════════════════════════════════════ -->
+  <script>
+    const MODULE_CATALOG = [
+      { id: 'atmosphere',     owner: 'Atmosphere-NX', repo: 'Atmosphere',             name: 'Atmosphere',        category: 'Core CFW',          tags: ['required'],    ram_kb: 0,    desc: 'The standard custom firmware. Required for everything. Start here.' },
+      { id: 'hekate',         owner: 'CTCaer',        repo: 'hekate',                 name: 'Hekate',            category: 'Core CFW',          tags: ['required'],    ram_kb: 0,    desc: 'Bootloader and partition manager. Boots CFW and manages emuMMC.' },
+      { id: 'sys-patch',      owner: 'impeeza',       repo: 'sys-patch',              name: 'sys-patch',         category: 'Core CFW',          tags: ['recommended'], ram_kb: 0,    desc: 'Patches signature checks on the fly. Replaces static sigpatches.' },
+      { id: 'nx-ovlloader',   owner: 'ppkantorski',   repo: 'nx-ovlloader',           name: 'nx-ovlloader',      category: 'Overlays',          tags: ['recommended'], ram_kb: 4096, desc: 'Required base layer for Ultrahand overlay menu. (Cost: 4.0 MB)' },
+      { id: 'ultrahand',      owner: 'ppkantorski',   repo: 'Ultrahand-Overlay',      name: 'Ultrahand Overlay', category: 'Overlays',          tags: ['recommended'], ram_kb: 0,    desc: 'Modern overlay manager with package support. Replaces Tesla.' },
+      { id: 'status-monitor', owner: 'masagrator',    repo: 'Status-Monitor-Overlay', name: 'Status Monitor',    category: 'Overlays',          tags: [],              ram_kb: 435,  desc: 'Real-time FPS, RAM, CPU/GPU usage overlay. (Cost: 435 KB)' },
+      { id: 'edizon-overlay', owner: 'proferabg',     repo: 'EdiZon-Overlay',         name: 'EdiZon Overlay',    category: 'Overlays',          tags: [],              ram_kb: 1024, desc: 'In-game overlay for managing cheats and memory tools. (Cost: 1.0 MB)' },
+      { id: 'missioncontrol', owner: 'ndeadly',       repo: 'MissionControl',         name: 'MissionControl',    category: 'Sysmodules',        tags: ['recommended'], ram_kb: 500,  desc: 'Use Bluetooth controllers from other platforms (PS5, Xbox, etc.). (Cost: 500 KB)' },
+      { id: 'sys-clk',        owner: 'retronx-team',  repo: 'sys-clk',                name: 'sys-clk',           category: 'Sysmodules',        tags: [],              ram_kb: 1024, desc: 'Overclock/underclock CPU, GPU, and memory per game. (Cost: 1.0 MB)' },
+      { id: 'sysdvr',         owner: 'exelix11',      repo: 'SysDVR',                 name: 'SysDVR',            category: 'Sysmodules',        tags: [],              ram_kb: 1524, desc: 'Stream Switch video and audio to your PC over USB or WiFi. (Cost: 1.5 MB)' },
+      { id: 'emuiibo',        owner: 'XorTroll',      repo: 'emuiibo',                name: 'Emuiibo',           category: 'Sysmodules',        tags: [],              ram_kb: 16,   desc: 'Virtual Amiibo emulation. Use any amiibo without the figure. (Cost: 16 KB)' },
+      { id: 'saltynx',        owner: 'masagrator',    repo: 'SaltyNX',                name: 'SaltyNX',           category: 'Sysmodules',        tags: [],              ram_kb: 404,  desc: 'Plugin framework that enables per-game cheats and patches. (Cost: 404 KB)' },
+      { id: 'dbi',            owner: 'rashevskyv',    repo: 'dbi',                    name: 'DBI',               category: 'File & Save Tools', tags: ['recommended'], ram_kb: 0,    desc: 'Reliable NSP/NSZ installer with USB and MTP support. Battle-tested.' },
+      { id: 'jksv',           owner: 'J-D-K',         repo: 'JKSV',                   name: 'JKSV',              category: 'File & Save Tools', tags: ['recommended'], ram_kb: 0,    desc: 'Save manager. Back up, restore, and transfer game saves.' },
+      { id: 'hb-appstore',    owner: 'fortheusers',   repo: 'hb-appstore',            name: 'HB Appstore',       category: 'Homebrew Apps',     tags: ['recommended'], ram_kb: 0,    desc: 'Browse and install homebrew apps directly on your Switch.' },
+      { id: 'edizon',         owner: 'tomvita',       repo: 'EdiZon-SE',              name: 'EdiZon-SE',         category: 'Homebrew Apps',     tags: [],              ram_kb: 0,    desc: 'In-game cheat manager and RAM editor app.' },
+      { id: 'moonlight',      owner: 'XITRIX',        repo: 'Moonlight-Switch',       name: 'Moonlight',         category: 'Streaming & Media', tags: [],              ram_kb: 0,    desc: 'Stream PC games via Sunshine or NVIDIA GameStream to your Switch.' },
+      { id: 'retroarch',      owner: 'libretro',      repo: 'RetroArch',              name: 'RetroArch',         category: 'Emulation',         tags: ['recommended'], ram_kb: 0,    desc: 'Multi-system emulation frontend. Covers most retro consoles.' },
+    ];
+
+    const MAX_RAM_KB = 32768; // 32 MB in KB
+  </script>
+
+
+  <!-- ═══════════════════════════════════════════
+       LOGIC
+  ═══════════════════════════════════════════ -->
+  <script>
+    /* ── State ── */
+    const selected = new Set();
+
+    /* ─────────────────────────────────────────
+       Helpers
+    ───────────────────────────────────────── */
+
+    function fmtRam(ram_kb) {
+      if (ram_kb === 0) return '—';
+      if (ram_kb >= 1024) return (ram_kb / 1024).toFixed(1) + ' MB';
+      return ram_kb + ' KB';
+    }
+
+    function ramClass(ram_kb) {
+      if (ram_kb >= 4096) return 'ram-high';
+      if (ram_kb >= 1024) return 'ram-mid';
+      return 'ram-low';
+    }
+
+    function dotClass(ram_kb) {
+      if (ram_kb >= 4096) return 'dot dot-high';
+      if (ram_kb >= 1024) return 'dot dot-mid';
+      return 'dot dot-low';
+    }
+
+    // Safe HTML escape — all user-derived data goes through this before innerHTML
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    /* ─────────────────────────────────────────
+       Public API — wire to your backend here
+    ───────────────────────────────────────── */
+
+    /**
+     * Returns the full module objects for all currently selected modules.
+     * Use this to build your POST body: getSelectedModules().map(m => m.id)
+     */
+    function getSelectedModules() {
+      return MODULE_CATALOG.filter(m => selected.has(m.id));
+    }
+
+    /* ─────────────────────────────────────────
+       Render
+    ───────────────────────────────────────── */
+
+    function renderModules() {
+      const container = document.getElementById('moduleList');
+      const categories = [...new Set(MODULE_CATALOG.map(m => m.category))];
+
+      container.innerHTML = categories.map(cat => {
+        const mods = MODULE_CATALOG.filter(m => m.category === cat);
+        return `
+          <section style="margin-bottom:36px;" data-cat="${esc(cat)}">
+            <div class="cat-line">
+              <h2 style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
+                         text-transform:uppercase; letter-spacing:0.22em; color:var(--muted); margin:0;">
+                ${esc(cat)}
+              </h2>
+            </div>
+            <div>
+              ${mods.map((m, i) => {
+                const isReq = m.tags.includes('required');
+                const isRec = m.tags.includes('recommended');
+                const isLast = i === mods.length - 1;
+                return `
+                  <label
+                    data-id="${esc(m.id)}"
+                    class="mod-row${isLast ? ' last-in-group' : ''}${isReq ? ' selected' : ''}"
+                  >
+                    <input
+                      type="checkbox"
+                      class="mod-check"
+                      value="${esc(m.id)}"
+                      ${isReq ? 'checked' : ''}
+                      onchange="toggleModule('${esc(m.id)}', this.checked)"
+                    />
+                    <div class="check-box" style="margin-top:2px;"></div>
+                    <div style="flex:1; min-width:0;">
+                      <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+                        <span style="font-weight:700; font-size:14px; color:rgba(255,255,255,0.95); letter-spacing:-0.01em;">
+                          ${esc(m.name)}
+                        </span>
+                        ${isReq ? '<span class="badge badge-required">Required</span>' : ''}
+                        ${isRec ? '<span class="badge badge-recommended">Recommended</span>' : ''}
+                      </div>
+                      <p style="font-size:12px; color:var(--muted); margin:4px 0 0; line-height:1.55; font-weight:300;">
+                        ${esc(m.desc)}
+                      </p>
+                    </div>
+                    <div style="flex-shrink:0; margin-top:2px;">
+                      <span class="${ramClass(m.ram_kb)}" style="font-family:'JetBrains Mono',monospace; font-size:11px;">
+                        ${fmtRam(m.ram_kb)}
+                      </span>
+                    </div>
+                  </label>
+                `;
+              }).join('')}
+            </div>
+          </section>
+        `;
+      }).join('');
+
+      // Pre-select required modules
+      MODULE_CATALOG.filter(m => m.tags.includes('required')).forEach(m => selected.add(m.id));
+      updateSidebar();
+    }
+
+    /* ─────────────────────────────────────────
+       Toggle
+    ───────────────────────────────────────── */
+
+    function toggleModule(id, checked) {
+      const mod = MODULE_CATALOG.find(m => m.id === id);
+      if (!mod) return;
+
+      // Lock required modules
+      if (mod.tags.includes('required') && !checked) {
+        const cb = document.querySelector(`input[value="${CSS.escape(id)}"]`);
+        if (cb) cb.checked = true;
+        return;
+      }
+
+      checked ? selected.add(id) : selected.delete(id);
+      updateRow(id, checked);
+      updateSidebar();
+    }
+
+    function updateRow(id, on) {
+      const row = document.querySelector(`label[data-id="${CSS.escape(id)}"]`);
+      if (!row) return;
+      if (on) {
+        row.classList.add('selected');
+      } else {
+        row.classList.remove('selected');
+      }
+    }
+
+    function removeMod(id) {
+      selected.delete(id);
+      const cb = document.querySelector(`input[value="${CSS.escape(id)}"]`);
+      if (cb) cb.checked = false;
+      updateRow(id, false);
+      updateSidebar();
+    }
+
+    /* ─────────────────────────────────────────
+       Sidebar
+    ───────────────────────────────────────── */
+
+    function updateSidebar() {
+      const mods = getSelectedModules();
+      const totalKb = mods.reduce((s, m) => s + m.ram_kb, 0);
+      const pct = Math.min((totalKb / MAX_RAM_KB) * 100, 100);
+
+      // RAM numbers
+      const displayRam = totalKb === 0 ? '0 KB' : fmtRam(totalKb);
+      document.getElementById('ramUsed').textContent = displayRam;
+      document.getElementById('ramPercent').textContent = Math.round(pct) + '%';
+
+      // RAM bar color
+      const bar = document.getElementById('ramBar');
+      bar.style.width = pct + '%';
+      bar.style.background = pct > 80 ? 'var(--warn)' : pct > 60 ? 'var(--warn-mid)' : 'var(--accent)';
+
+      // High RAM warning
+      document.getElementById('ramWarning').style.opacity = pct > 80 ? '1' : '0';
+
+      // Selected list
+      const list = document.getElementById('selectedList');
+      const emptyEl = document.getElementById('emptyState');
+
+      if (mods.length === 0) {
+        list.innerHTML = '';
+        list.appendChild(emptyEl);
+        emptyEl.style.display = '';
+      } else {
+        if (emptyEl) emptyEl.style.display = 'none';
+        list.innerHTML = mods.map(m => `
+          <div class="sel-item sel-item-row">
+            <div style="display:flex; align-items:center; gap:8px; min-width:0; overflow:hidden;">
+              <span class="${dotClass(m.ram_kb)}"></span>
+              <span style="font-size:12px; color:rgba(255,255,255,0.82); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                ${esc(m.name)}
+              </span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; flex-shrink:0; margin-left:8px;">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">
+                ${fmtRam(m.ram_kb)}
+              </span>
+              ${!m.tags.includes('required')
+                ? `<button class="remove-btn" onclick="event.stopPropagation(); removeMod('${esc(m.id)}')" aria-label="Remove ${esc(m.name)}">✕</button>`
+                : `<span style="width:15px; display:inline-block;"></span>`
+              }
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Module count
+      document.getElementById('selCount').textContent =
+        mods.length + ' module' + (mods.length !== 1 ? 's' : '');
+
+      // Build button
+      document.getElementById('buildBtn').disabled = mods.length === 0;
+
+      // Mobile bar
+      const mobRamStr = totalKb === 0 ? '0 KB'
+        : totalKb >= 1024 ? (totalKb / 1024).toFixed(1) + ' MB'
+        : totalKb + ' KB';
+      document.getElementById('mobRam').textContent = mobRamStr;
+      document.getElementById('mobCount').textContent = mods.length;
+      document.getElementById('mobileBar').classList.toggle('visible', mods.length > 0);
+    }
+
+    /* ─────────────────────────────────────────
+       Utilities
+    ───────────────────────────────────────── */
+
+    function selectAll() {
+      MODULE_CATALOG.forEach(m => {
+        selected.add(m.id);
+        const cb = document.querySelector(`input[value="${CSS.escape(m.id)}"]`);
+        if (cb) cb.checked = true;
+        updateRow(m.id, true);
+      });
+      updateSidebar();
+    }
+
+    function deselectAll() {
+      MODULE_CATALOG.forEach(m => {
+        if (m.tags.includes('required')) return;
+        selected.delete(m.id);
+        const cb = document.querySelector(`input[value="${CSS.escape(m.id)}"]`);
+        if (cb) cb.checked = false;
+        updateRow(m.id, false);
+      });
+      updateSidebar();
+    }
+
+    /* ─────────────────────────────────────────
+       Search
+    ───────────────────────────────────────── */
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase().trim();
+      MODULE_CATALOG.forEach(m => {
+        const row = document.querySelector(`label[data-id="${CSS.escape(m.id)}"]`);
+        if (!row) return;
+        const visible = !q
+          || m.name.toLowerCase().includes(q)
+          || m.desc.toLowerCase().includes(q)
+          || m.category.toLowerCase().includes(q);
+        row.style.display = visible ? '' : 'none';
+      });
+      // Hide sections with no visible rows
+      document.querySelectorAll('[data-cat]').forEach(sec => {
+        const anyVisible = sec.querySelectorAll('label:not([style*="display: none"])').length > 0;
+        sec.style.display = anyVisible ? '' : 'none';
+      });
+    });
+
+    /* ─────────────────────────────────────────
+       Keyboard shortcut: "/" → focus search
+    ───────────────────────────────────────── */
+
+    document.addEventListener('keydown', e => {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+    });
+
+    /* ─────────────────────────────────────────
+       Build Action
+       ─ Replace the fetch block below with your
+         real API call when ready.
+    ───────────────────────────────────────── */
+
+    document.getElementById('buildBtn').addEventListener('click', doBuild);
+
+    async function doBuild() {
+      const btn = document.getElementById('buildBtn');
+      const modules = getSelectedModules(); // Array of full module objects
+
+      btn.textContent = 'BUILDING…';
+      btn.disabled = true;
+      btn.classList.remove('state-success', 'state-error');
+
+      try {
+        // ── WIRE TO BACKEND: replace this block ──────────────────────────
+        //
+        // const res = await fetch('/api/builder/build', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     modules: modules.map(m => ({ id: m.id, owner: m.owner, repo: m.repo })),
+        //   }),
+        // });
+        // if (!res.ok) throw new Error(await res.text());
+        // const { downloadUrl } = await res.json();
+        // window.location.href = downloadUrl;
+        //
+        // ── END BACKEND BLOCK ─────────────────────────────────────────────
+
+        // Remove this mock when wiring real API:
+        await new Promise(r => setTimeout(r, 1500));
+
+        btn.textContent = '✓ PACKAGE READY';
+        btn.classList.add('state-success');
+        setTimeout(() => {
+          btn.textContent = 'Build SD Card →';
+          btn.classList.remove('state-success');
+          btn.disabled = false;
+        }, 2500);
+
+      } catch (err) {
+        console.error('[builder] build failed:', err);
+        btn.textContent = '✕ BUILD FAILED';
+        btn.classList.add('state-error');
+        setTimeout(() => {
+          btn.textContent = 'Build SD Card →';
+          btn.classList.remove('state-error');
+          btn.disabled = false;
+        }, 2500);
+      }
+    }
+
+    /* ─────────────────────────────────────────
+       Init
+    ───────────────────────────────────────── */
+    renderModules();
+  </script>
+
+</body>
+</html>
