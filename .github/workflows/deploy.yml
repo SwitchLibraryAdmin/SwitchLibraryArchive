@@ -31,12 +31,12 @@ jobs:
       - run: npm run build:css
 
       # Minify JS in-place
-      - run: npx terser assets/js/nav.js -o assets/js/nav.js -c -m
-      - run: npx terser sw.js -o sw.js -c -m
+      - run: npx terser site/assets/js/nav.js -o site/assets/js/nav.js -c -m
+      - run: npx terser site/sw.js -o site/sw.js -c -m
 
       # Minify HTML in-place
       - run: |
-          for f in *.html; do
+          find site -name '*.html' -type f | while read -r f; do
             npx html-minifier-terser \
               --collapse-whitespace \
               --remove-comments \
@@ -50,13 +50,13 @@ jobs:
 
       # Remove source files not needed in production
       - run: |
-          rm -rf node_modules package.json package-lock.json tailwind.config.js
-          rm -f assets/css/tailwind-input.css
+          rm -rf node_modules package.json package-lock.json config
+          rm -f site/assets/css/tailwind-input.css
           rm -f TODO.md
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: site
 
   deploy:
     needs: build

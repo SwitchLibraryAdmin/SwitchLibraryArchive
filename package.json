@@ -4,7 +4,7 @@
   "description": "**The most in-depth, noob-friendly post-CFW companion guide for the Nintendo Switch.**",
   "main": "index.js",
   "scripts": {
-    "build:css": "tailwindcss -i assets/css/tailwind-input.css -o assets/css/tailwind.min.css --minify",
+    "build:css": "tailwindcss -c config/tailwind.config.js -i site/assets/css/tailwind-input.css -o site/assets/css/tailwind.min.css --minify",
     "build": "npm run build:css",
     "build:prod": "npm run build:css"
   },

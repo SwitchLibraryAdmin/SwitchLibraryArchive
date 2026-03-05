@@ -13,11 +13,11 @@ Thumbs.db
 node_modules/
 
 # Private scrapers (not published)
-scrapers/
+tools/scrapers/
 
 # Debug artifacts
 debug_claude_response.txt
-scrapers/debug/
+tools/scrapers/debug/
 
 # Personal notes
 TODO.md

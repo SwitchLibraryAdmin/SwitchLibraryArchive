@@ -4,20 +4,20 @@ name: Validate Monitor Data
 # runs locally because it requires Chrome + Cloudflare bypass.
 #
 # Local workflow:
-#   cd scrapers
+#   cd tools/scrapers
 #   python gbatemp_scraper.py          # produces switch_scrape.json
-#   python intel_processor.py          # produces ../data/monitor_data.json
-#   cd .. && git add data/monitor_data.json && git commit && git push
+#   python intel_processor.py          # produces ../../site/data/monitor_data.json
+#   cd ../.. && git add site/data/monitor_data.json && git commit && git push
 #
 # This CI workflow validates monitor_data.json on every push.
 
 on:
   push:
     paths:
-      - 'data/monitor_data.json'
+      - 'site/data/monitor_data.json'
   pull_request:
     paths:
-      - 'data/monitor_data.json'
+      - 'site/data/monitor_data.json'
   workflow_dispatch:
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         python3 -c "
         import json, sys
 
-        with open('data/monitor_data.json') as f:
+        with open('site/data/monitor_data.json') as f:
             d = json.load(f)
 
         errors = []
