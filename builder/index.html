@@ -79,12 +79,22 @@
       font-family: 'JetBrains Mono', monospace;
       line-height: 1;
     }
+    .mod-row[data-dep-locked="true"] .mod-check:checked + .check-box::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      display: block;
+      background: var(--accent);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='black' d='M10 2a4 4 0 0 0-4 4v2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1V6a4 4 0 0 0-4-4Zm-2 6V6a2 2 0 1 1 4 0v2H8Z'/%3E%3C/svg%3E") center/contain no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='black' d='M10 2a4 4 0 0 0-4 4v2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1V6a4 4 0 0 0-4-4Zm-2 6V6a2 2 0 1 1 4 0v2H8Z'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
 
     /* ─── Module Row ─── */
     .mod-row {
       display: flex;
       align-items: center;
       gap: 8px;
+      position: relative;
       border: 1px solid var(--border);
       border-bottom: 0;
       padding: 5px 8px;
@@ -94,6 +104,85 @@
       transition: background 0.12s ease;
     }
     .mod-row:hover { background: var(--surface-2); }
+    .mod-tooltip {
+      position: absolute;
+      left: 50%;
+      right: auto;
+      width: min(360px, calc(100vw - 48px));
+      bottom: calc(100% + 8px);
+      z-index: 20;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      transition: opacity 0.12s ease, transform 0.12s ease;
+    }
+    .mod-row:hover .mod-tooltip,
+    .mod-row:focus-within .mod-tooltip {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .mod-tooltip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .mod-tooltip-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mod-tooltip-ram {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      background: rgba(6, 182, 212, 0.08);
+      border-radius: 9999px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+    .mod-tooltip-body {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #A0A0A0;
+      margin: 0 0 8px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+    .mod-tooltip-lock {
+      font-size: 11px;
+      color: var(--accent);
+      margin: 0 0 8px;
+      display: none;
+    }
+    .mod-tooltip-footer {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .mod-tooltip-footer-icon {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      border-radius: 9999px;
+      object-fit: cover;
+    }
     .mod-row.selected {
       border-left-color: var(--accent);
       background: var(--accent-tint);
@@ -102,7 +191,7 @@
     /* ─── Module Grid ─── */
     .mod-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       border-bottom: 1px solid var(--border);
     }
     @media (max-width: 600px) {
@@ -129,6 +218,24 @@
     .badge-recommended {
       color: var(--muted);
       border: 1px solid var(--border-hi);
+    }
+    .module-name {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+    .module-name-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .repo-avatar {
+      width: 1.1em;
+      height: 1.1em;
+      flex-shrink: 0;
+      border-radius: 9999px;
+      object-fit: cover;
     }
 
     /* ─── RAM display helpers ─── */
@@ -204,13 +311,13 @@
     }
 
     .build-btn {
-      width: 100%;
+      width: min(420px, 100%);
       padding: 15px;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
       font-size: 13px;
       letter-spacing: 0.12em;
-      text-transform: uppercase;
+      text-transform: none;
       border: 2px solid var(--accent);
       background: var(--accent-dim);
       color: var(--accent);
@@ -280,6 +387,61 @@
       margin: 0 0 22px;
     }
 
+    /* ─── Quick Start Bundle Cards ─── */
+    .bundle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 600px) {
+      .bundle-grid { grid-template-columns: 1fr; }
+    }
+
+    .bundle-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .bundle-card:hover {
+      border-color: rgba(6, 182, 212, 0.35);
+      background: var(--surface-2);
+    }
+    .bundle-card.active {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .bundle-card.active::after {
+      content: '● ACTIVE';
+      position: absolute;
+      top: 9px;
+      right: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    .bundle-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 6px;
+      letter-spacing: 0.04em;
+    }
+    .bundle-card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
     /* ─── Scrollbar ─── */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -291,7 +453,6 @@
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 24px;
-      display: flex;
     }
 
     .left-panel {
@@ -299,27 +460,56 @@
       padding: 32px 0;
       min-height: 100vh;
     }
-
-    .right-panel {
-      display: none;
-      flex-shrink: 0;
+    #moduleList {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
     }
-
-    @media (min-width: 1024px) {
-      .left-panel {
-        width: 70%;
-        padding-right: 36px;
-        border-right: 1px solid var(--border);
-      }
-      .right-panel {
-        display: block;
-        width: 30%;
-        padding: 32px 0 32px 36px;
-      }
+    .is-hidden { display: none !important; }
+    .catalog-loading {
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .catalog-loading-spinner {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border-hi);
+      border-top-color: var(--accent);
+      animation: catalogSpin 0.9s linear infinite;
+    }
+    .catalog-loading-text {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text);
+      text-align: center;
+    }
+    .catalog-loading.is-error .catalog-loading-spinner {
+      animation: none;
+      border-top-color: var(--warn);
+    }
+    .catalog-loading.is-error .catalog-loading-text { color: var(--warn); }
+    @keyframes catalogSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @media (max-width: 1200px) {
+      #moduleList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 700px) {
+      #moduleList { grid-template-columns: 1fr; }
     }
 
     /* ─── Page Header ─── */
     .page-header {
+      margin-top: 64px;
       border-bottom: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(17,17,19,0.7) 0%, transparent 100%);
     }
@@ -329,40 +519,24 @@
       padding: 28px 24px;
     }
 
-    /* ─── Mobile Bottom Bar ─── */
-    .mobile-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+    /* ─── Sticky RAM Header ─── */
+    .ram-header {
+      position: sticky;
+      top: 64px;
+      z-index: 40;
       background: rgba(17, 17, 19, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid var(--border);
-      padding: 12px 16px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transform: translateY(100%);
-      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid var(--border);
     }
-    .mobile-bar.visible { transform: translateY(0); }
-    @media (min-width: 1024px) { .mobile-bar { display: none; } }
-
-    .mobile-build-btn {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      background: var(--accent);
-      color: var(--bg);
-      border: none;
-      padding: 9px 20px;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      transition: background 0.15s ease;
+    .ram-header-inner {
+      width: 50%;
+      margin: 0 auto;
+      padding: 10px 24px;
     }
-    .mobile-build-btn:hover { background: var(--accent-hi); }
+    @media (max-width: 900px) {
+      .ram-header-inner { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -386,98 +560,90 @@
     </div>
   </div>
 
-  <!-- ─── Two-Column Layout ─── -->
+  <!-- ─── Sticky RAM Header ─── -->
+  <div class="ram-header">
+    <div class="ram-header-inner">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
+          <span id="ramUsed" style="color:#fff; font-weight:700;">0 KB</span>
+          <span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
+        </span>
+      </div>
+      <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
+        <div id="ramBar" class="ram-fill" style="width:0%;"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-top:5px;">
+        <span id="ramPercent" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0%</span>
+        <span id="ramWarning" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--warn); opacity:0; transition:opacity 0.25s ease;">⚠ HIGH RAM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Layout ─── -->
   <div class="layout-container">
 
-    <!-- LEFT: Module list -->
     <main class="left-panel">
 
-      <!-- Search / Filter Bar -->
-      <div style="display:flex; gap:10px; align-items:stretch; margin-bottom:28px;">
-        <div style="position:relative; flex:1;">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Filter modules…"
-            class="search-input"
-            aria-label="Filter modules"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); border:1px solid var(--border); padding:2px 6px; pointer-events:none;">/</span>
+      <!-- ─── Quick Start Bundles ─── -->
+      <div style="margin-bottom:18px;">
+        <h2 style="text-align:center; font-size:34px; font-weight:800; letter-spacing:-0.02em; color:#fff; margin:0 0 12px;">
+          1. Pick a Quickstart Bundle
+        </h2>
+        <div class="bundle-grid" id="bundleGrid">
+          <button class="bundle-card" data-bundle="minimalist" onclick="applyBundle('minimalist')">
+            <p class="bundle-card-title">Minimalist</p>
+            <p class="bundle-card-desc">Just the bare metal essentials to boot CFW.</p>
+          </button>
+          <button class="bundle-card" data-bundle="recommended" onclick="applyBundle('recommended')">
+            <p class="bundle-card-title">Recommended</p>
+            <p class="bundle-card-desc">The 2026 standard daily driver setup.</p>
+          </button>
+          <button class="bundle-card" data-bundle="power-user" onclick="applyBundle('power-user')">
+            <p class="bundle-card-title">Power User</p>
+            <p class="bundle-card-desc">The kitchen sink. Overclocks, overlays, and streaming.</p>
+          </button>
         </div>
-        <button class="filter-btn" onclick="selectAll()">SELECT ALL</button>
-        <button class="filter-btn" onclick="deselectAll()">CLEAR</button>
       </div>
 
+      <h2 style="text-align:center; font-size:34px; font-weight:800; letter-spacing:-0.02em; color:#fff; margin:0 0 22px;">
+        2. Customize the Apps You Want
+      </h2>
+
       <!-- Module categories (injected by JS) -->
+      <div id="catalogLoading" class="catalog-loading is-hidden" role="status" aria-live="polite">
+        <div id="catalogSpinner" class="catalog-loading-spinner"></div>
+        <p id="catalogLoadingText" class="catalog-loading-text">Waking up the server... this may take up to a minute.</p>
+      </div>
       <div id="moduleList"></div>
-
-    </main>
-
-    <!-- RIGHT: Sticky Sidebar -->
-    <aside class="right-panel">
-      <div style="position:sticky; top:72px;">
-
-        <!-- RAM Budget -->
-        <div style="margin-bottom:22px;">
-          <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
-            <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
-              <span id="ramUsed" style="color:#fff; font-weight:700;">0 KB</span>
-              <span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
-            </span>
-          </div>
-          <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
-            <div id="ramBar" class="ram-fill" style="width:0%;"></div>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-top:5px;">
-            <span id="ramPercent" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0%</span>
-            <span id="ramWarning" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--warn); opacity:0; transition:opacity 0.25s ease;">⚠ HIGH RAM</span>
-          </div>
-        </div>
-
-        <hr class="sidebar-rule">
-
-        <!-- Selected Modules -->
-        <div style="margin-bottom:22px;">
-          <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:11px;">
-            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">Selected</span>
-            <span id="selCount" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0 modules</span>
-          </div>
-          <div id="selectedList" style="max-height:calc(100vh - 390px); overflow-y:auto;">
-            <div id="emptyState" style="font-size:13px; color:rgba(113,113,122,0.45); font-weight:300; padding:28px 0; text-align:center; line-height:1.65;">
-              No modules selected.<br>
-              <span style="font-size:11px; color:rgba(113,113,122,0.3);">Check items on the left to begin.</span>
-            </div>
-          </div>
-        </div>
-
-        <hr class="sidebar-rule">
-
-        <!-- Build Button -->
-        <button id="buildBtn" class="build-btn" disabled>Build SD Card →</button>
+      <h2 style="text-align:center; font-size:34px; font-weight:800; letter-spacing:-0.02em; color:#fff; margin:26px 0 0;">
+        3. Download Your File
+      </h2>
+      <div style="display:flex; justify-content:center; margin:26px 0 0;">
+        <button id="buildBtn" class="build-btn" disabled>get your SwitchHack</button>
+      </div>
+      <div style="display:flex; justify-content:center;">
         <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(113,113,122,0.4); margin:8px 0 0;">
           ZIP archive · FAT32 ready
         </p>
-
       </div>
-    </aside>
+    </main>
 
   </div>
 
-  <!-- ─── Mobile Sticky Bottom Bar ─── -->
-  <div id="mobileBar" class="mobile-bar">
-    <div>
-      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#fff; font-weight:700;">
-        <span id="mobRam">0 KB</span><span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
-      </span>
-      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); margin-left:10px;">
-        <span id="mobCount">0</span> selected
-      </span>
+  <!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════════ -->
+  <footer class="border-t border-white/10 py-8 sm:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-sans font-extrabold text-white" style="letter-spacing:-.03em">Switch<span class="text-cyan-400">Hack</span></span>
+        <span class="text-gray-600 text-sm">&copy; 2026</span>
+      </div>
+      <div class="flex items-center gap-6 text-base text-gray-500">
+        <a href="/about/" class="hover:text-gray-300 transition-colors">About</a>
+        <a href="/legal/" class="hover:text-gray-300 transition-colors">Legal</a>
+      </div>
     </div>
-    <button class="mobile-build-btn" onclick="doBuild()">BUILD →</button>
-  </div>
+  </footer>
 
 
   <!-- ═══════════════════════════════════════════
@@ -520,6 +686,20 @@
         .replace(/'/g, '&#39;');
     }
 
+    function positionTooltip(row, tooltip) {
+      if (!row || !tooltip) return;
+      tooltip.style.left = '50%';
+      tooltip.style.right = 'auto';
+      const pad = 12;
+      const rowRect = row.getBoundingClientRect();
+      const tipRect = tooltip.getBoundingClientRect();
+      const desiredLeft = row.clientWidth * 0.5;
+      const minLeft = pad - rowRect.left;
+      const maxLeft = window.innerWidth - pad - rowRect.left - tipRect.width;
+      const clampedLeft = Math.min(Math.max(desiredLeft, minLeft), maxLeft);
+      tooltip.style.left = `${clampedLeft}px`;
+    }
+
     /* ─────────────────────────────────────────
        Public API — wire to your backend here
     ───────────────────────────────────────── */
@@ -532,33 +712,120 @@
       return MODULE_CATALOG.filter(m => selected.has(m.id));
     }
 
+    function getModuleById(id) {
+      return MODULE_CATALOG.find(m => m.id === id);
+    }
+
+    function getDependencies(mod) {
+      if (!mod || !Array.isArray(mod.depends_on)) return [];
+      return mod.depends_on;
+    }
+    function isHidden(mod) {
+      return !!(mod && mod.hidden);
+    }
+
+    function hasSelectedDependent(depId, ignoreId) {
+      return MODULE_CATALOG.some(m =>
+        selected.has(m.id)
+        && m.id !== ignoreId
+        && getDependencies(m).includes(depId)
+      );
+    }
+
+    function getSelectedDependents(depId) {
+      return MODULE_CATALOG.filter(m => selected.has(m.id) && getDependencies(m).includes(depId));
+    }
+
+    function addModuleWithDependencies(id, seen = new Set()) {
+      if (seen.has(id)) return;
+      seen.add(id);
+      const mod = getModuleById(id);
+      if (!mod) return;
+      selected.add(id);
+      getDependencies(mod).forEach(depId => addModuleWithDependencies(depId, seen));
+    }
+
+    function syncDependencyLocks() {
+      MODULE_CATALOG.forEach(mod => {
+        if (!selected.has(mod.id)) return;
+        getDependencies(mod).forEach(depId => selected.add(depId));
+      });
+
+      // Prune hidden dependency-only modules once nothing selected requires them
+      let changed = true;
+      while (changed) {
+        changed = false;
+        MODULE_CATALOG.forEach(mod => {
+          if (!selected.has(mod.id)) return;
+          if (!isHidden(mod)) return;
+          if (mod.tags.includes('required')) return;
+          if (hasSelectedDependent(mod.id, null)) return;
+          selected.delete(mod.id);
+          changed = true;
+        });
+      }
+
+      MODULE_CATALOG.forEach(mod => {
+        const cb = document.querySelector(`input[value="${CSS.escape(mod.id)}"]`);
+        const row = document.querySelector(`label[data-id="${CSS.escape(mod.id)}"]`);
+        if (!cb) return;
+        const on = selected.has(mod.id);
+        cb.checked = on;
+        updateRow(mod.id, on);
+        const dependents = getSelectedDependents(mod.id);
+        const lockedByRequired = mod.tags.includes('required');
+        const lockedByDependency = dependents.length > 0;
+        cb.disabled = lockedByRequired || lockedByDependency;
+        if (!row) return;
+        const lockReasonEl = row.querySelector('.mod-tooltip-lock');
+        if (lockedByDependency) {
+          const reason = `Locked: Required by ${dependents.map(m => m.name).join(', ')}`;
+          row.setAttribute('data-dep-locked', 'true');
+          row.setAttribute('title', reason);
+          if (lockReasonEl) {
+            lockReasonEl.textContent = reason;
+            lockReasonEl.style.display = 'block';
+          }
+        } else {
+          row.removeAttribute('data-dep-locked');
+          row.removeAttribute('title');
+          if (lockReasonEl) {
+            lockReasonEl.textContent = '';
+            lockReasonEl.style.display = 'none';
+          }
+        }
+      });
+    }
+
     /* ─────────────────────────────────────────
        Render
     ───────────────────────────────────────── */
 
     function renderModules() {
       const container = document.getElementById('moduleList');
-      const categories = [...new Set(MODULE_CATALOG.map(m => m.category))];
+      const visibleModules = MODULE_CATALOG.filter(m => !isHidden(m));
+      const categories = [...new Set(visibleModules.map(m => m.category))];
 
       container.innerHTML = categories.map(cat => {
-        const mods = MODULE_CATALOG.filter(m => m.category === cat);
+        const mods = visibleModules.filter(m => m.category === cat);
         return `
-          <section style="margin-bottom:36px;" data-cat="${esc(cat)}">
+          <section style="margin-bottom:0;" data-cat="${esc(cat)}">
             <div class="cat-line">
-              <h2 style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700;
-                         text-transform:uppercase; letter-spacing:0.22em; color:var(--muted); margin:0;">
+              <h2 style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:800;
+                         text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.92); margin:0;">
                 ${esc(cat)}
               </h2>
             </div>
             <div class="mod-grid">
               ${mods.map(m => {
                 const isReq = m.tags.includes('required');
-                const isRec = m.tags.includes('recommended');
+                const description = m.desc || m.description || '';
+                const owner = (m.slug || '').split('/')[0] || 'github';
+                const ramLabel = `${m.ram_kb === 0 ? '0 KB' : fmtRam(m.ram_kb)} RAM`;
                 return `
                   <label
                     data-id="${esc(m.id)}"
                     class="mod-row${isReq ? ' selected' : ''}"
-                    title="${esc(m.desc)}"
                   >
                     <input
                       type="checkbox"
@@ -568,9 +835,22 @@
                       onchange="toggleModule('${esc(m.id)}', this.checked)"
                     />
                     <div class="check-box"></div>
-                    <span style="flex:1; min-width:0; font-size:13px; color:rgba(255,255,255,0.9); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                      ${esc(m.name)}${isReq ? ' <span class="badge badge-required">req</span>' : ''}${isRec ? ' <span class="badge badge-recommended">rec</span>' : ''}
+                    <span class="module-name" style="flex:1; font-size:14px; color:rgba(255,255,255,0.9);">
+                      <img class="repo-avatar" src="https://github.com/${esc(owner)}.png?size=48" alt="" loading="lazy" decoding="async" />
+                      <span class="module-name-text">${esc(m.name)}</span>${isReq ? ' <span class="badge badge-required">req</span>' : ''}
                     </span>
+                    <div class="mod-tooltip">
+                      <div class="mod-tooltip-header">
+                        <span class="mod-tooltip-title">${esc(m.name)}</span>
+                        <span class="mod-tooltip-ram">${esc(ramLabel)}</span>
+                      </div>
+                      <p class="mod-tooltip-body">${esc(description)}</p>
+                      <p class="mod-tooltip-lock"></p>
+                      <div class="mod-tooltip-footer">
+                        <img class="mod-tooltip-footer-icon" src="https://github.com/${esc(owner)}.png?size=48" alt="" loading="lazy" decoding="async" />
+                        <span>${esc(m.slug || owner)}</span>
+                      </div>
+                    </div>
                   </label>
                 `;
               }).join('')}
@@ -579,8 +859,23 @@
         `;
       }).join('');
 
-      // Pre-select required modules
-      MODULE_CATALOG.filter(m => m.tags.includes('required')).forEach(m => selected.add(m.id));
+      container.querySelectorAll('.mod-row').forEach(row => {
+        const tooltip = row.querySelector('.mod-tooltip');
+        if (!tooltip) return;
+        const align = () => positionTooltip(row, tooltip);
+        row.addEventListener('mouseenter', align);
+        row.addEventListener('focusin', align);
+        row.addEventListener('click', align);
+      });
+
+      // Pre-select required + recommended modules
+      MODULE_CATALOG
+        .filter(m => m.tags.includes('required') || m.tags.includes('recommended'))
+        .forEach(m => addModuleWithDependencies(m.id));
+      syncDependencyLocks();
+      document.querySelectorAll('.bundle-card').forEach(card => card.classList.remove('active'));
+      const defaultBundle = document.querySelector('.bundle-card[data-bundle="recommended"]');
+      if (defaultBundle) defaultBundle.classList.add('active');
       updateSidebar();
     }
 
@@ -599,8 +894,19 @@
         return;
       }
 
-      checked ? selected.add(id) : selected.delete(id);
-      updateRow(id, checked);
+      if (!checked && hasSelectedDependent(id, id)) {
+        const cb = document.querySelector(`input[value="${CSS.escape(id)}"]`);
+        if (cb) cb.checked = true;
+        return;
+      }
+
+      if (checked) {
+        addModuleWithDependencies(id);
+      } else {
+        selected.delete(id);
+      }
+
+      syncDependencyLocks();
       updateSidebar();
     }
 
@@ -644,51 +950,9 @@
       // High RAM warning
       document.getElementById('ramWarning').style.opacity = pct > 80 ? '1' : '0';
 
-      // Selected list
-      const list = document.getElementById('selectedList');
-      const emptyEl = document.getElementById('emptyState');
-
-      if (mods.length === 0) {
-        list.innerHTML = '';
-        list.appendChild(emptyEl);
-        emptyEl.style.display = '';
-      } else {
-        if (emptyEl) emptyEl.style.display = 'none';
-        list.innerHTML = mods.map(m => `
-          <div class="sel-item sel-item-row">
-            <div style="display:flex; align-items:center; gap:8px; min-width:0; overflow:hidden;">
-              <span class="${dotClass(m.ram_kb)}"></span>
-              <span style="font-size:12px; color:rgba(255,255,255,0.82); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                ${esc(m.name)}
-              </span>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px; flex-shrink:0; margin-left:8px;">
-              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">
-                ${fmtRam(m.ram_kb)}
-              </span>
-              ${!m.tags.includes('required')
-                ? `<button class="remove-btn" onclick="event.stopPropagation(); removeMod('${esc(m.id)}')" aria-label="Remove ${esc(m.name)}">✕</button>`
-                : `<span style="width:15px; display:inline-block;"></span>`
-              }
-            </div>
-          </div>
-        `).join('');
-      }
-
-      // Module count
-      document.getElementById('selCount').textContent =
-        mods.length + ' module' + (mods.length !== 1 ? 's' : '');
-
       // Build button
       document.getElementById('buildBtn').disabled = mods.length === 0;
 
-      // Mobile bar
-      const mobRamStr = totalKb === 0 ? '0 KB'
-        : totalKb >= 1024 ? (totalKb / 1024).toFixed(1) + ' MB'
-        : totalKb + ' KB';
-      document.getElementById('mobRam').textContent = mobRamStr;
-      document.getElementById('mobCount').textContent = mods.length;
-      document.getElementById('mobileBar').classList.toggle('visible', mods.length > 0);
     }
 
     /* ─────────────────────────────────────────
@@ -697,11 +961,10 @@
 
     function selectAll() {
       MODULE_CATALOG.forEach(m => {
-        selected.add(m.id);
-        const cb = document.querySelector(`input[value="${CSS.escape(m.id)}"]`);
-        if (cb) cb.checked = true;
-        updateRow(m.id, true);
+        if (isHidden(m)) return;
+        addModuleWithDependencies(m.id);
       });
+      syncDependencyLocks();
       updateSidebar();
     }
 
@@ -709,45 +972,41 @@
       MODULE_CATALOG.forEach(m => {
         if (m.tags.includes('required')) return;
         selected.delete(m.id);
-        const cb = document.querySelector(`input[value="${CSS.escape(m.id)}"]`);
-        if (cb) cb.checked = false;
-        updateRow(m.id, false);
       });
+      MODULE_CATALOG.filter(m => m.tags.includes('required')).forEach(m => addModuleWithDependencies(m.id));
+      syncDependencyLocks();
       updateSidebar();
     }
 
     /* ─────────────────────────────────────────
-       Search
+       Quick Start Bundles
     ───────────────────────────────────────── */
 
-    document.getElementById('searchInput').addEventListener('input', function () {
-      const q = this.value.toLowerCase().trim();
+    function applyBundle(bundleTag) {
+      // Clear all non-required selections
       MODULE_CATALOG.forEach(m => {
-        const row = document.querySelector(`label[data-id="${CSS.escape(m.id)}"]`);
-        if (!row) return;
-        const visible = !q
-          || m.name.toLowerCase().includes(q)
-          || m.desc.toLowerCase().includes(q)
-          || m.category.toLowerCase().includes(q);
-        row.style.display = visible ? '' : 'none';
+        if (m.tags.includes('required')) return;
+        selected.delete(m.id);
       });
-      // Hide sections with no visible rows
-      document.querySelectorAll('[data-cat]').forEach(sec => {
-        const anyVisible = sec.querySelectorAll('label:not([style*="display: none"])').length > 0;
-        sec.style.display = anyVisible ? '' : 'none';
+
+      // Select modules that match the bundle tag
+      MODULE_CATALOG.forEach(m => {
+        if (isHidden(m)) return;
+        if (m.tags.includes(bundleTag)) {
+          addModuleWithDependencies(m.id);
+        }
       });
-    });
 
-    /* ─────────────────────────────────────────
-       Keyboard shortcut: "/" → focus search
-    ───────────────────────────────────────── */
+      MODULE_CATALOG.filter(m => m.tags.includes('required')).forEach(m => addModuleWithDependencies(m.id));
+      syncDependencyLocks();
 
-    document.addEventListener('keydown', e => {
-      if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
-        e.preventDefault();
-        document.getElementById('searchInput').focus();
-      }
-    });
+      // Highlight the active card
+      document.querySelectorAll('.bundle-card').forEach(card => card.classList.remove('active'));
+      const activeCard = document.querySelector(`.bundle-card[data-bundle="${CSS.escape(bundleTag)}"]`);
+      if (activeCard) activeCard.classList.add('active');
+
+      updateSidebar();
+    }
 
     /* ─────────────────────────────────────────
        Build Action
@@ -800,7 +1059,7 @@
         btn.textContent = '✓ PACKAGE READY';
         btn.classList.add('state-success');
         setTimeout(() => {
-          btn.textContent = 'Build SD Card →';
+          btn.textContent = 'get your SwitchHack';
           btn.classList.remove('state-success');
           btn.disabled = false;
         }, 2500);
@@ -810,7 +1069,7 @@
         btn.textContent = '✕ BUILD FAILED';
         btn.classList.add('state-error');
         setTimeout(() => {
-          btn.textContent = 'Build SD Card →';
+          btn.textContent = 'get your SwitchHack';
           btn.classList.remove('state-error');
           btn.disabled = false;
         }, 2500);
@@ -821,15 +1080,54 @@
        Init
     ───────────────────────────────────────── */
     async function init() {
-      const response = await fetch('https://switchhack-backend.onrender.com/api/catalog');
-      const data = await response.json();
-      
-      // Convert the JSON object into the array format your renderModules function expects
-      window.MODULE_CATALOG = Object.entries(data).map(([id, info]) => ({
-        id, ...info
-      }));
-      
-      renderModules();
+      const loadingEl = document.getElementById('catalogLoading');
+      const loadingTextEl = document.getElementById('catalogLoadingText');
+      const cachedRaw = localStorage.getItem('builderCatalogCache');
+      let hasRenderedFromCache = false;
+      if (cachedRaw) {
+        try {
+          const cachedData = JSON.parse(cachedRaw);
+          window.MODULE_CATALOG = Object.entries(cachedData).map(([id, info]) => ({ id, ...info }));
+          renderModules();
+          hasRenderedFromCache = true;
+        } catch (_) {}
+      }
+
+      const loaderDelayMs = 500;
+      let loaderShown = false;
+      const loaderTimer = setTimeout(() => {
+        if (!hasRenderedFromCache) {
+          loadingEl.classList.remove('is-hidden');
+          loaderShown = true;
+        }
+      }, loaderDelayMs);
+
+      loadingEl.classList.add('is-hidden');
+      loadingEl.classList.remove('is-error');
+      loadingTextEl.textContent = 'Waking up the server... this may take up to a minute.';
+
+      try {
+        const response = await fetch('https://switchhack-backend.onrender.com/api/catalog');
+        const data = await response.json();
+        localStorage.setItem('builderCatalogCache', JSON.stringify(data));
+        
+        // Convert the JSON object into the array format your renderModules function expects
+        window.MODULE_CATALOG = Object.entries(data).map(([id, info]) => ({
+          id, ...info
+        }));
+        
+        renderModules();
+        clearTimeout(loaderTimer);
+        loadingEl.classList.add('is-hidden');
+      } catch (err) {
+        clearTimeout(loaderTimer);
+        console.error('[builder] catalog fetch failed:', err);
+        if (!hasRenderedFromCache) {
+          if (!loaderShown) loadingEl.classList.remove('is-hidden');
+          loadingEl.classList.add('is-error');
+          loadingTextEl.textContent = 'Failed to connect to the server. Please refresh the page or try again later.';
+        }
+      }
     }
 
     init();

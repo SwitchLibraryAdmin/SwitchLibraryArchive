@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SwitchHack — SD Card Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ['"DM Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            surface: {
+              0: '#0a0a0b',
+              1: '#111113',
+              2: '#18181b',
+              3: '#222225',
+            },
+            accent: '#39ff14',
+            'accent-dim': '#1a7a0a',
+            border: '#2a2a2e',
+            muted: '#6b6b76',
+            warn: '#ff4444',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { background: #0a0a0b; color: #e4e4e7; font-family: 'DM Sans', sans-serif; }
+
+    /* Custom checkbox */
+    .mod-check { display: none; }
+    .mod-check + .check-box {
+      width: 18px; height: 18px; border: 1px solid #2a2a2e;
+      background: #111113; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all .15s ease;
+    }
+    .mod-check:checked + .check-box {
+      border-color: #39ff14; background: #39ff1412;
+    }
+    .mod-check:checked + .check-box::after {
+      content: '✓'; color: #39ff14; font-size: 12px; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Module row */
+    .mod-row { transition: background .12s ease, border-color .12s ease; }
+    .mod-row:hover { background: #18181b; }
+    .mod-row.selected { border-left: 2px solid #39ff14; background: #39ff1406; }
+
+    /* RAM bar animation */
+    .ram-fill { transition: width .35s cubic-bezier(.4,0,.2,1), background .35s ease; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111113; }
+    ::-webkit-scrollbar-thumb { background: #2a2a2e; }
+    ::-webkit-scrollbar-thumb:hover { background: #39ff14; }
+
+    /* Build button pulse */
+    @keyframes buildPulse {
+      0%, 100% { box-shadow: 0 0 0 0 #39ff1455; }
+      50% { box-shadow: 0 0 0 6px #39ff1400; }
+    }
+    .build-btn:not(:disabled):hover { animation: buildPulse 1.5s infinite; }
+
+    /* Sidebar selected item enter */
+    .sel-item {
+      animation: slideIn .2s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(8px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Category header line */
+    .cat-line::after {
+      content: ''; flex: 1; height: 1px; background: #2a2a2e; margin-left: 12px;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+
+  <!-- ─── TOP BAR ─── -->
+  <header class="sticky top-0 z-50 border-b border-border bg-surface-0/90 backdrop-blur-md">
+    <div class="max-w-[1440px] mx-auto flex items-center justify-between px-6 h-14">
+      <div class="flex items-center gap-3">
+        <span class="font-mono text-accent font-bold text-lg tracking-tight">SH://</span>
+        <span class="font-body font-extralight text-lg tracking-wide text-white/80">SwitchHack</span>
+      </div>
+      <div class="flex items-center gap-6 text-xs font-mono text-muted">
+        <span>v4.2.0</span>
+        <span class="hidden sm:inline">Atmosphere 1.7.1</span>
+        <a href="#" class="hover:text-accent transition-colors">Docs</a>
+        <a href="#" class="hover:text-accent transition-colors">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── MAIN LAYOUT ─── -->
+  <div class="max-w-[1440px] mx-auto flex px-6 gap-0">
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  LEFT: MODULE LIST (70%)                     -->
+    <!-- ════════════════════════════════════════════ -->
+    <main class="w-full lg:w-[70%] py-8 pr-0 lg:pr-8 border-r-0 lg:border-r border-border min-h-screen">
+
+      <!-- Search / Filter Bar -->
+      <div class="flex items-center gap-3 mb-8">
+        <div class="relative flex-1">
+          <input type="text" id="searchInput" placeholder="Filter modules…"
+            class="w-full bg-surface-1 border border-border text-sm font-body text-white/90 placeholder:text-muted
+                   px-4 py-2.5 outline-none focus:border-accent/50 transition-colors" />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] text-muted border border-border px-1.5 py-0.5">/</span>
+        </div>
+        <button onclick="selectAll()" class="text-[11px] font-mono text-muted border border-border px-3 py-2.5 hover:text-accent hover:border-accent/40 transition-colors">
+          SELECT ALL
+        </button>
+        <button onclick="deselectAll()" class="text-[11px] font-mono text-muted border border-border px-3 py-2.5 hover:text-accent hover:border-accent/40 transition-colors">
+          CLEAR
+        </button>
+      </div>
+
+      <!-- Module categories will be injected here -->
+      <div id="moduleList"></div>
+
+    </main>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  RIGHT: STICKY SIDEBAR (30%)                 -->
+    <!-- ════════════════════════════════════════════ -->
+    <aside class="hidden lg:block w-[30%] py-8 pl-8">
+      <div class="sticky top-[72px]">
+
+        <!-- RAM Budget -->
+        <div class="mb-6">
+          <div class="flex items-baseline justify-between mb-2">
+            <span class="text-[11px] font-mono font-bold text-muted uppercase tracking-widest">RAM Budget</span>
+            <span class="font-mono text-sm">
+              <span id="ramUsed" class="text-white font-bold">0.0</span>
+              <span class="text-muted font-normal"> / 32 MB</span>
+            </span>
+          </div>
+          <div class="h-2 bg-surface-2 border border-border overflow-hidden">
+            <div id="ramBar" class="ram-fill h-full bg-accent" style="width:0%"></div>
+          </div>
+          <div class="flex justify-between mt-1.5">
+            <span id="ramPercent" class="font-mono text-[10px] text-muted">0%</span>
+            <span id="ramWarning" class="font-mono text-[10px] text-warn opacity-0 transition-opacity">⚠ HIGH</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-border mb-5"></div>
+
+        <!-- Selected Modules List -->
+        <div class="mb-6">
+          <div class="flex items-baseline justify-between mb-3">
+            <span class="text-[11px] font-mono font-bold text-muted uppercase tracking-widest">Selected</span>
+            <span id="selCount" class="font-mono text-[10px] text-muted">0 modules</span>
+          </div>
+          <div id="selectedList" class="space-y-0 max-h-[calc(100vh-340px)] overflow-y-auto">
+            <div id="emptyState" class="text-sm text-muted/60 font-body font-extralight py-8 text-center leading-relaxed">
+              No modules selected.<br/>
+              <span class="text-muted/40 text-xs">Check items on the left to begin.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-border mb-5"></div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-3 mb-6 text-center">
+          <div class="border border-border p-3">
+            <div id="statFiles" class="font-mono text-lg font-bold text-white">0</div>
+            <div class="text-[10px] font-mono text-muted uppercase tracking-wider mt-0.5">Files</div>
+          </div>
+          <div class="border border-border p-3">
+            <div id="statSize" class="font-mono text-lg font-bold text-white">0 KB</div>
+            <div class="text-[10px] font-mono text-muted uppercase tracking-wider mt-0.5">SD Size</div>
+          </div>
+        </div>
+
+        <!-- Build Button -->
+        <button id="buildBtn" disabled
+          class="build-btn w-full py-4 font-mono font-bold text-sm uppercase tracking-widest
+                 border-2 border-accent bg-accent/10 text-accent
+                 disabled:border-border disabled:bg-surface-1 disabled:text-muted disabled:cursor-not-allowed
+                 hover:bg-accent hover:text-surface-0 transition-all duration-200">
+          Build SD Card →
+        </button>
+        <p class="text-center font-mono text-[10px] text-muted/50 mt-2">ZIP archive · FAT32 ready</p>
+
+      </div>
+    </aside>
+  </div>
+
+  <!-- ─── MOBILE STICKY BOTTOM BAR ─── -->
+  <div id="mobileBar" class="lg:hidden fixed bottom-0 left-0 right-0 bg-surface-1/95 backdrop-blur-md border-t border-border px-4 py-3 z-50 flex items-center justify-between translate-y-full transition-transform duration-200">
+    <div>
+      <span class="font-mono text-xs text-white font-bold"><span id="mobRam">0.0</span> / 32 MB</span>
+      <span class="font-mono text-[10px] text-muted ml-2"><span id="mobCount">0</span> selected</span>
+    </div>
+    <button onclick="doBuild()" class="font-mono text-xs font-bold bg-accent text-surface-0 px-5 py-2 tracking-wider">BUILD →</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  DATA + LOGIC                                          -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script>
+    const MODULES = [
+      // ── Core CFW ──
+      { id:'atmos',   cat:'Core CFW',    name:'Atmosphère',        desc:'Open-source CFW. The foundation everything else runs on.',                     ram:0,    size:2400, files:48, required:true },
+      { id:'hekate',  cat:'Core CFW',    name:'Hekate',            desc:'Bootloader & payload launcher with built-in tools and partition manager.',     ram:0,    size:1800, files:12 },
+      { id:'sigpatch',cat:'Core CFW',    name:'Sigpatches',        desc:'Signature patches for installing and running unsigned NSPs.',                  ram:0,    size:24,   files:6  },
+      { id:'prodinfo',cat:'Core CFW',    name:'Incognito / Exo',   desc:'Blanks prodinfo to prevent telemetry. Essential for online safety.',           ram:0.2,  size:80,   files:3  },
+      { id:'dns_mitm',cat:'Core CFW',    name:'dns-mitm (90DNS)',  desc:'Blocks Nintendo servers at the DNS level. Zero-config stealth.',               ram:1.0,  size:60,   files:2  },
+
+      // ── Sysmodules ──
+      { id:'sys_clk', cat:'Sysmodules',  name:'sys-clk',           desc:'Background overclocking daemon. Set per-game CPU/GPU/MEM profiles.',          ram:1.5,  size:340,  files:5  },
+      { id:'sys_ftpd',cat:'Sysmodules',  name:'sys-ftpd-light',    desc:'Lightweight FTP server running in the background for file transfers.',        ram:2.0,  size:180,  files:3  },
+      { id:'emuiibo', cat:'Sysmodules',  name:'emuiibo',           desc:'Virtual amiibo emulator. Load any amiibo dump from SD.',                      ram:1.8,  size:420,  files:8  },
+      { id:'ldn_mitm',cat:'Sysmodules',  name:'ldn_mitm',          desc:'Converts local wireless play to LAN, enabling Parsec / Lan-Play.',            ram:3.2,  size:210,  files:4  },
+      { id:'mission', cat:'Sysmodules',  name:'MissionControl',    desc:'Use PS4, PS5, Xbox, and Wii U Pro controllers over Bluetooth.',               ram:4.5,  size:560,  files:9  },
+      { id:'sys_con', cat:'Sysmodules',  name:'sys-con',           desc:'USB controller support — wired Xbox, PS, and generic HID gamepads.',          ram:2.8,  size:290,  files:6  },
+
+      // ── Overlays ──
+      { id:'tesla',   cat:'Overlays',    name:'Tesla Menu',        desc:'Overlay framework. Summon an in-game HUD with L+↓+R-Stick.',                  ram:3.5,  size:480,  files:7  },
+      { id:'ovl_clk', cat:'Overlays',    name:'sys-clk Overlay',   desc:'Tesla overlay for sys-clk. Adjust clocks in real-time from any game.',        ram:0.8,  size:90,   files:2, dep:'sys_clk' },
+      { id:'ovl_cheat',cat:'Overlays',   name:'EdiZon Overlay',    desc:'In-game cheat engine and save manager overlay for Tesla.',                    ram:1.2,  size:310,  files:5  },
+      { id:'ovl_stat',cat:'Overlays',    name:'Status Monitor',    desc:'Real-time FPS, CPU %, GPU %, RAM, temperatures, and fan speed overlay.',      ram:0.5,  size:70,   files:2  },
+      { id:'ovl_net', cat:'Overlays',    name:'ovl-sysmodules',    desc:'Toggle sysmodules on/off without rebooting via Tesla.',                       ram:0.3,  size:45,   files:1  },
+
+      // ── Homebrew Apps ──
+      { id:'tinfoil', cat:'Homebrew Apps', name:'Tinfoil',          desc:'Title installer with shop browser, USB install, and network sources.',       ram:0,    size:6400, files:14 },
+      { id:'dbi',     cat:'Homebrew Apps', name:'DBI',              desc:'Lightweight title installer. USB, MTP, and network install support.',         ram:0,    size:1200, files:4  },
+      { id:'nxtheme',cat:'Homebrew Apps', name:'NXThemes Installer',desc:'Install and manage custom home menu themes.',                                ram:0,    size:820,  files:6  },
+      { id:'jksv',   cat:'Homebrew Apps', name:'JKSV',              desc:'Save data manager. Backup, restore, and export saves.',                      ram:0,    size:540,  files:3  },
+      { id:'nxshell',cat:'Homebrew Apps', name:'NX-Shell',          desc:'On-device file manager with image viewer and text editor.',                   ram:0,    size:390,  files:2  },
+      { id:'daybreak',cat:'Homebrew Apps',name:'Daybreak',          desc:'Firmware updater. Install official Switch FW safely from SD.',                ram:0,    size:210,  files:3  },
+    ];
+
+    const MAX_RAM = 32;
+    let selected = new Set();
+
+    // ── Render categories ──
+    function renderModules() {
+      const container = document.getElementById('moduleList');
+      const categories = [...new Set(MODULES.map(m => m.cat))];
+
+      container.innerHTML = categories.map(cat => `
+        <section class="mb-8" data-cat="${cat}">
+          <div class="cat-line flex items-center mb-3">
+            <h2 class="font-body font-extrabold text-xs uppercase tracking-[.2em] text-muted">${cat}</h2>
+          </div>
+          <div class="space-y-0">
+            ${MODULES.filter(m => m.cat === cat).map(m => `
+              <label data-id="${m.id}"
+                class="mod-row flex items-start gap-4 border border-border border-b-0 last:border-b p-4 cursor-pointer select-none ${m.required ? 'selected border-l-2 border-l-accent bg-accent/[.03]' : 'border-l-2 border-l-transparent'}">
+                <input type="checkbox" class="mod-check" value="${m.id}" ${m.required ? 'checked' : ''} onchange="toggleModule('${m.id}', this.checked)" />
+                <div class="check-box mt-0.5 ${m.required ? '' : ''}">${m.required ? '' : ''}</div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-body font-bold text-sm text-white/95">${m.name}</span>
+                    ${m.required ? '<span class="font-mono text-[9px] text-accent border border-accent/30 px-1.5 py-0.5 uppercase tracking-wider">Required</span>' : ''}
+                    ${m.dep ? `<span class="font-mono text-[9px] text-muted border border-border px-1.5 py-0.5">Needs ${MODULES.find(x=>x.id===m.dep)?.name||m.dep}</span>` : ''}
+                  </div>
+                  <p class="font-body font-extralight text-xs text-muted mt-1 leading-relaxed">${m.desc}</p>
+                </div>
+                <div class="flex items-center gap-3 flex-shrink-0 mt-0.5">
+                  ${m.ram > 0 ? `<span class="font-mono text-[11px] font-bold ${m.ram >= 4 ? 'text-warn' : m.ram >= 2 ? 'text-yellow-500' : 'text-white/60'}">${m.ram.toFixed(1)}&nbsp;MB</span>` : '<span class="font-mono text-[11px] text-muted/40">—</span>'}
+                </div>
+              </label>
+            `).join('')}
+          </div>
+        </section>
+      `).join('');
+
+      // Init required
+      MODULES.filter(m => m.required).forEach(m => selected.add(m.id));
+      updateSidebar();
+    }
+
+    // ── Toggle ──
+    function toggleModule(id, checked) {
+      const mod = MODULES.find(m => m.id === id);
+      if (mod.required && !checked) {
+        document.querySelector(`input[value="${id}"]`).checked = true;
+        return;
+      }
+      if (checked) {
+        selected.add(id);
+        // auto-select dependency
+        if (mod.dep && !selected.has(mod.dep)) {
+          selected.add(mod.dep);
+          const depCb = document.querySelector(`input[value="${mod.dep}"]`);
+          if (depCb) depCb.checked = true;
+          updateRow(mod.dep, true);
+        }
+      } else {
+        selected.delete(id);
+        // deselect dependents
+        MODULES.filter(m => m.dep === id && selected.has(m.id)).forEach(m => {
+          selected.delete(m.id);
+          const cb = document.querySelector(`input[value="${m.id}"]`);
+          if (cb) cb.checked = false;
+          updateRow(m.id, false);
+        });
+      }
+      updateRow(id, checked);
+      updateSidebar();
+    }
+
+    function updateRow(id, on) {
+      const row = document.querySelector(`label[data-id="${id}"]`);
+      if (!row) return;
+      if (on) { row.classList.add('selected'); row.style.borderLeftColor = '#39ff14'; }
+      else    { row.classList.remove('selected'); row.style.borderLeftColor = 'transparent'; }
+    }
+
+    // ── Sidebar update ──
+    function updateSidebar() {
+      const mods = MODULES.filter(m => selected.has(m.id));
+      const totalRam = mods.reduce((s, m) => s + m.ram, 0);
+      const totalSize = mods.reduce((s, m) => s + m.size, 0);
+      const totalFiles = mods.reduce((s, m) => s + m.files, 0);
+      const pct = Math.min((totalRam / MAX_RAM) * 100, 100);
+
+      // RAM bar
+      document.getElementById('ramUsed').textContent = totalRam.toFixed(1);
+      document.getElementById('ramPercent').textContent = Math.round(pct) + '%';
+      const bar = document.getElementById('ramBar');
+      bar.style.width = pct + '%';
+      bar.style.background = pct > 85 ? '#ff4444' : pct > 60 ? '#eab308' : '#39ff14';
+      document.getElementById('ramWarning').style.opacity = pct > 80 ? '1' : '0';
+
+      // Stats
+      document.getElementById('statFiles').textContent = totalFiles;
+      document.getElementById('statSize').textContent = totalSize >= 1000 ? (totalSize / 1000).toFixed(1) + ' MB' : totalSize + ' KB';
+
+      // Selected list
+      const list = document.getElementById('selectedList');
+      const empty = document.getElementById('emptyState');
+
+      if (mods.length === 0) {
+        list.innerHTML = '';
+        list.appendChild(empty);
+        empty.style.display = '';
+      } else {
+        if (empty) empty.style.display = 'none';
+        list.innerHTML = mods.map(m => `
+          <div class="sel-item flex items-center justify-between py-2 px-3 border-b border-border/50 group hover:bg-surface-2/50 transition-colors">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 ${m.ram >= 4 ? 'bg-warn' : m.ram >= 2 ? 'bg-yellow-500' : 'bg-accent'}"></span>
+              <span class="text-xs font-body text-white/80 truncate">${m.name}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-[10px] text-muted">${m.ram > 0 ? m.ram.toFixed(1) : '—'}</span>
+              <button onclick="event.stopPropagation(); toggleModule('${m.id}', false); document.querySelector('input[value=\\'${m.id}\\']').checked=false;"
+                class="opacity-0 group-hover:opacity-100 text-muted hover:text-warn text-xs transition-opacity ${m.required ? 'invisible' : ''}">✕</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('selCount').textContent = mods.length + ' module' + (mods.length !== 1 ? 's' : '');
+
+      // Build button
+      const btn = document.getElementById('buildBtn');
+      btn.disabled = mods.length === 0;
+
+      // Mobile bar
+      document.getElementById('mobRam').textContent = totalRam.toFixed(1);
+      document.getElementById('mobCount').textContent = mods.length;
+      document.getElementById('mobileBar').style.transform = mods.length > 0 ? 'translateY(0)' : 'translateY(100%)';
+    }
+
+    // ── Select/Deselect All ──
+    function selectAll() {
+      MODULES.forEach(m => {
+        selected.add(m.id);
+        const cb = document.querySelector(`input[value="${m.id}"]`);
+        if (cb) cb.checked = true;
+        updateRow(m.id, true);
+      });
+      updateSidebar();
+    }
+    function deselectAll() {
+      MODULES.forEach(m => {
+        if (m.required) return;
+        selected.delete(m.id);
+        const cb = document.querySelector(`input[value="${m.id}"]`);
+        if (cb) cb.checked = false;
+        updateRow(m.id, false);
+      });
+      updateSidebar();
+    }
+
+    // ── Search ──
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      MODULES.forEach(m => {
+        const row = document.querySelector(`label[data-id="${m.id}"]`);
+        if (!row) return;
+        const match = m.name.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q) || m.cat.toLowerCase().includes(q);
+        row.style.display = match ? '' : 'none';
+      });
+      // Hide empty category headers
+      document.querySelectorAll('[data-cat]').forEach(sec => {
+        const visible = sec.querySelectorAll('label:not([style*="display: none"])');
+        sec.style.display = visible.length ? '' : 'none';
+      });
+    });
+
+    // ── Build Action ──
+    document.getElementById('buildBtn').addEventListener('click', doBuild);
+    function doBuild() {
+      const mods = MODULES.filter(m => selected.has(m.id));
+      const btn = document.getElementById('buildBtn');
+      btn.textContent = 'BUILDING…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✓ PACKAGE READY';
+        btn.classList.add('!bg-accent', '!text-surface-0');
+        setTimeout(() => {
+          btn.textContent = 'Build SD Card →';
+          btn.classList.remove('!bg-accent', '!text-surface-0');
+          btn.disabled = false;
+        }, 2000);
+      }, 1500);
+    }
+
+    // ── Keyboard shortcut ──
+    document.addEventListener('keydown', e => {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+    });
+
+    // ── Init ──
+    renderModules();
+  </script>
+</body>
+</html>
