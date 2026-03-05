@@ -874,7 +874,7 @@
     const selected = new Set();
     const FIRMWARE_BASE_RAM_KB = { fw18: 40960, fw19: 32768 };
     const HEAVY_MODS_OVERHEAD_KB = 16384;
-    const API_BASE = 'https://switchhack-backend.onrender.com/api/v1';
+    const API_BASE = 'https://switchhack-backend.onrender.com';
     const RATE_LIMIT_MESSAGE = 'Rate limit reached. Please wait a minute before trying again.';
     const MEMORY_BUDGET_MESSAGE = 'Memory budget exceeded. Please remove some modules.';
     const GENERIC_SERVER_MESSAGE = 'Server error. Please try again.';
@@ -976,7 +976,7 @@
     }
 
     async function postCalculate(requestedModuleIds, heavyModsEnabled = false) {
-      return fetch(`${API_BASE}/calculate`, {
+      return fetch(`${API_BASE}/api/v1/calculate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1362,7 +1362,7 @@
 
       try {
         // ── LIVE RENDER BACKEND API ──
-        const res = await fetch(`${API_BASE}/build`, {
+        const res = await fetch(`${API_BASE}/api/v1/build`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1455,7 +1455,7 @@
       loadingTextEl.textContent = 'Waking up the server... this may take up to a minute.';
 
       try {
-        const response = await fetch(`${API_BASE}/catalog`);
+        const response = await fetch(`${API_BASE}/api/v1/catalog`);
         if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
         const data = await response.json();
         localStorage.setItem('builderCatalogCache', JSON.stringify(data));
@@ -1519,7 +1519,7 @@
 
     async function loadRecentUpdates() {
       try {
-        const response = await fetch(`${API_BASE}/recent-updates`);
+        const response = await fetch(`${API_BASE}/api/v1/recent-updates`);
         if (!response.ok) {
           if (response.status === 429) {
             showApiToast(RATE_LIMIT_MESSAGE);
