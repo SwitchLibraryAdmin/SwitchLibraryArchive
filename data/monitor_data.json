@@ -18,7 +18,7 @@
       "status": "Stable",
       "reason": "Hekate 6.5.1 has more positive than negative signals, suggesting it works well with current firmware."
     },
-    "lastSync": "05:07 PM",
+    "lastSync": "09:12 AM",
     "recommended_firmware": "20.1.0",
     "recommended_firmware_reason": "Evidence shows Atmosphere 1.10.2 works on 20.1.0 with fewer crash reports compared to 21.2.0.",
     "sentiment_score": 45,
@@ -35,73 +35,73 @@
       "tool": "Hekate",
       "version": "6.5.1",
       "status": "Full",
-      "notes": "Positive signals outweigh negatives, suggesting stable operation with current firmware."
+      "notes": "Positive signals outweigh negatives, with mentions showing compatibility on current firmware."
     },
     {
       "tool": "sys-patch",
       "version": "Latest",
       "status": "Partial",
-      "notes": "Mixed signals with some positive reports but mentions of issues, indicating partial compatibility."
+      "notes": "Mixed signals with some positive reports but crashes noted, especially with LayeredFS issues."
     },
     {
       "tool": "DBI",
       "version": "Latest",
-      "status": "Partial",
-      "notes": "Positive signals exist, but negative reports suggest potential instability on newer firmware."
+      "status": "Full",
+      "notes": "Positive signals exceed negatives, with mentions indicating it works on updated firmware."
     },
     {
       "tool": "LayeredFS",
       "version": "Latest",
-      "status": "Broken",
-      "notes": "Reports of system-wide crashes on FW 21.2.0, indicating major incompatibility."
+      "status": "Partial",
+      "notes": "Reports of system-wide crashes on FW 21.2.0, but some positive usage noted."
     },
     {
       "tool": "JKSV",
       "version": "Latest",
       "status": "Broken",
-      "notes": "Negative signals dominate with crash reports on FW 21.2.0, suggesting broken functionality."
+      "notes": "Negative signals dominate with crash reports on FW 21.2.0, indicating incompatibility."
     },
     {
       "tool": "Checkpoint",
       "version": "Latest",
       "status": "Broken",
-      "notes": "Only negative signals reported, indicating compatibility issues with current setups."
+      "notes": "Only negative signals reported, suggesting issues with current firmware."
     },
     {
-      "tool": "Goldleaf",
-      "version": "Latest",
-      "status": "Full",
-      "notes": "Positive signals with no negatives, suggesting stable operation based on available evidence."
+      "tool": "ldn_mitm",
+      "version": "1.23.0",
+      "status": "Partial",
+      "notes": "Crash fixes noted, but negative signals indicate potential instability on newer firmware."
     }
   ],
   "trending_topics": [
     {
-      "tag": "Pokemon homebrew tools",
-      "count": 5,
+      "tag": "Firmware Compatibility Updates",
+      "count": 12,
       "sentiment": "positive"
     },
     {
-      "tag": "Firmware compatibility issues",
-      "count": 4,
-      "sentiment": "negative"
-    },
-    {
-      "tag": "Overlay and sysmodule updates",
+      "tag": "Pokemon Homebrew Tools",
       "count": 6,
       "sentiment": "positive"
     },
     {
-      "tag": "Emulator legal challenges",
+      "tag": "Emulator Legal Issues",
       "count": 2,
       "sentiment": "negative"
     },
     {
-      "tag": "Switch 2 game announcements",
-      "count": 3,
+      "tag": "Switch 2 Game Releases",
+      "count": 5,
+      "sentiment": "positive"
+    },
+    {
+      "tag": "Performance Enhancement Tools",
+      "count": 7,
       "sentiment": "positive"
     }
   ],
-  "scene_briefing": "Caution is advised as Atmosphere 1.10.2 works best on firmware 20.1.0 with fewer crashes. The scene is buzzing with Horizon OC Zeus enabling RAM overclocking beyond 3000MHz. Pokemon homebrew tools like pkHouse are trending, alongside ongoing firmware compatibility discussions.",
+  "scene_briefing": "Caution is advised as Atmosphere 1.10.2 works best on firmware 20.1.0 with fewer crashes. The release of Atmosphère 1.10.2 is the top story, alongside trending topics like firmware compatibility updates and performance enhancement tools.",
   "articles": [
     {
       "type": "homebrew",
@@ -115,7 +115,7 @@
       "timestamp": "2026-02-20",
       "risk": "Caution",
       "risk_reason": "Beta tool, requires NAND backups",
-      "description": "RAM overclocking tool for Switch up to 3100MHz"
+      "description": "RAM overclocking tool for Switch up to 3000MHz+"
     },
     {
       "type": "homebrew",
@@ -142,8 +142,8 @@
       "size": "",
       "timestamp": "2026-02-12",
       "risk": "Safe",
-      "risk_reason": "Open-source tool, no major issues",
-      "description": "Local bank system for Pokemon games on Switch"
+      "risk_reason": "Community-tested, no issues reported",
+      "description": "Local bank system for managing Pokemon across games"
     },
     {
       "type": "homebrew",
@@ -157,7 +157,7 @@
       "timestamp": "2026-02-14",
       "risk": "Safe",
       "risk_reason": "Homebrew app, no risk signals",
-      "description": "App for viewing Tera Raid details in Pokemon games"
+      "description": "App for viewing Tera Raid details live in Pokemon"
     },
     {
       "type": "homebrew",
@@ -170,8 +170,8 @@
       "size": "",
       "timestamp": "2026-02-17",
       "risk": "Safe",
-      "risk_reason": "Open-source engine, no reported issues",
-      "description": "Game editor and engine for N64 homebrew development"
+      "risk_reason": "Open-source tool, no risk signals",
+      "description": "Game editor and engine for N64 homebrew creation"
     },
     {
       "type": "homebrew",
@@ -184,8 +184,8 @@
       "size": "",
       "timestamp": "2026-01-06",
       "risk": "Caution",
-      "risk_reason": "Modifies game files, use at own risk",
-      "description": "Mod for Diablo III with resolution and feature enhancements"
+      "risk_reason": "Mod menu, modifies game files",
+      "description": "Mod menu for Diablo III with resolution enhancements"
     },
     {
       "type": "homebrew",
@@ -198,8 +198,8 @@
       "size": "",
       "timestamp": "2025-12-29",
       "risk": "Caution",
-      "risk_reason": "Game mod, may cause instability",
-      "description": "Mod for Inazuma Eleven adding 60FPS and 4K support"
+      "risk_reason": "Mod, may affect game stability",
+      "description": "Mod for Inazuma Eleven enabling 60FPS and 4K"
     },
     {
       "type": "homebrew",
@@ -212,8 +212,22 @@
       "size": "",
       "timestamp": "2025-12-12",
       "risk": "Caution",
-      "risk_reason": "Save editing, risk of corruption",
-      "description": "Tutorial for editing Metroid Prime 4 saves"
+      "risk_reason": "Save editing, potential data loss",
+      "description": "Tutorial and save editor for Metroid Prime 4"
+    },
+    {
+      "type": "homebrew",
+      "content_type": "Tutorial",
+      "source": "GBAtemp",
+      "title": "Learn to create cheats with breeze (or other cheat engine). No previous knowledge required. Examples with Dave the Diver",
+      "url": "https://gbatemp.net/threads/learn-to-create-cheats-with-breeze-or-other-cheat-engine-no-previous-knowledge-required-examples-with-dave-the-diver.678771/",
+      "version": "",
+      "region": "",
+      "size": "",
+      "timestamp": "2026-01-10",
+      "risk": "Caution",
+      "risk_reason": "Cheat creation, modifies game memory",
+      "description": "Tutorial for creating cheats using Breeze engine"
     },
     {
       "type": "homebrew",
@@ -226,8 +240,8 @@
       "size": "",
       "timestamp": "2026-02-25",
       "risk": "Caution",
-      "risk_reason": "Games failing after firmware update",
-      "description": "Discussion on games not booting with Atmosphere and FW21"
+      "risk_reason": "Games error after firmware update",
+      "description": "Discussion on games failing to boot with Atmosphere"
     },
     {
       "type": "homebrew",
@@ -240,22 +254,8 @@
       "size": "",
       "timestamp": "2026-02-18",
       "risk": "Caution",
-      "risk_reason": "Games missing after update, potential issue",
-      "description": "User reports games disappearing after Atmosphere update"
-    },
-    {
-      "type": "homebrew",
-      "content_type": "Discussion",
-      "source": "GBAtemp",
-      "title": "Help a father with his son’s Switch!",
-      "url": "https://gbatemp.net/threads/help-a-father-with-his-sons-switch.679806/",
-      "version": "",
-      "region": "",
-      "size": "",
-      "timestamp": "2026-02-19",
-      "risk": "Caution",
-      "risk_reason": "Error messages after reboot, troubleshooting needed",
-      "description": "Help request for Switch issues with Hekate and Atmosphere"
+      "risk_reason": "Games disappeared after update",
+      "description": "User reports games missing after Atmosphere update"
     }
   ],
   "news": [
@@ -264,24 +264,6 @@
       "source": "GBAtemp",
       "timestamp": "2026-02-27",
       "url": "https://gbatemp.net/threads/pokemon-winds-and-waves-announced-for-nintendo-switch-2-set-to-release-in-2027.679983/"
-    },
-    {
-      "headline": "Switch releases of Pokemon FireRed and LeafGreen include event items",
-      "source": "GBAtemp",
-      "timestamp": "2026-02-27",
-      "url": "https://gbatemp.net/threads/switch-releases-of-pokemon-firered-and-leafgreen-confirmed-to-contain-event-exclusive-ticket-items.679986/"
-    },
-    {
-      "headline": "Hitman World of Assassination adds cross-progression on Switch 2",
-      "source": "GBAtemp",
-      "timestamp": "2026-02-25",
-      "url": "https://gbatemp.net/threads/hitman-world-of-assassination-gets-cross-progression-support-on-nintendo-switch-2.679938/"
-    },
-    {
-      "headline": "Xenoblade Chronicles X gets Switch 2 Edition with 4K/60 performance",
-      "source": "GBAtemp",
-      "timestamp": "2026-02-19",
-      "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/"
     },
     {
       "headline": "Switch emulator Citron discontinued, Ryubing in maintenance mode",
@@ -296,7 +278,37 @@
       "url": "https://gbatemp.net/threads/nintendo-is-yet-again-issuing-dmca-notices-to-switch-emulators-on-github.679723/"
     },
     {
-      "headline": "Bounties offered for porting homebrew to Switch",
+      "headline": "Xenoblade Chronicles X gets Switch 2 update with 4K/60 docked",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-19",
+      "url": "https://gbatemp.net/threads/xenoblade-chronicles-x-definitive-edition-gets-an-even-more-definitive-switch-2-edition-features-4k-60-docked-performance.679810/"
+    },
+    {
+      "headline": "Hitman World of Assassination adds cross-progression on Switch 2",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-25",
+      "url": "https://gbatemp.net/threads/hitman-world-of-assassination-gets-cross-progression-support-on-nintendo-switch-2.679938/"
+    },
+    {
+      "headline": "Pokemon FireRed and LeafGreen Switch releases include event tickets",
+      "source": "GBAtemp",
+      "timestamp": "2026-02-27",
+      "url": "https://gbatemp.net/threads/switch-releases-of-pokemon-firered-and-leafgreen-confirmed-to-contain-event-exclusive-ticket-items.679986/"
+    },
+    {
+      "headline": "Skyrim releases on Nintendo Switch 2, homebrew discussions sparked",
+      "source": "GBAtemp",
+      "timestamp": "2025-12-09",
+      "url": "https://gbatemp.net/threads/party-like-its-2011-as-skyrim-releases-on-the-nintendo-switch-2.677901/"
+    },
+    {
+      "headline": "Discussion on Switch 2 physical releases state",
+      "source": "GBAtemp",
+      "timestamp": "2025-12-13",
+      "url": "https://gbatemp.net/threads/nintendo-switch-2-the-current-state-of-physical-releases.678010/"
+    },
+    {
+      "headline": "User offers bounties for Switch homebrew ports",
       "source": "GBAtemp",
       "timestamp": "2026-02-11",
       "url": "https://gbatemp.net/threads/offering-bounties-for-switch-homebrew-ports.679636/"
