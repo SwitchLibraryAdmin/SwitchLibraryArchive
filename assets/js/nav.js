@@ -8,6 +8,7 @@
   const isIntel = section === 'intel';
   const isMonitor = section === 'directory';
   const isHub = section === 'community';
+  const isBuilder = section === 'builder';
   const isHome = section === '';
   const homeHref = '/';
 
@@ -54,6 +55,7 @@
         <a href="/intel/" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="/directory/" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
         <a href="/community/" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
+        <a href="/builder/" class="${isBuilder ? active : inactive}"${isBuilder ? ' aria-current="page"' : ''}>Builder</a>
       </div>
 
       <!-- Mobile hamburger -->
@@ -88,6 +90,7 @@
         <a href="/intel/" class="${isIntel ? active : inactive}"${isIntel ? ' aria-current="page"' : ''}>Intel</a>
         <a href="/directory/" class="${isMonitor ? active : inactive}"${isMonitor ? ' aria-current="page"' : ''}>Directory</a>
         <a href="/community/" class="${isHub ? active : inactive}"${isHub ? ' aria-current="page"' : ''}>Community</a>
+        <a href="/builder/" class="${isBuilder ? active : inactive}"${isBuilder ? ' aria-current="page"' : ''}>Builder</a>
       </div>
     </div>
   </nav>`;
