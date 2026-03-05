@@ -11,9 +11,12 @@ Thumbs.db
 
 # Live-server artifacts
 node_modules/
+.cache/
 
 # Private scrapers (not published)
 tools/scrapers/
+tools/logs/
+*.log
 
 # Debug artifacts
 debug_claude_response.txt
@@ -21,6 +24,24 @@ tools/scrapers/debug/
 
 # Personal notes
 TODO.md
+CONTEXT.md
 
 # Environment variables / secrets
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+
+# Python local artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local AI/editor state
+.claude/
