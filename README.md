@@ -36,14 +36,14 @@ SwitchHack is a GitHub Pages site for Nintendo Switch users after CFW setup: gui
 ### Quick preview
 
 ```bash
-open index.html
+open site/index.html
 ```
 
 ### Local server (recommended for route/data behavior)
 
 ```bash
 python3 -m http.server 8000
-# then open http://localhost:8000/
+# then open http://localhost:8000/site/
 ```
 
 ### Rebuild Tailwind output (if you changed Tailwind input/config)
@@ -57,14 +57,14 @@ npm run build:css
 
 ## Data pipeline (important)
 
-`data/monitor_data.json` is machine-generated and is the source of truth for monitor/directory/community data-driven blocks.
+`site/data/monitor_data.json` is machine-generated and is the source of truth for monitor/directory/community data-driven blocks.
 
 Pipeline:
 
-1. `scrapers/gbatemp_scraper.py` (or local scraper entrypoint)
-2. `scrapers/switch_scrape.json` (raw output)
-3. `scrapers/intel_processor.py`
-4. `data/monitor_data.json` (site-consumed output)
+1. `tools/scrapers/gbatemp_scraper.py` (or local scraper entrypoint)
+2. `tools/scrapers/switch_scrape.json` (raw output)
+3. `tools/scrapers/intel_processor.py`
+4. `site/data/monitor_data.json` (site-consumed output)
 
 ---
 
@@ -77,7 +77,7 @@ Pushes to `main` trigger `.github/workflows/deploy.yml`, which:
 3. minifies HTML/JS,
 4. publishes to GitHub Pages.
 
-`daily_update.yml` validates `data/monitor_data.json` schema when that file changes.
+`daily_update.yml` validates `site/data/monitor_data.json` schema when that file changes.
 
 ---
 

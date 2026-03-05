@@ -13,15 +13,15 @@ echo "========================================"
 echo "Starting Sync: $(date)"
 
 echo "🕸️ Scraping Community Data..."
-python3.13 scrapers/scraper_main.py
+python3.13 tools/scrapers/scraper_main.py
 
 echo "🧠 Processing with DeepSeek AI..."
-python3.13 scrapers/intel_processor.py
+python3.13 tools/scrapers/intel_processor.py
 
 AI_SUCCESS=$(python3.13 -c "
 import json, sys
 try:
-    with open('data/monitor_data.json') as f:
+    with open('site/data/monitor_data.json') as f:
         d = json.load(f)
     print('1' if len(d.get('articles', [])) > 0 else '0')
 except:
@@ -34,7 +34,7 @@ if [ "$AI_SUCCESS" = "0" ]; then
 fi
 
 echo "🚀 Shipping to GitHub..."
-git add data/monitor_data.json data/monitor_history.json
+git add site/data/monitor_data.json site/data/monitor_history.json
 git commit -m "Autonomous Intel Update: $(date)"
 git push origin main
 

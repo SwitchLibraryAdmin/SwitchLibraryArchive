@@ -4134,3 +4134,256 @@ Success: /Users/lunt3/SwitchHack/data/monitor_data.json updated.
  2 files changed, 80 insertions(+), 58 deletions(-)
 ✅ Pipeline Complete: Wed Mar  4 17:07:34 EST 2026
 ========================================
+========================================
+Starting Sync: Thu Mar  5 05:12:56 EST 2026
+🕸️ Scraping Community Data...
+GBAtemp + Reddit + GitHub Nintendo Switch Scraper
+Cutoff: 2025-12-05 (3 months back)
+Reply window: 14 days (max 20 pages per thread)
+Re-scrape window: 24h | Megathread tail pages: 3
+Reddit minimum upvotes: 10
+Max body length: 10000
+Output: /Users/lunt3/SwitchHack/scrapers/switch_scrape.json
+GBAtemp forums: 9 switch-specific + 2 news
+Subreddits: SwitchHacks
+GitHub repos: 30
+Loaded 286 existing items (256 unique URLs)
+
+Launching browser to solve Cloudflare challenge...
+  Waiting for challenge to clear.
+  Challenge passed! (~1s)
+  Session ready — 30 cookies, cf_clearance=YES
+
+============================================================
+Scraping: Nintendo Switch
+============================================================
+  Page 1... found 10 threads (2 megathreads)
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch - Homebrew
+============================================================
+  Page 1... found 8 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch - Hacking
+============================================================
+  Page 1... found 16 threads (2 megathreads)
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch - Questions
+============================================================
+  Page 1... found 7 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch - Tutorials
+============================================================
+  Page 1... found 6 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch - ROM Hack
+============================================================
+  Page 1... found 3 threads (1 megathreads)
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch - Emulation
+============================================================
+  Page 1... found 15 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Nintendo Switch 2
+============================================================
+  Page 1... found 12 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: Switch Cheat Codes
+============================================================
+  Page 1... found 22 threads (1 megathreads)
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: GBAtemp Scene News
+  (keyword-filtered for Switch content)
+============================================================
+  Page 1... found 7 threads
+  Page 2... found 0 threads
+  Page 3... found 3 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+============================================================
+Scraping: User Submitted News
+  (keyword-filtered for Switch content)
+============================================================
+  Page 1... found 3 threads
+  Page 2... found 1 threads
+  Page 3... found 0 threads
+  Reached cutoff date (2025-12-05), stopping.
+
+Total unique GBAtemp threads: 104
+  Megathreads (always scrape): 4
+  New normal (will deep-scrape): 2
+  Re-scrape (recent replies):    9
+  Skipped (no changes):          89
+
+Scraping 4 megathreads (last 3 pages each)...
+  [mega 1/4] SWITCH NOOB PARADISE - Ask questions here... OK (59 replies, pages tail)
+  [mega 2/4] Switch Informations by serial number - READ THE FIRST P... OK (48 replies, pages tail)
+  [mega 3/4] Fire Emblem: Three Houses General Hacking... OK (50 replies, pages tail)
+  [mega 4/4] Cheat Codes AMS and Sx Os, Add and Request GENERAL...   [ERROR] Status 403 for https://gbatemp.net/threads/cheat-codes-ams-and-sx-os-add-and-request-general.601268/
+EMPTY
+
+Deep-scraping 2 new threads (OP + replies from last 14 days)...
+  [1/2] is there an emulator for 3ds on switch?... OK (2 replies)
+  [2/2] Kentum 1.0.1 TID: 01008F0022CD2000 BID: BC18BFC4C6...   [ERROR] Status 403 for https://gbatemp.net/threads/kentum-1-0-1-tid-01008f0022cd2000-bid-bc18bfc4c64571a9.677948/
+EMPTY
+
+Re-scraping tail of 9 threads with replies in last 24h...
+  [rescrape 1/9] Quick atmosphere Hosts config question... +2 new replies
+  [rescrape 2/9] Modded switch won’t boot OFW...   [ERROR] Failed to fetch https://gbatemp.net/threads/modded-switch-wont-boot-ofw.680110/: Failed to perform, curl: (28) Operation timed out after 934365 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+no new replies
+  [rescrape 3/9] Before I update... +1 new replies
+  [rescrape 4/9] We did that Nintenwont... +1 new replies
+  [rescrape 5/9] Is it safe to delete all logs trought haku33?... no new replies
+  [rescrape 6/9] boruto...   [ERROR] Status 403 for https://gbatemp.net/threads/boruto.680118/
+no new replies
+  [rescrape 7/9] Scott Pilgrim EX 1.0.0.13755 TID: 0100D59022590000...   [ERROR] Status 403 for https://gbatemp.net/threads/scott-pilgrim-ex-1-0-0-13755-tid-0100d59022590000-bid-e8dc5c9e4f0810e7.680114/
+no new replies
+  [rescrape 8/9] Fire Emblem Warriors 1.5.0 TID: 0100F15003E64000 B...   [ERROR] Status 403 for https://gbatemp.net/threads/fire-emblem-warriors-1-5-0-tid-0100f15003e64000-bid-1953770037acc52a.680112/
+no new replies
+  [rescrape 9/9] Legacy of Kain: Defiance Remastered 1.0.0 TID: 010...   [ERROR] Status 403 for https://gbatemp.net/threads/legacy-of-kain-defiance-remastered-1-0-0-tid-0100760026272000-bid-b57a73dd745ce134.680109/
+no new replies
+  Updated 3 existing threads with new replies
+
+JSON saved: /Users/lunt3/SwitchHack/scrapers/switch_scrape.json (292 items)
+  (incremental save after GBAtemp done)
+
+============================================================
+Scraping: r/SwitchHacks
+============================================================
+  Found 2 pinned megathread(s)
+  Page 1... found 0 new posts (>= 10 upvotes)
+  Reached cutoff date (2025-12-05), stopping.
+  Skipped 14 already-scraped posts
+
+New unique Reddit posts: 0
+Reddit megathreads (pinned): 2
+
+Fetching newest comments for 2 Reddit megathreads...
+  [mega 1/2] NOTICE: This is an unofficial community and not as... 2 new-sorted comments
+  [mega 2/2] SciresM Retiring... [comment error: Failed to perform, curl: (28) Operation timed out after 908954 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.] 0 new-sorted comments
+
+JSON saved: /Users/lunt3/SwitchHack/scrapers/switch_scrape.json (294 items)
+  (incremental save after Reddit done)
+
+============================================================
+Scraping: GitHub releases (30 repos)
+============================================================
+  Atmosphere-NX/Atmosphere... found 0 new releases
+  CTCaer/hekate... found 0 new releases
+  rashevskyv/dbi... found 0 new releases
+  XorTroll/Goldleaf... found 0 new releases
+  mtheall/ftpd... found 0 new releases
+  ITotalJustice/sphaira... found 0 new releases
+  fortheusers/hb-appstore... found 0 new releases
+  switchbrew/nx-hbmenu... found 0 new releases
+  switchbrew/nx-hbloader... found 0 new releases
+  WerWolv/nx-ovlloader... found 0 new releases
+  WerWolv/Tesla-Menu... found 0 new releases
+  WerWolv/ovl-sysmodules... found 0 new releases
+  ppkantorski/Ultrahand-Overlay... found 0 new releases
+  masagrator/Status-Monitor-Overlay... found 0 new releases
+  masagrator/SaltyNX... found 0 new releases
+  masagrator/FPSLocker... found 0 new releases
+  retronx-team/sys-clk... found 0 new releases
+  impeeza/sys-patch... found 0 new releases
+  ndeadly/MissionControl... found 0 new releases
+  cathery/sys-con... found 0 new releases
+  spacemeowx2/ldn_mitm... found 0 new releases
+  J-D-K/JKSV... found 0 new releases
+  DarkMatterCore/nxdumptool... found 0 new releases
+  tomvita/EdiZon-SE... found 0 new releases
+  exelix11/SwitchThemeInjector... found 0 new releases
+  suchmememanyskill/TegraExplorer... found 0 new releases
+  XorTroll/emuiibo... found 0 new releases
+  exelix11/SysDVR... found 0 new releases
+  proconsule/nxmp... found 0 new releases
+  HamletDuFromage/aio-switch-updater... found 0 new releases
+
+New unique GitHub releases: 0
+
+Pruned 3 stale items older than 2025-12-05 (2 GBAtemp, 1 Reddit, 0 GitHub)
+
+JSON saved: /Users/lunt3/SwitchHack/scrapers/switch_scrape.json (291 items)
+
+Done!
+  Existing items loaded: 286
+  New GBAtemp threads:   6 (1740 replies scraped)
+  Updated GBAtemp:       3 (re-scraped tails)
+  New Reddit posts:      2
+  Updated Reddit posts:  0 (re-scraped)
+  New GitHub releases:   0
+  Total in file:         291 (205 GBAtemp + 27 Reddit + 59 GitHub) [after pruning]
+successfully removed temp profile /var/folders/2c/fhdtt9r12xz64gdfbql8jhd40000gn/T/uc_udtt1359
+🧠 Processing with DeepSeek AI...
+Reading raw data from: /Users/lunt3/SwitchHack/scrapers/switch_scrape.json
+Loaded 291 items.
+Previous output loaded (11 articles cached).
+Stage 1: Extracting versions...
+  Atmosphere: 1.10.2
+  Hekate:     6.5.1
+  Firmware:   21.2.0
+Stage 2: Curating data (bucket selection)...
+  GBAtemp: 40 threads (bucket-selected)
+  GitHub:  59 releases
+  Reddit:  20 posts (top by upvotes)
+  FW Intel: 30 evidence items from 291 total items
+  Tool Compat: 13 tools with mentions: Atmosphere(46), Hekate(16), LayeredFS(3), sys-patch(7), Tinfoil(3), DBI(13), Goldleaf(3), Checkpoint(4), JKSV(6), Tesla(4), nxdumptool(3), Lockpick_RCM(2), ldn_mitm(4)
+  Signals:  {'CRASH_REPORT': 11, 'POSITIVE': 9, 'LAYEREDFS_ISSUE': 3, 'CORRUPTION': 7, 'INCOMPATIBLE': 3, 'BAN_REPORT': 1, 'UPDATE_WARNING': 1}
+Stage 3: Running AI analysis...
+  --- Call 1: Threat Analysis ---
+  [threat] Sending 19489 chars to DeepSeek...
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_request_threat.json
+  [threat] finish_reason=stop, tokens=614, response=2329 chars
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_meta_threat.txt
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_raw_threat.json
+  --- Call 2a: Scene Extraction ---
+  [extract] Sending 43467 chars to DeepSeek...
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_request_extract.json
+  [extract] finish_reason=stop, tokens=6799, response=24458 chars
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_meta_extract.txt
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_raw_extract.json
+  --- Call 2b: Content Formatting ---
+  [format] Sending 18241 chars to DeepSeek...
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_request_format.json
+  [format] finish_reason=stop, tokens=3696, response=12355 chars
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_meta_format.txt
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_raw_format.json
+  --- Call 3: Scene Briefing ---
+  [briefing] Sending 604 chars to DeepSeek...
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_request_briefing.json
+  [briefing] finish_reason=stop, tokens=66, response=263 chars
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_meta_briefing.txt
+  Debug saved: /Users/lunt3/SwitchHack/scrapers/debug/last_response_raw_briefing.json
+Stage 4: Validating and merging...
+  Articles:    11 ({'homebrew': 11})
+  News:        39 items
+  Reddit:      5 posts
+  Trending:    5 topics
+  Compat:      8 tools
+  Sentiment:   45/100 (Anxious)
+  Threat:      Caution (Stable)
+  Briefing:    Caution is advised as Atmosphere 1.10.2 works best on firmware 20.1.0 with fewer...
+Success: /Users/lunt3/SwitchHack/data/monitor_data.json updated.
+  History: 20 snapshots saved to /Users/lunt3/SwitchHack/data/monitor_history.json
+🚀 Shipping to GitHub...
+[main 1bbcf86] Autonomous Intel Update: Thu Mar  5 09:12:23 EST 2026
+ 2 files changed, 91 insertions(+), 68 deletions(-)
+✅ Pipeline Complete: Thu Mar  5 09:12:24 EST 2026
+========================================
