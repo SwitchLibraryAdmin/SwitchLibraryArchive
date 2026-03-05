@@ -25,18 +25,37 @@
 
   <style>
     /* ─── Design Tokens ─── */
-    :root {
-      --bg:          #0a0a0b;
-      --surface:     #111113;
-      --surface-2:   #18181b;
-      --border:      #1e1e22;
-      --border-hi:   #2a2a2e;
-      --muted:       #71717a;
-      --text:        #e4e4e7;
-      --accent:      #06B6D4;
-      --accent-hi:   #22D3EE;
-      --accent-dim:  rgba(6, 182, 212, 0.09);
-      --accent-tint: rgba(6, 182, 212, 0.06);
+    :root[data-theme="dark"], :root {
+      /* Linear layering system */
+      --bg-primary:            #08090a;
+      --bg-secondary:          #1c1c1f;
+      --bg-translucent:        rgba(255, 255, 255, 0.05);
+      --bg-translucent-hover:  rgba(255, 255, 255, 0.08);
+
+      --border-primary:        #23252a;
+      --border-translucent:    rgba(255, 255, 255, 0.05);
+      --border-active:         rgba(255, 255, 255, 0.15);
+
+      --text-primary:          #f7f8f8;
+      --text-secondary:        #d0d6e0;
+      --text-tertiary:         #8a8f98;
+
+      --shadow-card:           0px 4px 24px rgba(0, 0, 0, 0.2);
+
+      --accent-cyan:           #55ccff;
+
+      /* ── Semantic aliases so existing var() refs keep working ── */
+      --bg:          #08090a;
+      --surface:     #1c1c1f;
+      --surface-2:   rgba(255, 255, 255, 0.08);
+      --border:      #23252a;
+      --border-hi:   rgba(255, 255, 255, 0.15);
+      --muted:       #8a8f98;
+      --text:        #f7f8f8;
+      --accent:      #55ccff;
+      --accent-hi:   #55ccff;
+      --accent-dim:  rgba(85, 204, 255, 0.09);
+      --accent-tint: rgba(85, 204, 255, 0.06);
       --warn-mid:    #EAB308;
       --warn:        #EF4444;
     }
@@ -45,8 +64,8 @@
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg-primary);
+      color: var(--text-primary);
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
@@ -95,15 +114,21 @@
       align-items: center;
       gap: 8px;
       position: relative;
-      border: 1px solid var(--border);
-      border-bottom: 0;
+      background-color: transparent;
+      border: none;
+      border-left: 2px solid transparent;
+      border-bottom: 1px solid var(--border-translucent);
+      border-radius: 0;
+      box-shadow: none;
       padding: 5px 8px;
       cursor: pointer;
       user-select: none;
-      border-left: 2px solid transparent;
-      transition: background 0.12s ease;
+      transition: background 0.12s ease, border-color 0.12s ease;
     }
-    .mod-row:hover { background: var(--surface-2); }
+    .mod-row:hover {
+      background: var(--bg-translucent-hover);
+      border-color: var(--border-active);
+    }
     .mod-tooltip {
       position: absolute;
       left: 50%;
@@ -136,7 +161,7 @@
     .mod-tooltip-title {
       font-size: 13px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-primary);
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -147,8 +172,8 @@
       font-size: 10px;
       font-weight: 700;
       color: var(--accent);
-      border: 1px solid rgba(6, 182, 212, 0.35);
-      background: rgba(6, 182, 212, 0.08);
+      border: 1px solid rgba(85, 204, 255, 0.35);
+      background: rgba(85, 204, 255, 0.08);
       border-radius: 9999px;
       padding: 2px 8px;
       white-space: nowrap;
@@ -156,7 +181,7 @@
     .mod-tooltip-body {
       font-size: 12px;
       line-height: 1.4;
-      color: #A0A0A0;
+      color: var(--text-tertiary);
       margin: 0 0 8px;
       overflow: hidden;
       display: -webkit-box;
@@ -192,7 +217,8 @@
     .mod-grid {
       display: grid;
       grid-template-columns: 1fr;
-      border-bottom: 1px solid var(--border);
+      gap: 5px;
+      padding-bottom: 4px;
     }
     @media (max-width: 600px) {
       .mod-grid { grid-template-columns: 1fr; }
@@ -212,8 +238,8 @@
     }
     .badge-required {
       color: var(--accent);
-      border: 1px solid rgba(6, 182, 212, 0.3);
-      background: rgba(6, 182, 212, 0.06);
+      border: 1px solid rgba(85, 204, 255, 0.3);
+      background: rgba(85, 204, 255, 0.06);
     }
     .badge-recommended {
       color: var(--muted);
@@ -231,8 +257,8 @@
       white-space: nowrap;
     }
     .repo-avatar {
-      width: 1.1em;
-      height: 1.1em;
+      width: 1.27em;
+      height: 1.27em;
       flex-shrink: 0;
       border-radius: 9999px;
       object-fit: cover;
@@ -253,8 +279,10 @@
     .ram-fill {
       height: 100%;
       background: var(--accent);
-      transition: width 0.38s cubic-bezier(0.4, 0, 0.2, 1), background 0.38s ease;
+      transition: width 0.65s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease;
     }
+    .ram-fill.is-warn-mid { background: var(--warn-mid); }
+    .ram-fill.is-warn     { background: var(--warn); }
 
     /* ─── Search Input ─── */
     .search-input {
@@ -270,7 +298,7 @@
       -webkit-appearance: none;
     }
     .search-input::placeholder { color: var(--muted); }
-    .search-input:focus { border-color: rgba(6, 182, 212, 0.45); }
+    .search-input:focus { border-color: rgba(85, 204, 255, 0.45); }
 
     /* ─── Filter Buttons ─── */
     .filter-btn {
@@ -287,7 +315,7 @@
     }
     .filter-btn:hover {
       color: var(--accent);
-      border-color: rgba(6, 182, 212, 0.35);
+      border-color: rgba(85, 204, 255, 0.35);
     }
 
     /* ─── Category Header ─── */
@@ -306,8 +334,8 @@
 
     /* ─── Build Button ─── */
     @keyframes buildPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.5); }
-      50%       { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(85, 204, 255, 0.5); }
+      50%       { box-shadow: 0 0 0 10px rgba(85, 204, 255, 0); }
     }
 
     .build-btn {
@@ -361,7 +389,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 8px 12px;
-      border-bottom: 1px solid rgba(30, 30, 34, 0.8);
+      border-bottom: 1px solid var(--border-translucent);
       transition: background 0.1s ease;
     }
     .sel-item-row:hover { background: var(--surface-2); }
@@ -409,7 +437,7 @@
       overflow: hidden;
     }
     .bundle-card:hover {
-      border-color: rgba(6, 182, 212, 0.35);
+      border-color: rgba(85, 204, 255, 0.35);
       background: var(--surface-2);
     }
     .bundle-card.active {
@@ -431,7 +459,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-primary);
       margin: 0 0 6px;
       letter-spacing: 0.04em;
     }
@@ -440,6 +468,34 @@
       color: var(--muted);
       margin: 0;
       line-height: 1.5;
+    }
+
+    /* ─── Recent Updates Feed ─── */
+    .update-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 5px 0 5px 10px;
+      border-left: 2px solid var(--accent-cyan);
+      margin-bottom: 4px;
+    }
+    .update-item:last-child { margin-bottom: 0; }
+    .update-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .update-version {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-primary);
+    }
+    .update-time {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-left: auto;
+      white-space: nowrap;
     }
 
     /* ─── Scrollbar ─── */
@@ -461,10 +517,12 @@
       min-height: 100vh;
     }
     #moduleList {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-      align-items: start;
+      columns: 4;
+      column-gap: 18px;
+    }
+    #moduleList section {
+      break-inside: avoid;
+      margin-bottom: 48px;
     }
     .is-hidden { display: none !important; }
     .catalog-loading {
@@ -501,17 +559,17 @@
       to { transform: rotate(360deg); }
     }
     @media (max-width: 1200px) {
-      #moduleList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #moduleList { columns: 2; }
     }
     @media (max-width: 700px) {
-      #moduleList { grid-template-columns: 1fr; }
+      #moduleList { columns: 1; }
     }
 
     /* ─── Page Header ─── */
     .page-header {
       margin-top: 64px;
       border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(17,17,19,0.7) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(8, 9, 10, 0.7) 0%, transparent 100%);
     }
     .page-header-inner {
       max-width: 1440px;
@@ -524,7 +582,7 @@
       position: sticky;
       top: 64px;
       z-index: 40;
-      background: rgba(17, 17, 19, 0.96);
+      background: rgba(8, 9, 10, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
@@ -547,16 +605,47 @@
 
   <!-- ─── Page Header ─── -->
   <div class="page-header">
-    <div class="page-header-inner">
-      <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.22em; margin:0 0 8px;">
-        SD Card Builder
-      </p>
-      <h1 style="font-size:22px; font-weight:800; color:#fff; letter-spacing:-0.025em; margin:0 0 5px; line-height:1.2;">
-        Build your custom SD card
-      </h1>
-      <p style="font-size:14px; color:var(--muted); font-weight:300; margin:0; line-height:1.5;">
-        Select the modules you want. RAM cost is tracked live. Download a ready-to-flash ZIP.
-      </p>
+    <div class="page-header-inner" style="display:flex; justify-content:space-between; align-items:flex-start; gap:32px;">
+
+      <!-- Left: title block -->
+      <div style="flex:1; min-width:0;">
+        <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.22em; margin:0 0 12px;">
+          SD Card Builder
+        </p>
+        <h1 style="font-size:38px; font-weight:800; color:var(--text-primary); letter-spacing:-0.03em; margin:0 0 10px; line-height:1.1;">
+          Build your custom SD card
+        </h1>
+        <p style="font-size:16px; color:var(--muted); font-weight:300; margin:0; line-height:1.6; max-width:420px;">
+          Select the modules you want. RAM cost is tracked live. Download a ready-to-flash ZIP.
+        </p>
+      </div>
+
+      <!-- Middle: live update feed -->
+      <div style="min-width:220px; max-width:280px; flex-shrink:0; padding-top:2px;">
+        <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.18em; margin:0 0 4px;">Always Up-to-date</p>
+        <p style="font-size:12px; color:var(--text-tertiary); margin:0 0 12px; line-height:1.5;">You don't have to watch for updates. Our bots do that. Here's what's new:</p>
+        <div id="recent-updates-list"></div>
+      </div>
+
+      <!-- Right: value props -->
+      <div style="flex-shrink:0; padding-top:2px;">
+        <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.18em; margin:0 0 12px;">Trusted by SwitchHack</p>
+      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;">
+        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+          <span><strong style="color:var(--text-primary); font-weight:600;">Zero Bloat</strong> — Only install what you need.</span>
+        </li>
+        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+          <span><strong style="color:var(--text-primary); font-weight:600;">Guaranteed Stability</strong> — Stay under the 32MB RAM limit.</span>
+        </li>
+        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+          <span><strong style="color:var(--text-primary); font-weight:600;">Complete Transparency</strong> — No mystery background files.</span>
+        </li>
+      </ul>
+      </div>
+
     </div>
   </div>
 
@@ -566,7 +655,7 @@
       <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
         <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
         <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
-          <span id="ramUsed" style="color:#fff; font-weight:700;">0 KB</span>
+          <span id="ramUsed" style="color:var(--text-primary); font-weight:700;">0 KB</span>
           <span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
         </span>
       </div>
@@ -587,7 +676,7 @@
 
       <!-- ─── Quick Start Bundles ─── -->
       <div style="margin-bottom:18px;">
-        <h2 style="text-align:center; font-size:34px; font-weight:800; letter-spacing:-0.02em; color:#fff; margin:0 0 12px;">
+        <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:0 0 22px;">
           1. Pick a Quickstart Bundle
         </h2>
         <div class="bundle-grid" id="bundleGrid">
@@ -596,7 +685,7 @@
             <p class="bundle-card-desc">Just the bare metal essentials to boot CFW.</p>
           </button>
           <button class="bundle-card" data-bundle="recommended" onclick="applyBundle('recommended')">
-            <p class="bundle-card-title">Recommended</p>
+            <p class="bundle-card-title">Balanced (Recommended)</p>
             <p class="bundle-card-desc">The 2026 standard daily driver setup.</p>
           </button>
           <button class="bundle-card" data-bundle="power-user" onclick="applyBundle('power-user')">
@@ -606,7 +695,7 @@
         </div>
       </div>
 
-      <h2 style="text-align:center; font-size:34px; font-weight:800; letter-spacing:-0.02em; color:#fff; margin:0 0 22px;">
+      <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:0 0 32px;">
         2. Customize the Apps You Want
       </h2>
 
@@ -616,7 +705,7 @@
         <p id="catalogLoadingText" class="catalog-loading-text">Waking up the server... this may take up to a minute.</p>
       </div>
       <div id="moduleList"></div>
-      <h2 style="text-align:center; font-size:34px; font-weight:800; letter-spacing:-0.02em; color:#fff; margin:26px 0 0;">
+      <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:48px 0 0;">
         3. Download Your File
       </h2>
       <div style="display:flex; justify-content:center; margin:26px 0 0;">
@@ -809,9 +898,9 @@
       container.innerHTML = categories.map(cat => {
         const mods = visibleModules.filter(m => m.category === cat);
         return `
-          <section style="margin-bottom:0;" data-cat="${esc(cat)}">
+          <section data-cat="${esc(cat)}">
             <div class="cat-line">
-              <h2 style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:800;
+              <h2 style="font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:800;
                          text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.92); margin:0;">
                 ${esc(cat)}
               </h2>
@@ -835,7 +924,7 @@
                       onchange="toggleModule('${esc(m.id)}', this.checked)"
                     />
                     <div class="check-box"></div>
-                    <span class="module-name" style="flex:1; font-size:14px; color:rgba(255,255,255,0.9);">
+                    <span class="module-name" style="flex:1; font-size:14px; color:var(--text-primary);">
                       <img class="repo-avatar" src="https://github.com/${esc(owner)}.png?size=48" alt="" loading="lazy" decoding="async" />
                       <span class="module-name-text">${esc(m.name)}</span>${isReq ? ' <span class="badge badge-required">req</span>' : ''}
                     </span>
@@ -942,10 +1031,11 @@
       document.getElementById('ramUsed').textContent = displayRam;
       document.getElementById('ramPercent').textContent = Math.round(pct) + '%';
 
-      // RAM bar color
+      // RAM bar — defer to next frame so DOM sync work above doesn't interrupt the transition
       const bar = document.getElementById('ramBar');
-      bar.style.width = pct + '%';
-      bar.style.background = pct > 80 ? 'var(--warn)' : pct > 60 ? 'var(--warn-mid)' : 'var(--accent)';
+      bar.classList.toggle('is-warn',     pct > 80);
+      bar.classList.toggle('is-warn-mid', pct > 60 && pct <= 80);
+      requestAnimationFrame(() => { bar.style.width = pct + '%'; });
 
       // High RAM warning
       document.getElementById('ramWarning').style.opacity = pct > 80 ? '1' : '0';
@@ -1131,6 +1221,43 @@
     }
 
     init();
+
+    /* ─────────────────────────────────────────
+       Recent Updates Feed
+    ───────────────────────────────────────── */
+
+    function timeSince(dateString) {
+      const seconds = Math.floor((Date.now() - new Date(dateString)) / 1000);
+      if (seconds < 60)  return 'Just now';
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60)  return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24)    return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+      const days = Math.floor(hours / 24);
+      if (days < 30)     return `${days} day${days !== 1 ? 's' : ''} ago`;
+      const months = Math.floor(days / 30);
+      if (months < 12)   return `${months} month${months !== 1 ? 's' : ''} ago`;
+      return `${Math.floor(months / 12)} year${Math.floor(months / 12) !== 1 ? 's' : ''} ago`;
+    }
+
+    function renderRecentUpdates(updates) {
+      const container = document.getElementById('recent-updates-list');
+      if (!container) return;
+      container.innerHTML = updates.map(u => `
+        <div class="update-item">
+          <span class="update-name">${u.name}</span>
+          <span class="update-version">${u.version}</span>
+          <span class="update-time">${timeSince(u.date)}</span>
+        </div>
+      `).join('');
+    }
+
+    // Mock data — replace with live API data when ready
+    renderRecentUpdates([
+      { name: 'Atmosphere',  version: 'v1.7.1', date: new Date(Date.now() - 1000 * 60 * 90).toISOString() },
+      { name: 'Hekate',      version: 'v6.2.2', date: new Date(Date.now() - 1000 * 60 * 60 * 11).toISOString() },
+      { name: 'DBI',         version: 'v652',   date: new Date(Date.now() - 1000 * 60 * 60 * 27).toISOString() },
+    ]);
 
   </script>
 
