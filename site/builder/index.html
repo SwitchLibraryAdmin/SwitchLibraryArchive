@@ -377,6 +377,112 @@
       animation: none;
     }
 
+    /* ─── Configuration + Warnings Panels ─── */
+    .config-panel {
+      margin: 0 0 12px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(12, 16, 22, 0.96), rgba(12, 16, 22, 0.88));
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+    .config-title {
+      margin: 0 0 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .config-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .config-label {
+      display: block;
+      margin: 0 0 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .config-select {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .config-select:focus {
+      border-color: rgba(85, 204, 255, 0.45);
+      box-shadow: 0 0 0 2px rgba(85, 204, 255, 0.15);
+    }
+    .config-checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: var(--text-primary);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .config-checkbox-row input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: #f59e0b;
+    }
+    .config-checkbox-copy strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .config-checkbox-copy span {
+      display: block;
+      margin-top: 3px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .warnings-panel {
+      margin: 18px auto 0;
+      width: min(720px, 100%);
+      border: 1px solid rgba(249, 115, 22, 0.55);
+      background: linear-gradient(180deg, rgba(120, 53, 15, 0.18), rgba(69, 26, 3, 0.22));
+      box-shadow: inset 0 1px 0 rgba(251, 146, 60, 0.2);
+      padding: 12px 14px;
+    }
+    .warnings-title {
+      margin: 0 0 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fb923c;
+    }
+    .warnings-copy {
+      margin: 0;
+      color: #fed7aa;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .warnings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .warning-item {
+      border: 1px solid rgba(251, 146, 60, 0.35);
+      background: rgba(124, 45, 18, 0.18);
+      color: #ffedd5;
+      padding: 8px 10px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     /* ─── Sidebar selected item ─── */
     @keyframes slideIn {
       from { opacity: 0; transform: translateX(8px); }
@@ -623,7 +729,7 @@
       <!-- Middle: live update feed -->
       <div style="min-width:220px; max-width:280px; flex-shrink:0; padding-top:2px;">
         <p style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:0.18em; margin:0 0 4px;">Always Up-to-date</p>
-        <p style="font-size:12px; color:var(--text-tertiary); margin:0 0 12px; line-height:1.5;">You don't have to watch for updates. Our bots do that. Here's what's new:</p>
+        <p style="font-size:12px; color:var(--text-tertiary); margin:0 0 12px; line-height:1.5;">You don't have to watch for updates. A bot does that. Here's what's new:</p>
         <div id="recent-updates-list"></div>
       </div>
 
@@ -652,11 +758,30 @@
   <!-- ─── Sticky RAM Header ─── -->
   <div class="ram-header">
     <div class="ram-header-inner">
+      <div class="config-panel">
+        <p class="config-title">Configuration Panel</p>
+        <div class="config-grid">
+          <div>
+            <label for="firmware-target" class="config-label">Firmware Target</label>
+            <select id="firmware-target" class="config-select">
+              <option value="fw18">Firmware 18.0.0 and below (Base RAM ceiling: 40 MB)</option>
+              <option value="fw19" selected>Firmware 19.0.0+ (Base RAM ceiling: 32 MB)</option>
+            </select>
+          </div>
+          <label for="heavy-mods-toggle" class="config-checkbox-row">
+            <input id="heavy-mods-toggle" type="checkbox">
+            <span class="config-checkbox-copy">
+              <strong>I plan to use heavy game mods (e.g., Smash Bros, TotK, Fire Emblem)</strong>
+              <span>Atmosphere requires an extra 12-16MB dynamically to load thousands of custom files via LayeredFS.</span>
+            </span>
+          </label>
+        </div>
+      </div>
       <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
         <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
         <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
           <span id="ramUsed" style="color:var(--text-primary); font-weight:700;">0 KB</span>
-          <span style="color:var(--muted); font-weight:400;"> / 32 MB</span>
+          <span style="color:var(--muted); font-weight:400;"> / <span id="ramMax">32 MB</span></span>
         </span>
       </div>
       <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
@@ -708,6 +833,12 @@
       <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:48px 0 0;">
         3. Download Your File
       </h2>
+      <div id="warnings-panel" class="warnings-panel" hidden>
+        <p class="warnings-title">Compatibility Warnings</p>
+        <div id="warnings-list" class="warnings-list">
+          <p class="warnings-copy">Potential module conflicts or memory pressure warnings will appear here.</p>
+        </div>
+      </div>
       <div style="display:flex; justify-content:center; margin:26px 0 0;">
         <button id="buildBtn" class="build-btn" disabled>get your SwitchHack</button>
       </div>
@@ -741,7 +872,13 @@
   <script>
     /* ── State ── */
     const selected = new Set();
-    const MAX_RAM_KB = 32768;
+    const FIRMWARE_BASE_RAM_KB = { fw18: 40960, fw19: 32768 };
+    const HEAVY_MODS_OVERHEAD_KB = 16384;
+    const API_BASE = 'https://switchhack-backend.onrender.com/api/v1';
+    const RATE_LIMIT_MESSAGE = 'Rate limit reached. Please wait a minute before trying again.';
+    const MEMORY_BUDGET_MESSAGE = 'Memory budget exceeded. Please remove some modules.';
+    const GENERIC_SERVER_MESSAGE = 'Server error. Please try again.';
+    window.MODULE_CATALOG = window.MODULE_CATALOG || [];
 
     /* ─────────────────────────────────────────
        Helpers
@@ -789,6 +926,39 @@
       tooltip.style.left = `${clampedLeft}px`;
     }
 
+    function getCurrentRamCeilingKb() {
+      const firmwareTarget = document.getElementById('firmware-target');
+      const heavyModsToggle = document.getElementById('heavy-mods-toggle');
+      const firmwareKey = firmwareTarget ? firmwareTarget.value : 'fw19';
+      const baseKb = FIRMWARE_BASE_RAM_KB[firmwareKey] || FIRMWARE_BASE_RAM_KB.fw19;
+      const heavyReserveKb = heavyModsToggle && heavyModsToggle.checked ? HEAVY_MODS_OVERHEAD_KB : 0;
+      return Math.max(baseKb - heavyReserveKb, 0);
+    }
+
+    function calculateRamCeiling() {
+      const ceilingKb = getCurrentRamCeilingKb();
+      const ramMaxEl = document.getElementById('ramMax');
+      if (ramMaxEl) {
+        ramMaxEl.textContent = fmtRam(ceilingKb);
+      }
+      return ceilingKb;
+    }
+
+    function showApiToast(message) {
+      let toast = document.getElementById('api-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'api-toast';
+        toast.setAttribute('role', 'alert');
+        toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:rgba(15,23,42,0.96);color:#e5e7eb;border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 14px;font-size:13px;font-family:Inter,system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,0.35);max-width:min(90vw,520px);text-align:center;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.style.display = 'block';
+      clearTimeout(showApiToast._timer);
+      showApiToast._timer = setTimeout(() => { toast.style.display = 'none'; }, 4200);
+    }
+
     /* ─────────────────────────────────────────
        Public API — wire to your backend here
     ───────────────────────────────────────── */
@@ -803,6 +973,17 @@
 
     function getModuleById(id) {
       return MODULE_CATALOG.find(m => m.id === id);
+    }
+
+    async function postCalculate(requestedModuleIds, heavyModsEnabled = false) {
+      return fetch(`${API_BASE}/calculate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requested_modules: requestedModuleIds,
+          heavy_mods_enabled: heavyModsEnabled,
+        }),
+      });
     }
 
     function getDependencies(mod) {
@@ -1024,7 +1205,9 @@
     function updateSidebar() {
       const mods = getSelectedModules();
       const totalKb = mods.reduce((s, m) => s + m.ram_kb, 0);
-      const pct = Math.min((totalKb / MAX_RAM_KB) * 100, 100);
+      const ceilingKb = calculateRamCeiling();
+      const pct = ceilingKb > 0 ? Math.min((totalKb / ceilingKb) * 100, 100) : 100;
+      const exceedsCeiling = totalKb > ceilingKb;
 
       // RAM numbers
       const displayRam = totalKb === 0 ? '0 KB' : fmtRam(totalKb);
@@ -1033,16 +1216,74 @@
 
       // RAM bar — defer to next frame so DOM sync work above doesn't interrupt the transition
       const bar = document.getElementById('ramBar');
-      bar.classList.toggle('is-warn',     pct > 80);
-      bar.classList.toggle('is-warn-mid', pct > 60 && pct <= 80);
+      bar.classList.toggle('is-warn',     exceedsCeiling || pct > 80);
+      bar.classList.toggle('is-warn-mid', !exceedsCeiling && pct > 60 && pct <= 80);
       requestAnimationFrame(() => { bar.style.width = pct + '%'; });
 
       // High RAM warning
-      document.getElementById('ramWarning').style.opacity = pct > 80 ? '1' : '0';
+      const ramWarningEl = document.getElementById('ramWarning');
+      ramWarningEl.textContent = exceedsCeiling ? '⚠ LIMIT EXCEEDED' : '⚠ HIGH RAM';
+      ramWarningEl.style.opacity = (exceedsCeiling || pct > 80) ? '1' : '0';
 
       // Build button
       document.getElementById('buildBtn').disabled = mods.length === 0;
 
+      evaluateConflicts(mods, totalKb, ceilingKb);
+
+    }
+
+    function evaluateConflicts(mods, totalKb, ceilingKb) {
+      const panel = document.getElementById('warnings-panel');
+      const list = document.getElementById('warnings-list');
+      if (!panel || !list) return;
+
+      const warnings = [];
+      const selectedIds = new Set(mods.map(m => m.id));
+
+      if (totalKb > ceilingKb) {
+        warnings.push('Memory Limit Exceeded: Your console is at high risk of crashing on boot.');
+      }
+
+      const seenConflictKeys = new Set();
+      mods.forEach(mod => {
+        if (!Array.isArray(mod.conflicts)) return;
+        mod.conflicts.forEach(conf => {
+          let targetId = null;
+          let message = null;
+
+          if (typeof conf === 'string') {
+            targetId = conf;
+          } else if (conf && typeof conf === 'object') {
+            targetId = conf.with || conf.id || conf.module || conf.conflicts_with || null;
+            message = conf.warning || conf.message || null;
+          }
+
+          if (!targetId || !selectedIds.has(targetId)) return;
+          const pairKey = [mod.id, targetId].sort().join('::');
+          if (seenConflictKeys.has(pairKey)) return;
+          seenConflictKeys.add(pairKey);
+
+          if (!message) {
+            const targetMod = mods.find(m => m.id === targetId);
+            message = `Conflict detected: ${mod.name} and ${(targetMod && targetMod.name) || targetId} should not be enabled together.`;
+          }
+          warnings.push(message);
+        });
+      });
+
+      const sysmoduleCount = mods.filter(m => String(m.type || '').toLowerCase() === 'sysmodule').length;
+      if (sysmoduleCount > 4) {
+        warnings.push('FS Session Limit Risk: Horizon OS limits background SD card reads. Having more than 4 active sysmodules can cause random Panic fatals.');
+      }
+
+      if (warnings.length === 0) {
+        panel.hidden = true;
+        list.innerHTML = '';
+        return;
+      }
+
+      list.innerHTML = warnings.map(w => `<div class="warning-item">${esc(w)}</div>`).join('');
+      panel.hidden = false;
     }
 
     /* ─────────────────────────────────────────
@@ -1105,6 +1346,8 @@
     ───────────────────────────────────────── */
 
     document.getElementById('buildBtn').addEventListener('click', doBuild);
+    document.getElementById('firmware-target').addEventListener('change', updateSidebar);
+    document.getElementById('heavy-mods-toggle').addEventListener('change', updateSidebar);
 
    async function doBuild() {
       const btn = document.getElementById('buildBtn');
@@ -1119,18 +1362,30 @@
 
       try {
         // ── LIVE RENDER BACKEND API ──
-        const res = await fetch('https://switchhack-backend.onrender.com/api/build', {
+        const res = await fetch(`${API_BASE}/build`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            requested_modules: moduleIds,
-            heavy_mods_enabled: false 
+            modules: moduleIds,
+            heavy_mods_enabled: document.getElementById('heavy-mods-toggle').checked
           }),
         });
 
         if (!res.ok) {
-            const errText = await res.text();
-            throw new Error(`Server Error: ${res.status} - ${errText}`);
+          if (res.status === 429) {
+            showApiToast(RATE_LIMIT_MESSAGE);
+            throw new Error('Rate limit reached');
+          }
+          if (res.status === 400) {
+            showApiToast(MEMORY_BUDGET_MESSAGE);
+            throw new Error('Memory budget exceeded');
+          }
+          if (res.status === 422 || res.status >= 500) {
+            showApiToast(GENERIC_SERVER_MESSAGE);
+            throw new Error(`Server validation/error: ${res.status}`);
+          }
+          showApiToast(GENERIC_SERVER_MESSAGE);
+          throw new Error(`Unexpected server response: ${res.status}`);
         }
 
         // The backend returns the raw ZIP file. Convert it to a blob and trigger download.
@@ -1156,6 +1411,9 @@
 
       } catch (err) {
         console.error('[builder] build failed:', err);
+        if (!/Rate limit reached|Memory budget exceeded|Server validation\/error/.test(String(err && err.message))) {
+          showApiToast(GENERIC_SERVER_MESSAGE);
+        }
         btn.textContent = '✕ BUILD FAILED';
         btn.classList.add('state-error');
         setTimeout(() => {
@@ -1197,7 +1455,8 @@
       loadingTextEl.textContent = 'Waking up the server... this may take up to a minute.';
 
       try {
-        const response = await fetch('https://switchhack-backend.onrender.com/api/catalog');
+        const response = await fetch(`${API_BASE}/catalog`);
+        if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
         const data = await response.json();
         localStorage.setItem('builderCatalogCache', JSON.stringify(data));
         
@@ -1252,12 +1511,44 @@
       `).join('');
     }
 
-    // Mock data — replace with live API data when ready
-    renderRecentUpdates([
-      { name: 'Atmosphere',  version: 'v1.7.1', date: new Date(Date.now() - 1000 * 60 * 90).toISOString() },
-      { name: 'Hekate',      version: 'v6.2.2', date: new Date(Date.now() - 1000 * 60 * 60 * 11).toISOString() },
-      { name: 'DBI',         version: 'v652',   date: new Date(Date.now() - 1000 * 60 * 60 * 27).toISOString() },
-    ]);
+    function renderRecentUpdatesError(message) {
+      const container = document.getElementById('recent-updates-list');
+      if (!container) return;
+      container.innerHTML = `<div class="update-item"><span class="update-name">${esc(message)}</span></div>`;
+    }
+
+    async function loadRecentUpdates() {
+      try {
+        const response = await fetch(`${API_BASE}/recent-updates`);
+        if (!response.ok) {
+          if (response.status === 429) {
+            showApiToast(RATE_LIMIT_MESSAGE);
+            renderRecentUpdatesError(RATE_LIMIT_MESSAGE);
+            return;
+          }
+          if (response.status === 422 || response.status >= 500) {
+            showApiToast(GENERIC_SERVER_MESSAGE);
+            renderRecentUpdatesError(GENERIC_SERVER_MESSAGE);
+            return;
+          }
+          showApiToast(GENERIC_SERVER_MESSAGE);
+          renderRecentUpdatesError(GENERIC_SERVER_MESSAGE);
+          return;
+        }
+
+        const data = await response.json();
+        if (!Array.isArray(data)) {
+          throw new Error('Invalid recent updates payload');
+        }
+        renderRecentUpdates(data.slice(0, 3));
+      } catch (err) {
+        console.error('[builder] recent updates fetch failed:', err);
+        showApiToast(GENERIC_SERVER_MESSAGE);
+        renderRecentUpdatesError(GENERIC_SERVER_MESSAGE);
+      }
+    }
+
+    loadRecentUpdates();
 
   </script>
 
