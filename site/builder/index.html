@@ -764,8 +764,8 @@
           <div>
             <label for="firmware-target" class="config-label">Firmware Target</label>
             <select id="firmware-target" class="config-select">
-              <option value="fw18">Firmware 18.0.0 and below (Base RAM ceiling: 40 MB)</option>
-              <option value="fw19" selected>Firmware 19.0.0+ (Base RAM ceiling: 32 MB)</option>
+              <option value="pre-20">Firmware 18.0.0 and below (Base RAM ceiling: 40 MB)</option>
+              <option value="20-plus" selected>Firmware 19.0.0+ (Base RAM ceiling: 32 MB)</option>
             </select>
           </div>
           <label for="heavy-mods-toggle" class="config-checkbox-row">
@@ -872,7 +872,7 @@
   <script>
     /* ── State ── */
     const selected = new Set();
-    const FIRMWARE_BASE_RAM_KB = { fw18: 40960, fw19: 32768 };
+    const FIRMWARE_BASE_RAM_KB = { 'pre-20': 40960, '20-plus': 32768 };
     const HEAVY_MODS_OVERHEAD_KB = 16384;
     const API_BASE = 'https://switchhack-backend.onrender.com';
     const RATE_LIMIT_MESSAGE = 'Rate limit reached. Please wait a minute before trying again.';
@@ -929,8 +929,8 @@
     function getCurrentRamCeilingKb() {
       const firmwareTarget = document.getElementById('firmware-target');
       const heavyModsToggle = document.getElementById('heavy-mods-toggle');
-      const firmwareKey = firmwareTarget ? firmwareTarget.value : 'fw19';
-      const baseKb = FIRMWARE_BASE_RAM_KB[firmwareKey] || FIRMWARE_BASE_RAM_KB.fw19;
+      const firmwareKey = firmwareTarget ? firmwareTarget.value : '20-plus';
+      const baseKb = FIRMWARE_BASE_RAM_KB[firmwareKey] || FIRMWARE_BASE_RAM_KB['20-plus'];
       const heavyReserveKb = heavyModsToggle && heavyModsToggle.checked ? HEAVY_MODS_OVERHEAD_KB : 0;
       return Math.max(baseKb - heavyReserveKb, 0);
     }
