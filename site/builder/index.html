@@ -1349,57 +1349,26 @@
     document.getElementById('firmware-target').addEventListener('change', updateSidebar);
     document.getElementById('heavy-mods-toggle').addEventListener('change', updateSidebar);
 
-   async function doBuild() {
+    function doBuild() {
       const btn = document.getElementById('buildBtn');
       const modules = getSelectedModules(); // Array of full module objects
-      
+
       // Extract just the string IDs for your Python backend
       const moduleIds = modules.map(m => m.id);
+      const heavyModsEnabled = document.getElementById('heavy-mods-toggle').checked;
+      const firmwareTarget = document.getElementById('firmware-target').value;
 
       btn.textContent = 'BUILDING…';
       btn.disabled = true;
       btn.classList.remove('state-success', 'state-error');
 
+      const params = new URLSearchParams();
+      moduleIds.forEach(moduleId => params.append('modules', moduleId));
+      params.set('heavy_mods_enabled', String(heavyModsEnabled));
+      params.set('firmware_target', firmwareTarget);
+
       try {
-        // ── LIVE RENDER BACKEND API ──
-        const res = await fetch(`${API_BASE}/api/v1/build`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            modules: moduleIds,
-            heavy_mods_enabled: document.getElementById('heavy-mods-toggle').checked
-          }),
-        });
-
-        if (!res.ok) {
-          if (res.status === 429) {
-            showApiToast(RATE_LIMIT_MESSAGE);
-            throw new Error('Rate limit reached');
-          }
-          if (res.status === 400) {
-            showApiToast(MEMORY_BUDGET_MESSAGE);
-            throw new Error('Memory budget exceeded');
-          }
-          if (res.status === 422 || res.status >= 500) {
-            showApiToast(GENERIC_SERVER_MESSAGE);
-            throw new Error(`Server validation/error: ${res.status}`);
-          }
-          showApiToast(GENERIC_SERVER_MESSAGE);
-          throw new Error(`Unexpected server response: ${res.status}`);
-        }
-
-        // The backend returns the raw ZIP file. Convert it to a blob and trigger download.
-        const blob = await res.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = 'switchhack_bundle.zip';
-        document.body.appendChild(a);
-        a.click();
-        
-        // Clean up
-        a.remove();
-        window.URL.revokeObjectURL(downloadUrl);
+        window.location.href = `${API_BASE}/api/v1/build?${params.toString()}`;
 
         btn.textContent = '✓ PACKAGE READY';
         btn.classList.add('state-success');
@@ -1408,12 +1377,9 @@
           btn.classList.remove('state-success');
           btn.disabled = false;
         }, 2500);
-
       } catch (err) {
         console.error('[builder] build failed:', err);
-        if (!/Rate limit reached|Memory budget exceeded|Server validation\/error/.test(String(err && err.message))) {
-          showApiToast(GENERIC_SERVER_MESSAGE);
-        }
+        showApiToast(GENERIC_SERVER_MESSAGE);
         btn.textContent = '✕ BUILD FAILED';
         btn.classList.add('state-error');
         setTimeout(() => {
