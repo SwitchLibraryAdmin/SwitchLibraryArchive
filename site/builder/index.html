@@ -878,6 +878,11 @@
     const RATE_LIMIT_MESSAGE = 'Rate limit reached. Please wait a minute before trying again.';
     const MEMORY_BUDGET_MESSAGE = 'Memory budget exceeded. Please remove some modules.';
     const GENERIC_SERVER_MESSAGE = 'Server error. Please try again.';
+    const BUILD_BUTTON_DEFAULT_LABEL = 'get your SwitchHack';
+    const BUILD_BUTTON_FRAMES = ['BUILDING.', 'BUILDING..', 'BUILDING...'];
+    const BUILD_POLL_INTERVAL_MS = 2000;
+    const BUILD_ANIMATION_INTERVAL_MS = 500;
+    const BUILD_MAX_POLL_FAILURES = 3;
     window.MODULE_CATALOG = window.MODULE_CATALOG || [];
 
     /* ─────────────────────────────────────────
@@ -959,9 +964,26 @@
       showApiToast._timer = setTimeout(() => { toast.style.display = 'none'; }, 4200);
     }
 
+    function getBuildErrorMessage(status) {
+      if (status === 429) return RATE_LIMIT_MESSAGE;
+      if (status === 400) return MEMORY_BUDGET_MESSAGE;
+      return GENERIC_SERVER_MESSAGE;
+    }
+
+    function finishBuildButton(btn, text, stateClass, toastMessage) {
+      if (toastMessage) showApiToast(toastMessage);
+      btn.textContent = text;
+      btn.classList.add(stateClass);
+      setTimeout(() => {
+        btn.textContent = BUILD_BUTTON_DEFAULT_LABEL;
+        btn.classList.remove(stateClass);
+        btn.disabled = false;
+      }, 2500);
+    }
+
     /* ─────────────────────────────────────────
        Public API — wire to your backend here
-    ───────────────────────────────────────── */
+     ───────────────────────────────────────── */
 
     /**
      * Returns the full module objects for all currently selected modules.
@@ -1349,7 +1371,7 @@
     document.getElementById('firmware-target').addEventListener('change', updateSidebar);
     document.getElementById('heavy-mods-toggle').addEventListener('change', updateSidebar);
 
-    function doBuild() {
+    async function doBuild() {
       const btn = document.getElementById('buildBtn');
       const modules = getSelectedModules(); // Array of full module objects
 
@@ -1357,36 +1379,105 @@
       const moduleIds = modules.map(m => m.id);
       const heavyModsEnabled = document.getElementById('heavy-mods-toggle').checked;
       const firmwareTarget = document.getElementById('firmware-target').value;
+      let animationFrame = 0;
+      let animationIntervalId = null;
+      let pollIntervalId = null;
+      let consecutivePollFailures = 0;
+      let pollInFlight = false;
 
-      btn.textContent = 'BUILDING…';
+      btn.textContent = BUILD_BUTTON_FRAMES[animationFrame];
       btn.disabled = true;
       btn.classList.remove('state-success', 'state-error');
 
-      const params = new URLSearchParams();
-      moduleIds.forEach(moduleId => params.append('modules', moduleId));
-      params.set('heavy_mods_enabled', String(heavyModsEnabled));
-      params.set('firmware_target', firmwareTarget);
+      const clearBuildIntervals = () => {
+        if (animationIntervalId !== null) {
+          clearInterval(animationIntervalId);
+          animationIntervalId = null;
+        }
+        if (pollIntervalId !== null) {
+          clearInterval(pollIntervalId);
+          pollIntervalId = null;
+        }
+      };
+
+      const failBuild = (message = GENERIC_SERVER_MESSAGE) => {
+        clearBuildIntervals();
+        finishBuildButton(btn, '✕ BUILD FAILED', 'state-error', message);
+      };
 
       try {
-        window.location.href = `${API_BASE}/api/v1/build?${params.toString()}`;
+        animationIntervalId = setInterval(() => {
+          animationFrame = (animationFrame + 1) % BUILD_BUTTON_FRAMES.length;
+          btn.textContent = BUILD_BUTTON_FRAMES[animationFrame];
+        }, BUILD_ANIMATION_INTERVAL_MS);
 
-        btn.textContent = '✓ PACKAGE READY';
-        btn.classList.add('state-success');
-        setTimeout(() => {
-          btn.textContent = 'get your SwitchHack';
-          btn.classList.remove('state-success');
-          btn.disabled = false;
-        }, 2500);
+        const jobResponse = await fetch(`${API_BASE}/api/v1/build-job`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modules: moduleIds,
+            heavy_mods_enabled: heavyModsEnabled,
+            firmware_target: firmwareTarget,
+          }),
+        });
+
+        if (!jobResponse.ok) {
+          throw new Error(`build-job:${jobResponse.status}`);
+        }
+
+        const jobData = await jobResponse.json();
+        const jobId = jobData && jobData.job_id;
+
+        if (!jobId) {
+          throw new Error('build-job:missing-job-id');
+        }
+
+        const pollBuildStatus = async () => {
+          if (pollInFlight) return;
+          pollInFlight = true;
+
+          try {
+            const statusResponse = await fetch(`${API_BASE}/api/v1/build-status/${encodeURIComponent(jobId)}`);
+
+            if (!statusResponse.ok) {
+              throw new Error(`build-status:${statusResponse.status}`);
+            }
+
+            const statusData = await statusResponse.json();
+            consecutivePollFailures = 0;
+
+            if (statusData.status === 'completed') {
+              if (!statusData.url) {
+                throw new Error('build-status:missing-url');
+              }
+
+              clearBuildIntervals();
+              window.location.href = statusData.url;
+              finishBuildButton(btn, '✓ PACKAGE READY', 'state-success');
+              return;
+            }
+
+            if (statusData.status === 'failed') {
+              failBuild(GENERIC_SERVER_MESSAGE);
+            }
+          } catch (err) {
+            consecutivePollFailures += 1;
+            console.error('[builder] build status poll failed:', err);
+
+            if (consecutivePollFailures >= BUILD_MAX_POLL_FAILURES) {
+              failBuild(GENERIC_SERVER_MESSAGE);
+            }
+          } finally {
+            pollInFlight = false;
+          }
+        };
+
+        pollIntervalId = setInterval(pollBuildStatus, BUILD_POLL_INTERVAL_MS);
+        await pollBuildStatus();
       } catch (err) {
         console.error('[builder] build failed:', err);
-        showApiToast(GENERIC_SERVER_MESSAGE);
-        btn.textContent = '✕ BUILD FAILED';
-        btn.classList.add('state-error');
-        setTimeout(() => {
-          btn.textContent = 'get your SwitchHack';
-          btn.classList.remove('state-error');
-          btn.disabled = false;
-        }, 2500);
+        const statusMatch = String(err && err.message).match(/build-job:(\d+)/);
+        failBuild(statusMatch ? getBuildErrorMessage(Number(statusMatch[1])) : GENERIC_SERVER_MESSAGE);
       }
     }
 
