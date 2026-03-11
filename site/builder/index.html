@@ -445,12 +445,18 @@
       margin: 0 0 34px;
     }
     .builder-step-step2 {
+      width: min(980px, 100%);
+      margin-left: auto;
+      margin-right: auto;
       margin-bottom: 68px;
     }
     .builder-step-frame-less {
       margin-bottom: 20px;
     }
     .builder-step-firmware {
+      width: min(1040px, 100%);
+      margin-left: auto;
+      margin-right: auto;
       margin-bottom: 42px;
     }
     .builder-step-heading {
@@ -538,17 +544,28 @@
       margin-bottom: 0;
     }
     .bundle-card.firmware-card {
-      min-height: 100%;
       overflow: visible;
+      display: block;
+      padding-top: 19px;
+      padding-bottom: 19px;
+      text-align: center;
     }
     .bundle-card.firmware-card:hover,
     .bundle-card.firmware-card:focus-visible {
       z-index: 6;
     }
     .firmware-card .bundle-card-title {
-      padding-right: 84px;
+      width: 100%;
+      padding-right: 0;
       line-height: 1.35;
       margin-bottom: 0;
+      text-wrap: balance;
+      text-align: center;
+    }
+    .firmware-card.active::after {
+      top: 9px;
+      right: 10px;
+      bottom: auto;
     }
     .firmware-card .firmware-card-tooltip {
       position: absolute;
@@ -807,6 +824,10 @@
       color: var(--text-primary);
       margin: 0 0 6px;
       letter-spacing: 0.04em;
+    }
+    .builder-step-step2 .bundle-card-title,
+    .builder-step-firmware .bundle-card-title {
+      font-size: 15px;
     }
     .bundle-card-desc {
       font-size: 12px;
@@ -1118,7 +1139,7 @@
     }
     .ram-header {
       position: static;
-      width: min(1080px, 100%);
+      width: min(1040px, 100%);
       margin: 0 auto 28px;
       background: rgba(8, 9, 10, 0.96);
       backdrop-filter: blur(16px);
@@ -1225,7 +1246,7 @@
           </button>
           <button type="button" class="bundle-card quickstart-card" data-bundle="power-user" onclick="applyBundle('power-user')">
             <p class="bundle-card-title">Power User</p>
-            <p class="bundle-card-desc">The kitchen sink. Overclocks, overlays, and streaming.</p>
+            <p class="bundle-card-desc">Overclocks, overlays, and streaming.</p>
           </button>
         </div>
       </section>
@@ -1311,17 +1332,17 @@
             <span id="ramPercent" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0%</span>
             <span id="ramWarning" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--warn); opacity:0; transition:opacity 0.25s ease;">⚠ HIGH RAM</span>
           </div>
+          <div id="warnings-panel" class="warnings-panel" hidden>
+            <p class="warnings-title">Compatibility Warnings</p>
+            <div id="warnings-list" class="warnings-list">
+              <p class="warnings-copy">Potential module conflicts or memory pressure warnings will appear here.</p>
+            </div>
+          </div>
         </div>
       </div>
 
       <section class="builder-step">
         <h2 class="builder-step-heading" style="margin: 48px 0 0;">Step 4: Download Your File</h2>
-        <div id="warnings-panel" class="warnings-panel" hidden>
-          <p class="warnings-title">Compatibility Warnings</p>
-          <div id="warnings-list" class="warnings-list">
-            <p class="warnings-copy">Potential module conflicts or memory pressure warnings will appear here.</p>
-          </div>
-        </div>
         <div style="display:flex; justify-content:center; margin:26px 0 0;">
           <button id="buildBtn" class="build-btn" disabled>get your SwitchHack</button>
           <div id="buildProgressPanel" class="build-progress-panel" hidden aria-live="polite">
