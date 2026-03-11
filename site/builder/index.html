@@ -130,26 +130,34 @@
       border-color: var(--border-active);
     }
     .mod-tooltip {
-      position: absolute;
-      left: 50%;
-      right: auto;
-      width: min(360px, calc(100vw - 48px));
-      bottom: calc(100% + 8px);
-      z-index: 20;
+      display: none;
+    }
+    .floating-mod-tooltip {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 80;
+      width: min(360px, calc(100vw - 24px));
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 10px 12px;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
       opacity: 0;
+      visibility: hidden;
       transform: translateY(4px);
       pointer-events: none;
       transition: opacity 0.12s ease, transform 0.12s ease;
     }
-    .mod-row:hover .mod-tooltip,
-    .mod-row:focus-within .mod-tooltip {
+    .floating-mod-tooltip.is-visible {
       opacity: 1;
+      visibility: visible;
       transform: translateY(0);
-      pointer-events: auto;
+    }
+    .floating-mod-tooltip[data-placement="bottom"] {
+      transform: translateY(-4px);
+    }
+    .floating-mod-tooltip.is-visible[data-placement="bottom"] {
+      transform: translateY(0);
     }
     .mod-tooltip-header {
       display: flex;
@@ -683,7 +691,12 @@
       padding: 56px 24px;
     }
 
-    /* ─── Sticky RAM Header ─── */
+    /* ─── Builder top controls ─── */
+    .builder-top-inner {
+      width: 50%;
+      margin: 0 auto;
+      padding: 10px 24px;
+    }
     .ram-header {
       position: sticky;
       top: 64px;
@@ -693,13 +706,8 @@
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-    .ram-header-inner {
-      width: 50%;
-      margin: 0 auto;
-      padding: 10px 24px;
-    }
     @media (max-width: 900px) {
-      .ram-header-inner { width: 100%; }
+      .builder-top-inner { width: 100%; }
     }
   </style>
 </head>
@@ -755,28 +763,31 @@
     </div>
   </div>
 
+  <div class="builder-top-inner">
+    <div class="config-panel">
+      <p class="config-title">Configuration Panel</p>
+      <div class="config-grid">
+        <div>
+          <label for="firmware-target" class="config-label">Firmware Target</label>
+          <select id="firmware-target" class="config-select">
+            <option value="pre-20">Firmware 18.0.0 and below (Base RAM ceiling: 40 MB)</option>
+            <option value="20-plus" selected>Firmware 19.0.0+ (Base RAM ceiling: 32 MB)</option>
+          </select>
+        </div>
+        <label for="heavy-mods-toggle" class="config-checkbox-row">
+          <input id="heavy-mods-toggle" type="checkbox">
+          <span class="config-checkbox-copy">
+            <strong>I plan to use heavy game mods (e.g., Smash Bros, TotK, Fire Emblem)</strong>
+            <span>Atmosphere requires an extra 12-16MB dynamically to load thousands of custom files via LayeredFS.</span>
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+
   <!-- ─── Sticky RAM Header ─── -->
   <div class="ram-header">
-    <div class="ram-header-inner">
-      <div class="config-panel">
-        <p class="config-title">Configuration Panel</p>
-        <div class="config-grid">
-          <div>
-            <label for="firmware-target" class="config-label">Firmware Target</label>
-            <select id="firmware-target" class="config-select">
-              <option value="pre-20">Firmware 18.0.0 and below (Base RAM ceiling: 40 MB)</option>
-              <option value="20-plus" selected>Firmware 19.0.0+ (Base RAM ceiling: 32 MB)</option>
-            </select>
-          </div>
-          <label for="heavy-mods-toggle" class="config-checkbox-row">
-            <input id="heavy-mods-toggle" type="checkbox">
-            <span class="config-checkbox-copy">
-              <strong>I plan to use heavy game mods (e.g., Smash Bros, TotK, Fire Emblem)</strong>
-              <span>Atmosphere requires an extra 12-16MB dynamically to load thousands of custom files via LayeredFS.</span>
-            </span>
-          </label>
-        </div>
-      </div>
+    <div class="builder-top-inner">
       <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
         <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
         <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
@@ -912,18 +923,95 @@
         .replace(/'/g, '&#39;');
     }
 
-    function positionTooltip(row, tooltip) {
-      if (!row || !tooltip) return;
-      tooltip.style.left = '50%';
-      tooltip.style.right = 'auto';
-      const pad = 12;
-      const rowRect = row.getBoundingClientRect();
+    let activeTooltipRow = null;
+    let activeTooltipElement = null;
+    let activeTooltipHideTimer = null;
+    const TOOLTIP_VIEWPORT_PADDING = 12;
+    const TOOLTIP_OFFSET_GAP = 12;
+    const TOOLTIP_START_ALIGNMENT_RATIO = 0.4;
+
+    function ensureFloatingTooltip() {
+      if (activeTooltipElement) return activeTooltipElement;
+      activeTooltipElement = document.createElement('div');
+      activeTooltipElement.id = 'builder-floating-tooltip';
+      activeTooltipElement.className = 'floating-mod-tooltip';
+      activeTooltipElement.setAttribute('role', 'tooltip');
+      document.body.appendChild(activeTooltipElement);
+      return activeTooltipElement;
+    }
+
+    function hideFloatingTooltip() {
+      clearTimeout(activeTooltipHideTimer);
+      if (activeTooltipRow) {
+        activeTooltipRow.removeAttribute('data-tooltip-active');
+      }
+      if (activeTooltipElement) {
+        activeTooltipElement.classList.remove('is-visible');
+        activeTooltipElement.style.visibility = 'hidden';
+      }
+      activeTooltipRow = null;
+    }
+
+    function scheduleHideFloatingTooltip() {
+      clearTimeout(activeTooltipHideTimer);
+      activeTooltipHideTimer = setTimeout(() => {
+        hideFloatingTooltip();
+      }, 40);
+    }
+
+    function positionFloatingTooltip() {
+      if (!activeTooltipRow) return;
+      const tooltip = ensureFloatingTooltip();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const rowRect = activeTooltipRow.getBoundingClientRect();
+
+      tooltip.style.maxWidth = `${Math.max(220, Math.min(360, viewportWidth - (TOOLTIP_VIEWPORT_PADDING * 2)))}px`;
+      tooltip.style.left = '0px';
+      tooltip.style.top = '0px';
+      tooltip.style.visibility = 'hidden';
+
       const tipRect = tooltip.getBoundingClientRect();
-      const desiredLeft = row.clientWidth * 0.5;
-      const minLeft = pad - rowRect.left;
-      const maxLeft = window.innerWidth - pad - rowRect.left - tipRect.width;
-      const clampedLeft = Math.min(Math.max(desiredLeft, minLeft), maxLeft);
-      tooltip.style.left = `${clampedLeft}px`;
+      const desiredLeft = rowRect.left + (rowRect.width * TOOLTIP_START_ALIGNMENT_RATIO);
+      const minLeft = TOOLTIP_VIEWPORT_PADDING;
+      const maxLeft = Math.max(TOOLTIP_VIEWPORT_PADDING, viewportWidth - TOOLTIP_VIEWPORT_PADDING - tipRect.width);
+      const left = Math.min(Math.max(desiredLeft, minLeft), maxLeft);
+
+      let placement = 'top';
+      let top = rowRect.top - tipRect.height - TOOLTIP_OFFSET_GAP;
+
+      if (top < TOOLTIP_VIEWPORT_PADDING) {
+        placement = 'bottom';
+        top = rowRect.bottom + TOOLTIP_OFFSET_GAP;
+      }
+
+      if (top + tipRect.height > viewportHeight - TOOLTIP_VIEWPORT_PADDING) {
+        top = Math.max(TOOLTIP_VIEWPORT_PADDING, viewportHeight - TOOLTIP_VIEWPORT_PADDING - tipRect.height);
+      }
+
+      tooltip.dataset.placement = placement;
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+      tooltip.style.visibility = 'visible';
+    }
+
+    function showFloatingTooltip(row) {
+      const template = row && row.querySelector('.mod-tooltip');
+      if (!template) return;
+
+      clearTimeout(activeTooltipHideTimer);
+
+      const tooltip = ensureFloatingTooltip();
+      tooltip.innerHTML = template.innerHTML;
+
+      if (activeTooltipRow && activeTooltipRow !== row) {
+        activeTooltipRow.removeAttribute('data-tooltip-active');
+      }
+
+      activeTooltipRow = row;
+      row.setAttribute('data-tooltip-active', 'true');
+      positionFloatingTooltip();
+      tooltip.classList.add('is-visible');
     }
 
     function getCurrentRamCeilingKb() {
@@ -1073,6 +1161,7 @@
 
     function renderModules() {
       const container = document.getElementById('moduleList');
+      hideFloatingTooltip();
       const visibleModules = MODULE_CATALOG.filter(m => !isHidden(m));
       const categories = [...new Set(visibleModules.map(m => m.category))];
 
@@ -1130,12 +1219,17 @@
       }).join('');
 
       container.querySelectorAll('.mod-row').forEach(row => {
-        const tooltip = row.querySelector('.mod-tooltip');
-        if (!tooltip) return;
-        const align = () => positionTooltip(row, tooltip);
-        row.addEventListener('mouseenter', align);
-        row.addEventListener('focusin', align);
-        row.addEventListener('click', align);
+        if (!row.querySelector('.mod-tooltip')) return;
+        row.addEventListener('mouseenter', () => showFloatingTooltip(row));
+        row.addEventListener('mouseleave', scheduleHideFloatingTooltip);
+        row.addEventListener('focusin', () => showFloatingTooltip(row));
+        row.addEventListener('focusout', () => {
+          requestAnimationFrame(() => {
+            if (row.contains(document.activeElement)) return;
+            if (activeTooltipRow === row) hideFloatingTooltip();
+          });
+        });
+        row.addEventListener('click', () => showFloatingTooltip(row));
       });
 
       // Pre-select required + recommended modules
@@ -1348,6 +1442,17 @@
     document.getElementById('buildBtn').addEventListener('click', doBuild);
     document.getElementById('firmware-target').addEventListener('change', updateSidebar);
     document.getElementById('heavy-mods-toggle').addEventListener('change', updateSidebar);
+    window.addEventListener('resize', () => {
+      if (activeTooltipRow) positionFloatingTooltip();
+    });
+    window.addEventListener('scroll', () => {
+      if (activeTooltipRow) positionFloatingTooltip();
+    }, true);
+    document.addEventListener('pointerdown', (event) => {
+      if (!activeTooltipRow) return;
+      if (activeTooltipRow.contains(event.target)) return;
+      hideFloatingTooltip();
+    });
 
     function doBuild() {
       const btn = document.getElementById('buildBtn');
