@@ -445,10 +445,13 @@
       margin: 0 0 34px;
     }
     .builder-step-step2 {
-      margin-bottom: 44px;
+      margin-bottom: 68px;
     }
     .builder-step-frame-less {
       margin-bottom: 20px;
+    }
+    .builder-step-firmware {
+      margin-bottom: 42px;
     }
     .builder-step-heading {
       text-align: center;
@@ -973,7 +976,7 @@
 
     .left-panel {
       width: 100%;
-      padding: 32px 0;
+      padding: 22px 0 32px;
       min-height: 100vh;
     }
     #moduleList {
@@ -1027,14 +1030,78 @@
 
     /* ─── Page Header ─── */
     .page-header {
-      margin-top: 64px;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(8, 9, 10, 0.7) 0%, transparent 100%);
+      background:
+        radial-gradient(circle at top left, rgba(85, 204, 255, 0.12), transparent 36%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 28%),
+        linear-gradient(180deg, rgba(8, 9, 10, 0.92) 0%, rgba(8, 9, 10, 0.78) 58%, rgba(8, 9, 10, 0.42) 100%);
     }
     .page-header-inner {
       max-width: 1440px;
+      min-height: clamp(380px, 58vh, 640px);
       margin: 0 auto;
-      padding: 56px 24px;
+      padding: calc(clamp(40px, 6vw, 76px) + 64px) 24px clamp(18px, 3vw, 28px);
+      display: flex;
+      align-items: center;
+    }
+    .builder-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.8fr) minmax(220px, 0.9fr);
+      gap: clamp(24px, 3vw, 48px);
+      width: 100%;
+      align-items: start;
+    }
+    .builder-hero-title {
+      font-size: clamp(44px, 6vw, 72px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.05em;
+      margin: 0 0 14px;
+      line-height: 1.1;
+      max-width: 10ch;
+    }
+    .builder-hero-copy {
+      font-size: 17px;
+      color: var(--muted);
+      font-weight: 300;
+      margin: 0;
+      line-height: 1.7;
+      max-width: 500px;
+    }
+    .builder-hero-main {
+      --hero-main-offset: clamp(12px, 2vw, 28px);
+      position: relative;
+      min-width: 0;
+      padding-left: var(--hero-main-offset);
+    }
+    .builder-hero-kicker {
+      position: absolute;
+      left: var(--hero-main-offset);
+      top: 0;
+      transform: translateY(calc(-100% - 14px));
+      margin: 0;
+    }
+    .builder-hero-primary {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .builder-hero-rail {
+      min-width: 0;
+      align-self: start;
+      justify-self: center;
+      width: min(100%, 300px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .builder-feature-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     /* ─── Builder top controls ─── */
@@ -1046,17 +1113,37 @@
     .builder-top-inner-wide {
       width: min(1440px, 100%);
     }
+    .builder-hero-builder {
+      padding-top: 0;
+    }
     .ram-header {
-      position: sticky;
-      top: 64px;
-      z-index: 40;
+      position: static;
+      width: min(1080px, 100%);
+      margin: 0 auto 28px;
       background: rgba(8, 9, 10, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
     }
     @media (max-width: 900px) {
       .builder-top-inner { width: 100%; }
+      .page-header-inner {
+        min-height: auto;
+        padding-top: calc(40px + 40px);
+        padding-bottom: 20px;
+      }
+      .builder-hero {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .builder-hero-title {
+        max-width: none;
+      }
+      .builder-hero-main {
+        --hero-main-offset: 0px;
+      }
+      .builder-hero-kicker {
+        transform: translateY(calc(-100% - 10px));
+      }
     }
   </style>
 </head>
@@ -1068,126 +1155,54 @@
 
   <!-- ─── Page Header ─── -->
   <div class="page-header">
-    <div class="page-header-inner" style="display:flex; justify-content:space-between; align-items:flex-start; gap:64px;">
+    <div class="page-header-inner">
+      <div class="builder-hero">
 
       <!-- Left: title block -->
-      <div style="flex:1; min-width:0;">
-        <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.22em; margin:0 0 12px;">
+      <div class="builder-hero-main">
+        <p class="builder-hero-kicker" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.22em;">
           SD Card Builder
         </p>
-        <h1 style="font-size:38px; font-weight:800; color:var(--text-primary); letter-spacing:-0.03em; margin:0 0 10px; line-height:1.1;">
-          Build your custom SD card
-        </h1>
-        <p style="font-size:16px; color:var(--muted); font-weight:300; margin:0; line-height:1.6; max-width:420px;">
-          Select the modules you want. RAM cost is tracked live. Download a ready-to-flash ZIP.
-        </p>
+        <div class="builder-hero-primary">
+          <h1 class="builder-hero-title">
+            Build your custom SD card
+          </h1>
+          <p class="builder-hero-copy">
+            Select the modules you want. RAM cost is tracked live. Download a ready-to-flash ZIP.
+          </p>
+        </div>
       </div>
 
       <!-- Middle: live update feed -->
-      <div style="min-width:220px; max-width:280px; flex-shrink:0; padding-top:2px;">
+      <div class="builder-hero-rail" style="padding-top:2px; max-width:280px;">
         <p style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:0.18em; margin:0 0 4px;">Always Up-to-date</p>
         <p style="font-size:12px; color:var(--text-tertiary); margin:0 0 12px; line-height:1.5;">You don't have to watch for updates. A bot does that. Here's what's new:</p>
         <div id="recent-updates-list"></div>
       </div>
 
       <!-- Right: value props -->
-      <div style="flex-shrink:0; padding-top:2px;">
+      <div class="builder-hero-rail" style="padding-top:2px;">
         <p style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:0.18em; margin:0 0 12px;">Trusted by SwitchHack</p>
-      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;">
-        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
-          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
-          <span><strong style="color:var(--text-primary); font-weight:600;">Zero Bloat</strong> — Only install what you need.</span>
-        </li>
-        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
-          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
-          <span><strong style="color:var(--text-primary); font-weight:600;">Guaranteed Stability</strong> — Stay under the 32MB RAM limit.</span>
-        </li>
-        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
-          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
-          <span><strong style="color:var(--text-primary); font-weight:600;">Mod-Aware Planning</strong> — RAM budgeting reflects heavy mod usage.</span>
-        </li>
-        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
-          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
-          <span><strong style="color:var(--text-primary); font-weight:600;">Complete Transparency</strong> — No mystery background files.</span>
-        </li>
-      </ul>
+        <ul class="builder-feature-list">
+          <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+            <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+            <span><strong style="color:var(--text-primary); font-weight:600;">Zero Bloat</strong> — Only install what you need.</span>
+          </li>
+          <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+            <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+            <span><strong style="color:var(--text-primary); font-weight:600;">Guaranteed Stability</strong> — Stay under the 32MB RAM limit.</span>
+          </li>
+          <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+            <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+            <span><strong style="color:var(--text-primary); font-weight:600;">Mod-Aware Planning</strong> — RAM budgeting reflects heavy mod usage.</span>
+          </li>
+          <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+            <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+            <span><strong style="color:var(--text-primary); font-weight:600;">Complete Transparency</strong> — No mystery background files.</span>
+          </li>
+        </ul>
       </div>
 
-    </div>
-  </div>
-
-  <div class="builder-top-inner builder-top-inner-wide">
-    <section class="builder-step builder-step-frame-less">
-      <h2 class="builder-step-heading">Step 1: Choose Your Firmware</h2>
-      <input id="firmware-target" class="firmware-hidden-input" type="hidden" value="20-plus">
-      <div class="bundle-grid firmware-grid" id="firmwareGrid" role="radiogroup" aria-label="Choose your firmware reality">
-        <button type="button" class="bundle-card firmware-card" data-firmware="pre-20" aria-pressed="false">
-          <p class="bundle-card-title">Firmware 18.0.0 and below</p>
-          <span class="firmware-card-tooltip" role="tooltip">Cannot boot the newest games without manual patching. Unlocks a massive 40MB RAM ceiling. Choose this to run video streaming, network bridges, and complex overlays all at the same time.</span>
-        </button>
-        <button type="button" class="bundle-card firmware-card active" data-firmware="20-plus" aria-pressed="true">
-          <p class="bundle-card-title">Firmware 19.0.0 to 20.x</p>
-          <span class="firmware-card-tooltip" role="tooltip">Plays games released before late 2025. Features a 32MB RAM ceiling, but handles heavy game mods safely without the 8MB penalty. A stable choice for moderate background app usage.</span>
-        </button>
-        <button type="button" class="bundle-card firmware-card" data-firmware="21-plus" aria-pressed="false">
-          <p class="bundle-card-title">Firmware 21.0.0+ (latest)</p>
-          <span class="firmware-card-tooltip" role="tooltip">Plays all current games and updates natively. Imposes a strict 32MB RAM ceiling. If you use heavy game mods, the system steals an 8MB reserve, restricting you to only 1 or 2 lightweight background apps.</span>
-        </button>
-      </div>
-      <div class="activity-mode">
-        <input id="heavy-mods-toggle" class="activity-hidden-input" type="checkbox">
-        <span class="activity-mode-label">Primary Activity:</span>
-        <div class="activity-pill-group" role="radiogroup" aria-label="Primary activity">
-          <button type="button" class="activity-pill active" data-activity-mode="standard" aria-pressed="true">
-            <span class="activity-pill-title">Standard</span>
-            <span class="activity-pill-tooltip" role="tooltip">Disables the 8MB reserve penalty and keeps the runtime focused on normal game launching.</span>
-          </button>
-          <button type="button" class="activity-pill" data-activity-mode="heavy" aria-pressed="false">
-            <span class="activity-pill-title">Heavy Game Modding</span>
-            <span class="activity-pill-tooltip" role="tooltip">Enables the 8MB reserve behavior on Firmware 21.0.0+ for LayeredFS-heavy mod stacks.</span>
-          </button>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ─── Sticky RAM Header ─── -->
-  <div class="ram-header">
-    <div class="builder-top-inner">
-      <div class="ram-header-top">
-        <div class="ram-meta">
-          <span class="ram-label">RAM Budget</span>
-          <span class="ram-helper-anchor">
-            <button type="button" class="ram-helper-icon" aria-label="RAM budget info">i</button>
-            <span class="ram-helper-tooltip" role="tooltip">
-              <span class="ram-helper-tooltip-title">RAM Budget</span>
-              <p class="ram-helper-tooltip-copy">Horizon OS strictly limits how much memory background apps can use. Exceeding this budget will cause your console to crash when launching games.</p>
-            </span>
-          </span>
-          <span class="ram-helper-anchor is-tech">
-            <button type="button" class="ram-helper-link" aria-label="Technical details">Technical Details</button>
-            <span class="ram-helper-tooltip" role="tooltip">
-              <span class="ram-helper-tooltip-title">Equation</span>
-              <div class="ram-helper-equation" aria-label="Sum from i equals 1 to n of M sub sysmodule sub i is less than or equal to M sub available minus M sub ams reserve">
-                <span class="math-op">&sum;</span><sup>n</sup><sub>i=1</sub>
-                M<sub>sysmodule<sub>i</sub></sub> &le; M<sub>available</sub> - M<sub>ams,reserve</sub>
-              </div>
-              <span class="ram-helper-tooltip-title">Explanation</span>
-              <p class="ram-helper-tooltip-copy">Firmware 21.0.0+ introduced a 10MB deficit to the Applet Pool. To compensate, the core interception layer relies on the memlet helper module to dynamically steal an 8192 KB reserve from the System Pool to compile LayeredFS game modifications. If background daemons consume this space, the system will suffer a Data abort (0x101) upon game launch.</p>
-            </span>
-          </span>
-        </div>
-        <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
-          <span id="ramUsed" style="color:var(--text-primary); font-weight:700;">0 KB</span>
-          <span style="color:var(--muted); font-weight:400;"> / <span id="ramMax">32 MB</span></span>
-        </span>
-      </div>
-      <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
-        <div id="ramBar" class="ram-fill" style="width:0%;"></div>
-      </div>
-      <div style="display:flex; justify-content:space-between; margin-top:5px;">
-        <span id="ramPercent" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0%</span>
-        <span id="ramWarning" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--warn); opacity:0; transition:opacity 0.25s ease;">⚠ HIGH RAM</span>
       </div>
     </div>
   </div>
@@ -1198,7 +1213,7 @@
     <main class="left-panel">
 
       <section class="builder-step builder-step-step2">
-        <h2 class="builder-step-heading">Step 2: Pick a Quickstart Bundle</h2>
+        <h2 class="builder-step-heading">Step 1: Pick a Quickstart Bundle</h2>
         <div class="bundle-grid" id="bundleGrid">
           <button type="button" class="bundle-card quickstart-card" data-bundle="minimalist" onclick="applyBundle('minimalist')">
             <p class="bundle-card-title">Minimalist</p>
@@ -1216,7 +1231,7 @@
       </section>
 
       <section class="builder-step">
-        <h2 class="builder-step-heading">Step 3: Customize the Apps You Want</h2>
+        <h2 class="builder-step-heading">Step 2: Customize the Apps You Want</h2>
 
         <!-- Module categories (injected by JS) -->
         <div id="catalogLoading" class="catalog-loading is-hidden" role="status" aria-live="polite">
@@ -1225,6 +1240,79 @@
         </div>
         <div id="moduleList"></div>
       </section>
+
+      <section class="builder-step builder-step-firmware">
+        <h2 class="builder-step-heading">Step 3: Choose Your Firmware</h2>
+        <input id="firmware-target" class="firmware-hidden-input" type="hidden" value="20-plus">
+        <div class="bundle-grid firmware-grid" id="firmwareGrid" role="radiogroup" aria-label="Choose your firmware reality">
+          <button type="button" class="bundle-card firmware-card" data-firmware="pre-20" aria-pressed="false">
+            <p class="bundle-card-title">Firmware 18.0.0 and below</p>
+            <span class="firmware-card-tooltip" role="tooltip">Cannot boot the newest games without manual patching. Unlocks a massive 40MB RAM ceiling. Choose this to run video streaming, network bridges, and complex overlays all at the same time.</span>
+          </button>
+          <button type="button" class="bundle-card firmware-card active" data-firmware="20-plus" aria-pressed="true">
+            <p class="bundle-card-title">Firmware 19.0.0 to 20.x</p>
+            <span class="firmware-card-tooltip" role="tooltip">Plays games released before late 2025. Features a 32MB RAM ceiling, but handles heavy game mods safely without the 8MB penalty. A stable choice for moderate background app usage.</span>
+          </button>
+          <button type="button" class="bundle-card firmware-card" data-firmware="21-plus" aria-pressed="false">
+            <p class="bundle-card-title">Firmware 21.0.0+ (latest)</p>
+            <span class="firmware-card-tooltip" role="tooltip">Plays all current games and updates natively. Imposes a strict 32MB RAM ceiling. If you use heavy game mods, the system steals an 8MB reserve, restricting you to only 1 or 2 lightweight background apps.</span>
+          </button>
+        </div>
+        <div class="activity-mode">
+          <input id="heavy-mods-toggle" class="activity-hidden-input" type="checkbox">
+          <span class="activity-mode-label">Primary Activity:</span>
+          <div class="activity-pill-group" role="radiogroup" aria-label="Primary activity">
+            <button type="button" class="activity-pill active" data-activity-mode="standard" aria-pressed="true">
+              <span class="activity-pill-title">Standard</span>
+              <span class="activity-pill-tooltip" role="tooltip">Disables the 8MB reserve penalty and keeps the runtime focused on normal game launching.</span>
+            </button>
+            <button type="button" class="activity-pill" data-activity-mode="heavy" aria-pressed="false">
+              <span class="activity-pill-title">Heavy Game Modding</span>
+              <span class="activity-pill-tooltip" role="tooltip">Enables the 8MB reserve behavior on Firmware 21.0.0+ for LayeredFS-heavy mod stacks.</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="ram-header">
+        <div class="builder-top-inner">
+          <div class="ram-header-top">
+            <div class="ram-meta">
+              <span class="ram-label">RAM Budget</span>
+              <span class="ram-helper-anchor">
+                <button type="button" class="ram-helper-icon" aria-label="RAM budget info">i</button>
+                <span class="ram-helper-tooltip" role="tooltip">
+                  <span class="ram-helper-tooltip-title">RAM Budget</span>
+                  <p class="ram-helper-tooltip-copy">Horizon OS strictly limits how much memory background apps can use. Exceeding this budget will cause your console to crash when launching games.</p>
+                </span>
+              </span>
+              <span class="ram-helper-anchor is-tech">
+                <button type="button" class="ram-helper-link" aria-label="Technical details">Technical Details</button>
+                <span class="ram-helper-tooltip" role="tooltip">
+                  <span class="ram-helper-tooltip-title">Equation</span>
+                  <div class="ram-helper-equation" aria-label="Sum from i equals 1 to n of M sub sysmodule sub i is less than or equal to M sub available minus M sub ams reserve">
+                    <span class="math-op">&sum;</span><sup>n</sup><sub>i=1</sub>
+                    M<sub>sysmodule<sub>i</sub></sub> &le; M<sub>available</sub> - M<sub>ams,reserve</sub>
+                  </div>
+                  <span class="ram-helper-tooltip-title">Explanation</span>
+                  <p class="ram-helper-tooltip-copy">Firmware 21.0.0+ introduced a 10MB deficit to the Applet Pool. To compensate, the core interception layer relies on the memlet helper module to dynamically steal an 8192 KB reserve from the System Pool to compile LayeredFS game modifications. If background daemons consume this space, the system will suffer a Data abort (0x101) upon game launch.</p>
+                </span>
+              </span>
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
+              <span id="ramUsed" style="color:var(--text-primary); font-weight:700;">0 KB</span>
+              <span style="color:var(--muted); font-weight:400;"> / <span id="ramMax">32 MB</span></span>
+            </span>
+          </div>
+          <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
+            <div id="ramBar" class="ram-fill" style="width:0%;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:5px;">
+            <span id="ramPercent" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted);">0%</span>
+            <span id="ramWarning" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--warn); opacity:0; transition:opacity 0.25s ease;">⚠ HIGH RAM</span>
+          </div>
+        </div>
+      </div>
 
       <section class="builder-step">
         <h2 class="builder-step-heading" style="margin: 48px 0 0;">Step 4: Download Your File</h2>
@@ -1248,7 +1336,7 @@
           </div>
         </div>
         <div style="display:flex; justify-content:center;">
-          <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(113,113,122,0.4); margin:8px 0 0;">
+          <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(161,161,170,0.72); margin:8px 0 0;">
             ZIP archive · FAT32 ready
           </p>
         </div>
