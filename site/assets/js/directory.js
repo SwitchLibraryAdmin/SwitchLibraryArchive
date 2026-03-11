@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────
 
 const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
-const GH_API = 'https://switchhack-hub.lunt34.workers.dev';
+const GH_API = 'https://api.github.com';
 const MONITOR_JSON = 'data/monitor_data.json';
 
 // Category definitions — order controls display order in feed and directory

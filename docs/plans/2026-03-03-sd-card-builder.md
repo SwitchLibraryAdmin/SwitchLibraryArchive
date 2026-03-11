@@ -21,7 +21,7 @@
 // required modules: locked checkbox, auto-selected on init
 ```
 
-Exact catalog is in `/Users/lunt3/SwitchHack/MODULE_CATALOG` (no extension — it's a JS snippet).
+Exact catalog is in `MODULE_CATALOG` at the project root (no extension — it's a JS snippet).
 
 ---
 
@@ -422,7 +422,7 @@ git commit -m "feat: add mobile sticky bottom bar"
 
 **Files:**
 - Modify: `builder/index.html` — add `<script>` block with data before the logic script (before closing `</body>`)
-- Source data: `/Users/lunt3/SwitchHack/MODULE_CATALOG` (read this file — it has no extension, it's a plain JS snippet)
+- Source data: `MODULE_CATALOG` at project root (read this file — it has no extension, it's a plain JS snippet)
 
 **Step 1: Read the MODULE_CATALOG file and paste it verbatim into a script block**
 
@@ -860,6 +860,6 @@ git commit -m "feat: complete SD Card Builder at /builder/"
 ## Notes for Implementer
 
 - The build button `disabled` state: required modules ARE added to `selected` set on init, so `mods.length > 0` will be true from page load. The build button should be enabled on load. If this isn't the desired UX, change the condition to `mods.length > MODULE_CATALOG.filter(m => m.tags.includes('required')).length`.
-- The `MODULE_CATALOG` file at project root has no file extension — read it with the Read tool using the full path `/Users/lunt3/SwitchHack/MODULE_CATALOG`.
+- The `MODULE_CATALOG` file at project root has no file extension — read it directly from the repo root.
 - The local Tailwind bundle (`assets/css/tailwind.min.css`) is pre-compiled. Arbitrary values like `bg-[#06B6D4]` will NOT work unless they were in the build input. Use inline `style=""` attributes for all custom hex colors that aren't already in the bundle. Check `assets/css/tailwind.min.css` for which color utilities are available, or default to `style=` for all custom token colors.
 - **Important implication of the above:** The entire color system may need to use `style=""` instead of Tailwind classes. The safest approach is to use inline styles for all `#` hex colors and only use Tailwind for layout utilities (flex, grid, padding, margin, w-full, etc.) which are guaranteed to be in any Tailwind bundle.

@@ -2,11 +2,13 @@
 
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-# Notice: 'Documents/' is gone
-cd /Users/lunt3/SwitchHack/ || exit 1
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-if [ -f /Users/lunt3/SwitchHack/.env ]; then
-    export $(grep -v '^#' /Users/lunt3/SwitchHack/.env | xargs)
+cd "$REPO_ROOT" || exit 1
+
+if [ -f "$REPO_ROOT/.env" ]; then
+    export $(grep -v '^#' "$REPO_ROOT/.env" | xargs)
 fi
 
 echo "========================================"
