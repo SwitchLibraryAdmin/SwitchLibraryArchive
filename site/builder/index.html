@@ -2205,6 +2205,7 @@
       const moduleIds = getSelectedModules().map(m => m.id);
       const heavyModsEnabled = document.getElementById('heavy-mods-toggle').checked;
       const firmwareTarget = getFirmwareTargetValue();
+      let zipWriter = null;
 
       clearBuildPollTimer();
       setBuildState({
@@ -2231,70 +2232,122 @@
         }
 
         const { core_url, heavy_urls = [] } = data;
+        const fullCoreUrl = core_url
+          ? (core_url.startsWith('http') ? core_url : API_BASE + core_url)
+          : null;
 
         const allUrls = [];
-        if (core_url) {
-          const fullCoreUrl = core_url.startsWith('http') ? core_url : API_BASE + core_url;
-          allUrls.push(fullCoreUrl);
-        }
+        if (fullCoreUrl) allUrls.push(fullCoreUrl);
         if (heavy_urls.length) allUrls.push(...heavy_urls);
         if (allUrls.length === 0) throw new Error('build-start:missing-build-urls');
         const totalUrls = allUrls.length;
 
-        // 2. Create master ZIP writer
-        setBuildState({ buildProgress: 10, buildMessage: 'Preparing ZIP archive...' });
-        const zipWriter = new zip.ZipWriter(new zip.BlobWriter('application/zip'));
-
-        // 3. Helper — fetch a remote ZIP and stream every entry into zipWriter
-        async function mergeRemoteZip(url, index) {
-          setBuildState({
-            buildProgress: 10 + Math.round((index / totalUrls) * 80),
-            buildMessage: `Downloading file ${index + 1} of ${totalUrls}...`,
+        if (window.showSaveFilePicker) {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: 'SwitchHack.zip',
+            types: [{
+              description: 'ZIP Archive',
+              accept: { 'application/zip': ['.zip'] },
+            }],
           });
+          const writable = await fileHandle.createWritable();
+          zipWriter = new zip.ZipWriter(writable);
 
-          const res = await fetch(url);
-          if (!res.ok) throw new Error(`fetch-zip:${res.status} ${url}`);
-          const blob = await res.blob();
+          // 2. Stream the master ZIP directly to disk
+          setBuildState({ buildProgress: 10, buildMessage: 'Preparing ZIP archive...' });
 
-          const reader = new zip.ZipReader(new zip.BlobReader(blob));
-          const entries = await reader.getEntries();
+          // 3. Helper — fetch a remote ZIP and stream every entry into zipWriter
+          async function mergeRemoteZip(url, index) {
+            setBuildState({
+              buildProgress: 10 + Math.round((index / totalUrls) * 80),
+              buildMessage: `Downloading file ${index + 1} of ${totalUrls}...`,
+            });
 
-          for (const entry of entries) {
-            if (!entry.directory) {
-              const entryData = await entry.getData(new zip.BlobWriter());
-              await zipWriter.add(entry.filename, new zip.BlobReader(entryData));
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`fetch-zip:${res.status} ${url}`);
+            if (!res.body) throw new Error(`fetch-zip:missing-stream ${url}`);
+
+            const reader = new zip.ZipReader(new zip.ReadableStreamReader(res.body));
+            const entries = await reader.getEntries();
+
+            for (const entry of entries) {
+              if (!entry.directory) {
+                const entryData = await entry.getData(new zip.BlobWriter());
+                await zipWriter.add(entry.filename, new zip.BlobReader(entryData));
+              }
             }
+
+            await reader.close();
           }
 
-          await reader.close();
+          // 4. Merge core + all heavy ZIPs
+          for (let i = 0; i < allUrls.length; i++) {
+            const url = allUrls[i];
+            const fetchUrl = i === 0 && fullCoreUrl
+              ? url
+              : `${API_BASE}/api/v1/stream-asset?url=${encodeURIComponent(url)}`;
+            await mergeRemoteZip(fetchUrl, i);
+          }
+
+          // 5. Finalise the ZIP already being written to disk
+          setBuildState({ buildProgress: 95, buildMessage: 'Finalising SwitchHack.zip...' });
+          await zipWriter.close();
+          zipWriter = null;
+
+          setBuildState({
+            isBuilding: false,
+            buildProgress: 0,
+            buildMessage: 'Preparing your build...',
+            jobId: null,
+          });
+        } else {
+          setBuildState({
+            buildProgress: 15,
+            buildMessage: 'Basic browser detected. Downloading files individually...',
+          });
+
+          const triggerDownload = (url) => {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            setTimeout(() => {
+              if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+            }, 10000);
+          };
+
+          if (fullCoreUrl) {
+            triggerDownload(fullCoreUrl);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+
+          for (let i = 0; i < heavy_urls.length; i++) {
+            triggerDownload(heavy_urls[i]);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+
+          setBuildState({
+            isBuilding: false,
+            buildProgress: 0,
+            buildMessage: 'Success! Please extract all downloaded ZIPs to your SD card.',
+            jobId: null,
+          });
+          showApiToast('Success! Please extract all downloaded ZIPs to your SD card.');
         }
-
-        // 4. Merge core + all heavy ZIPs
-        for (let i = 0; i < allUrls.length; i++) {
-          await mergeRemoteZip(allUrls[i], i);
-        }
-
-        // 5. Finalise and trigger download
-        setBuildState({ buildProgress: 95, buildMessage: 'Finalising SwitchHack.zip...' });
-        const finalBlob = await zipWriter.close();
-
-        const objectUrl = URL.createObjectURL(finalBlob);
-        const a = document.createElement('a');
-        a.href = objectUrl;
-        a.download = 'SwitchHack.zip';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(objectUrl);
-
-        setBuildState({
-          isBuilding: false,
-          buildProgress: 0,
-          buildMessage: 'Preparing your build...',
-          jobId: null,
-        });
       } catch (err) {
         clearBuildPollTimer();
+        if (zipWriter) {
+          try { await zipWriter.close(); } catch (_) {}
+        }
+        if (err && err.name === 'AbortError') {
+          setBuildState({
+            isBuilding: false,
+            buildProgress: 0,
+            buildMessage: 'Preparing your build...',
+            jobId: null,
+          });
+          return;
+        }
         console.error('[builder] build failed:', err);
         setBuildState({
           isBuilding: false,
