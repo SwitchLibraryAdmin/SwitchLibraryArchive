@@ -2216,7 +2216,7 @@
 
       try {
         // 1. POST to backend — expects { core_url, heavy_urls }
-        const response = await fetch(`${API_BASE}/api/v1/build/start`, {
+        const response = await fetch(`${API_BASE}/api/v1/build`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -2231,9 +2231,11 @@
         }
 
         const { core_url, heavy_urls = [] } = data;
-        if (!core_url) throw new Error('build-start:missing-core-url');
 
-        const allUrls = [core_url, ...heavy_urls];
+        const allUrls = [];
+        if (core_url) allUrls.push(core_url);
+        if (heavy_urls.length) allUrls.push(...heavy_urls);
+        if (allUrls.length === 0) throw new Error('build-start:missing-build-urls');
         const totalUrls = allUrls.length;
 
         // 2. Create master ZIP writer
