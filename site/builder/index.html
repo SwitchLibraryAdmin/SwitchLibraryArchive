@@ -392,6 +392,52 @@
       box-shadow: none;
       animation: none;
     }
+    .build-progress-panel {
+      width: min(420px, 100%);
+      padding: 16px 18px;
+      border: 1px solid rgba(85, 204, 255, 0.22);
+      background: linear-gradient(180deg, rgba(12, 16, 22, 0.96), rgba(10, 14, 19, 0.92));
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+    }
+    .build-progress-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .build-progress-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .build-progress-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .build-progress-track {
+      height: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .build-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(85, 204, 255, 0.65), rgba(85, 204, 255, 1));
+      transition: width 0.35s ease;
+    }
+    .build-progress-message {
+      margin: 12px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      text-align: left;
+    }
 
     /* ─── Configuration + Warnings Panels ─── */
     .config-panel {
@@ -561,6 +607,10 @@
     .bundle-card:hover {
       border-color: rgba(85, 204, 255, 0.35);
       background: var(--surface-2);
+    }
+    .bundle-card:disabled {
+      opacity: 0.58;
+      cursor: not-allowed;
     }
     .bundle-card.active {
       border-color: var(--accent);
@@ -860,6 +910,16 @@
       </div>
       <div style="display:flex; justify-content:center; margin:26px 0 0;">
         <button id="buildBtn" class="build-btn" disabled>get your SwitchHack</button>
+        <div id="buildProgressPanel" class="build-progress-panel" hidden aria-live="polite">
+          <div class="build-progress-header">
+            <span class="build-progress-label">Building package</span>
+            <span id="buildProgressValue" class="build-progress-value">0%</span>
+          </div>
+          <div class="build-progress-track" aria-hidden="true">
+            <div id="buildProgressFill" class="build-progress-fill"></div>
+          </div>
+          <p id="buildProgressMessage" class="build-progress-message">Preparing your build...</p>
+        </div>
       </div>
       <div style="display:flex; justify-content:center;">
         <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(113,113,122,0.4); margin:8px 0 0;">
@@ -897,7 +957,13 @@
     const RATE_LIMIT_MESSAGE = 'Rate limit reached. Please wait a minute before trying again.';
     const GENERIC_SERVER_MESSAGE = 'Server error. Please try again.';
     const BUILD_BUTTON_DEFAULT_LABEL = 'get your SwitchHack';
+    const BUILD_POLL_INTERVAL_MS = 1500;
     window.MODULE_CATALOG = window.MODULE_CATALOG || [];
+    let isBuilding = false;
+    let buildProgress = 0;
+    let buildMessage = 'Preparing your build...';
+    let jobId = null;
+    let buildPollTimer = null;
 
     /* ─────────────────────────────────────────
        Helpers
@@ -1055,6 +1121,133 @@
       showApiToast._timer = setTimeout(() => { toast.style.display = 'none'; }, 4200);
     }
 
+    function normalizeBuildProgress(value) {
+      const numericValue = Number(value);
+      if (!Number.isFinite(numericValue)) return 0;
+      return Math.max(0, Math.min(100, Math.round(numericValue)));
+    }
+
+    function getBuildErrorMessage(error) {
+      const message = String(error && error.message ? error.message : '');
+      const statusMatch = message.match(/build-(?:start|status):(\d+)/);
+      if (statusMatch && Number(statusMatch[1]) === 429) return RATE_LIMIT_MESSAGE;
+      if (message && !message.startsWith('build-')) return message;
+      return GENERIC_SERVER_MESSAGE;
+    }
+
+    function clearBuildPollTimer() {
+      if (buildPollTimer !== null) {
+        clearTimeout(buildPollTimer);
+        buildPollTimer = null;
+      }
+    }
+
+    function applyBuildLockState() {
+      const firmwareTargetEl = document.getElementById('firmware-target');
+      const heavyModsToggleEl = document.getElementById('heavy-mods-toggle');
+
+      if (firmwareTargetEl) firmwareTargetEl.disabled = isBuilding;
+      if (heavyModsToggleEl) heavyModsToggleEl.disabled = isBuilding;
+
+      document.querySelectorAll('.bundle-card').forEach(card => {
+        card.disabled = isBuilding;
+      });
+
+      document.querySelectorAll('.mod-row').forEach(row => {
+        if (isBuilding) {
+          row.setAttribute('data-building-locked', 'true');
+        } else {
+          row.removeAttribute('data-building-locked');
+        }
+      });
+
+      if (document.getElementById('moduleList').children.length > 0) {
+        syncDependencyLocks();
+      }
+    }
+
+    function renderBuildUI() {
+      const buildBtn = document.getElementById('buildBtn');
+      const progressPanel = document.getElementById('buildProgressPanel');
+      const progressValue = document.getElementById('buildProgressValue');
+      const progressFill = document.getElementById('buildProgressFill');
+      const progressMessageEl = document.getElementById('buildProgressMessage');
+      const hasModulesSelected = getSelectedModules().length > 0;
+
+      buildBtn.hidden = isBuilding;
+      progressPanel.hidden = !isBuilding;
+      buildBtn.disabled = isBuilding || !hasModulesSelected;
+
+      progressValue.textContent = `${buildProgress}%`;
+      progressFill.style.width = `${buildProgress}%`;
+      progressMessageEl.textContent = buildMessage || 'Preparing your build...';
+
+      applyBuildLockState();
+    }
+
+    function setBuildState(nextState = {}) {
+      if (Object.prototype.hasOwnProperty.call(nextState, 'isBuilding')) {
+        isBuilding = nextState.isBuilding;
+      }
+      if (Object.prototype.hasOwnProperty.call(nextState, 'buildProgress')) {
+        buildProgress = normalizeBuildProgress(nextState.buildProgress);
+      }
+      if (Object.prototype.hasOwnProperty.call(nextState, 'buildMessage')) {
+        buildMessage = nextState.buildMessage;
+      }
+      if (Object.prototype.hasOwnProperty.call(nextState, 'jobId')) {
+        jobId = nextState.jobId;
+      }
+      renderBuildUI();
+    }
+
+    async function pollBuildStatus() {
+      if (!jobId) return;
+
+      try {
+        const activeJobId = jobId;
+        const response = await fetch(`${API_BASE}/api/v1/build/${encodeURIComponent(activeJobId)}/status`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data && data.message ? data.message : `build-status:${response.status}`);
+        }
+
+        setBuildState({
+          buildProgress: data.progress,
+          buildMessage: data.message || 'Building your package...',
+        });
+
+        if (data.status === 'complete') {
+          clearBuildPollTimer();
+          setBuildState({
+            isBuilding: false,
+            buildProgress: 0,
+            buildMessage: 'Preparing your build...',
+            jobId: null,
+          });
+          window.location.href = `${API_BASE}/api/v1/build/${encodeURIComponent(activeJobId)}/download`;
+          return;
+        }
+
+        if (data.status === 'error') {
+          throw new Error(data && data.message ? data.message : GENERIC_SERVER_MESSAGE);
+        }
+
+        buildPollTimer = window.setTimeout(pollBuildStatus, BUILD_POLL_INTERVAL_MS);
+      } catch (err) {
+        clearBuildPollTimer();
+        console.error('[builder] build status failed:', err);
+        setBuildState({
+          isBuilding: false,
+          buildProgress: 0,
+          buildMessage: 'Preparing your build...',
+          jobId: null,
+        });
+        showApiToast(getBuildErrorMessage(err));
+      }
+    }
+
     /* ─────────────────────────────────────────
        Public API — wire to your backend here
      ───────────────────────────────────────── */
@@ -1141,7 +1334,7 @@
         const dependents = getSelectedDependents(mod.id);
         const lockedByRequired = mod.tags.includes('required');
         const lockedByDependency = dependents.length > 0;
-        cb.disabled = lockedByRequired || lockedByDependency;
+        cb.disabled = isBuilding || lockedByRequired || lockedByDependency;
         if (!row) return;
         const lockReasonEl = row.querySelector('.mod-tooltip-lock');
         if (lockedByDependency) {
@@ -1256,6 +1449,7 @@
     ───────────────────────────────────────── */
 
     function toggleModule(id, checked) {
+      if (isBuilding) return;
       const mod = MODULE_CATALOG.find(m => m.id === id);
       if (!mod) return;
 
@@ -1328,9 +1522,10 @@
       ramWarningEl.style.opacity = (exceedsCeiling || pct > 80) ? '1' : '0';
 
       // Build button
-      document.getElementById('buildBtn').disabled = mods.length === 0;
+      document.getElementById('buildBtn').disabled = isBuilding || mods.length === 0;
 
       evaluateConflicts(mods, totalKb, ceilingKb);
+      renderBuildUI();
 
     }
 
@@ -1393,6 +1588,7 @@
     ───────────────────────────────────────── */
 
     function selectAll() {
+      if (isBuilding) return;
       MODULE_CATALOG.forEach(m => {
         if (isHidden(m)) return;
         addModuleWithDependencies(m.id);
@@ -1402,6 +1598,7 @@
     }
 
     function deselectAll() {
+      if (isBuilding) return;
       MODULE_CATALOG.forEach(m => {
         if (m.tags.includes('required')) return;
         selected.delete(m.id);
@@ -1416,6 +1613,7 @@
     ───────────────────────────────────────── */
 
     function applyBundle(bundleTag) {
+      if (isBuilding) return;
       // Clear all non-required selections
       MODULE_CATALOG.forEach(m => {
         if (m.tags.includes('required')) return;
@@ -1462,31 +1660,63 @@
       hideFloatingTooltip();
     });
 
-    function doBuild() {
-      const btn = document.getElementById('buildBtn');
+    async function doBuild() {
+      if (isBuilding) return;
       const modules = getSelectedModules(); // Array of full module objects
 
       // Extract just the string IDs for your Python backend
       const moduleIds = modules.map(m => m.id);
       const heavyModsEnabled = document.getElementById('heavy-mods-toggle').checked;
       const firmwareTarget = document.getElementById('firmware-target').value;
-      const params = new URLSearchParams();
-      moduleIds.forEach(moduleId => params.append('modules', moduleId));
-      params.set('heavy_mods_enabled', String(heavyModsEnabled));
-      params.set('firmware_target', firmwareTarget);
 
-      btn.textContent = 'DOWNLOADING...';
-      btn.disabled = true;
-      btn.classList.remove('state-success', 'state-error');
-      btn.classList.add('state-success');
+      clearBuildPollTimer();
+      setBuildState({
+        isBuilding: true,
+        buildProgress: 0,
+        buildMessage: 'Submitting your build job...',
+        jobId: null,
+      });
 
-      window.location.href = `${API_BASE}/api/v1/build?${params.toString()}`;
+      try {
+        const response = await fetch(`${API_BASE}/api/v1/build/start`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modules: moduleIds,
+            heavy_mods_enabled: heavyModsEnabled,
+            firmware_target: firmwareTarget,
+          }),
+        });
+        const data = await response.json();
 
-      setTimeout(() => {
-        btn.textContent = BUILD_BUTTON_DEFAULT_LABEL;
-        btn.classList.remove('state-success');
-        btn.disabled = false;
-      }, 3500);
+        if (!response.ok) {
+          throw new Error(data && data.message ? data.message : `build-start:${response.status}`);
+        }
+
+        const nextJobId = data && data.job_id;
+        if (!nextJobId) {
+          throw new Error('build-start:missing-job-id');
+        }
+
+        setBuildState({
+          isBuilding: true,
+          buildProgress: data.progress,
+          buildMessage: data.message || 'Build job queued. Preparing your package...',
+          jobId: String(nextJobId),
+        });
+
+        buildPollTimer = window.setTimeout(pollBuildStatus, BUILD_POLL_INTERVAL_MS);
+      } catch (err) {
+        clearBuildPollTimer();
+        console.error('[builder] build start failed:', err);
+        setBuildState({
+          isBuilding: false,
+          buildProgress: 0,
+          buildMessage: 'Preparing your build...',
+          jobId: null,
+        });
+        showApiToast(getBuildErrorMessage(err));
+      }
     }
 
     /* ─────────────────────────────────────────
@@ -1545,6 +1775,7 @@
     }
 
     init();
+    renderBuildUI();
 
     /* ─────────────────────────────────────────
        Recent Updates Feed
