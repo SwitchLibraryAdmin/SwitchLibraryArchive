@@ -442,22 +442,25 @@
 
     /* ─── Builder Panels + Warnings ─── */
     .builder-step {
-      margin: 0 0 34px;
+      margin: 0 0 clamp(28px, 2.6vw, 34px);
     }
     .builder-step-step2 {
       width: min(980px, 100%);
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 68px;
+      margin-bottom: clamp(52px, 4.8vw, 68px);
     }
     .builder-step-frame-less {
-      margin-bottom: 20px;
+      margin-bottom: clamp(16px, 1.8vw, 20px);
+    }
+    .builder-step-customize {
+      margin-bottom: clamp(52px, 4.8vw, 68px);
     }
     .builder-step-firmware {
       width: min(1040px, 100%);
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 42px;
+      margin-bottom: clamp(34px, 3vw, 42px);
     }
     .builder-step-heading {
       text-align: center;
@@ -465,7 +468,7 @@
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text-primary);
-      margin: 0 0 22px;
+      margin: 0 0 clamp(18px, 1.8vw, 22px);
     }
     .config-panel {
       margin: 0 0 12px;
@@ -997,7 +1000,7 @@
 
     .left-panel {
       width: 100%;
-      padding: 22px 0 32px;
+      padding: clamp(10px, 0.9vw, 12px) 0 clamp(28px, 2.4vw, 32px);
       min-height: 100vh;
     }
     #moduleList {
@@ -1129,7 +1132,7 @@
     .builder-top-inner {
       width: min(1080px, 100%);
       margin: 0 auto;
-      padding: 10px 24px;
+      padding: clamp(8px, 1vw, 10px) clamp(20px, 2vw, 24px);
     }
     .builder-top-inner-wide {
       width: min(1440px, 100%);
@@ -1140,10 +1143,25 @@
     .ram-header {
       position: static;
       width: min(1040px, 100%);
-      margin: 0 auto 28px;
+      margin: 0 auto clamp(24px, 2.6vw, 28px);
       background: rgba(8, 9, 10, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
+    }
+    @media (max-width: 1280px) {
+      .page-header-inner {
+        min-height: clamp(340px, 54vh, 560px);
+      }
+      .builder-hero {
+        gap: clamp(20px, 2.4vw, 36px);
+      }
+      .builder-step-step2 {
+        width: min(920px, 100%);
+      }
+      .builder-step-firmware,
+      .ram-header {
+        width: min(980px, 100%);
+      }
     }
     @media (max-width: 900px) {
       .builder-top-inner { width: 100%; }
@@ -1251,7 +1269,7 @@
         </div>
       </section>
 
-      <section class="builder-step">
+      <section class="builder-step builder-step-customize">
         <h2 class="builder-step-heading">Step 2: Customize the Apps You Want</h2>
 
         <!-- Module categories (injected by JS) -->
