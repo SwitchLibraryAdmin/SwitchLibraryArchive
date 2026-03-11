@@ -2233,7 +2233,10 @@
         const { core_url, heavy_urls = [] } = data;
 
         const allUrls = [];
-        if (core_url) allUrls.push(core_url);
+        if (core_url) {
+          const fullCoreUrl = core_url.startsWith('http') ? core_url : API_BASE + core_url;
+          allUrls.push(fullCoreUrl);
+        }
         if (heavy_urls.length) allUrls.push(...heavy_urls);
         if (allUrls.length === 0) throw new Error('build-start:missing-build-urls');
         const totalUrls = allUrls.length;
