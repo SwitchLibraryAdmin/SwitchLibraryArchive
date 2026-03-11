@@ -22,6 +22,7 @@
   <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/tailwind.min.css">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@zip.js/zip.js/dist/zip.min.js"></script>
 
   <style>
     /* ─── Design Tokens ─── */
@@ -429,7 +430,7 @@
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, rgba(85, 204, 255, 0.65), rgba(85, 204, 255, 1));
-      transition: width 0.35s ease;
+      transition: width 0.5s ease-in-out;
     }
     .build-progress-message {
       margin: 12px 0 0;
@@ -439,7 +440,24 @@
       text-align: left;
     }
 
-    /* ─── Configuration + Warnings Panels ─── */
+    /* ─── Builder Panels + Warnings ─── */
+    .builder-step {
+      margin: 0 0 34px;
+    }
+    .builder-step-step2 {
+      margin-bottom: 44px;
+    }
+    .builder-step-frame-less {
+      margin-bottom: 20px;
+    }
+    .builder-step-heading {
+      text-align: center;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin: 0 0 22px;
+    }
     .config-panel {
       margin: 0 0 12px;
       padding: 14px;
@@ -507,6 +525,158 @@
       margin-top: 3px;
       font-size: 11px;
       color: var(--text-secondary);
+    }
+    .firmware-hidden-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .firmware-grid {
+      margin-bottom: 0;
+    }
+    .bundle-card.firmware-card {
+      min-height: 100%;
+      overflow: visible;
+    }
+    .bundle-card.firmware-card:hover,
+    .bundle-card.firmware-card:focus-visible {
+      z-index: 6;
+    }
+    .firmware-card .bundle-card-title {
+      padding-right: 84px;
+      line-height: 1.35;
+      margin-bottom: 0;
+    }
+    .firmware-card .firmware-card-tooltip {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      width: min(320px, calc(100vw - 48px));
+      padding: 12px 14px;
+      transform: translateX(-50%) translateY(-6px);
+      background: linear-gradient(180deg, rgba(12, 16, 22, 0.98), rgba(10, 13, 18, 0.96));
+      border: 1px solid rgba(85, 204, 255, 0.22);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.55;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+      z-index: 8;
+      text-wrap: pretty;
+    }
+    .firmware-card:hover .firmware-card-tooltip,
+    .firmware-card:focus-visible .firmware-card-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    .secondary-toggle {
+      margin-top: 14px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 12px 14px;
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      background: linear-gradient(180deg, rgba(84, 45, 9, 0.22), rgba(33, 21, 8, 0.16));
+    }
+    .secondary-toggle input[type="checkbox"] {
+      accent-color: #f59e0b;
+    }
+    .secondary-toggle .config-checkbox-copy strong {
+      color: #ffedd5;
+    }
+    .secondary-toggle .config-checkbox-copy span {
+      color: #fdba74;
+    }
+    .activity-hidden-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .activity-mode {
+      margin-top: 16px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .activity-mode-label {
+      display: block;
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .activity-pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+    .activity-pill {
+      position: relative;
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-secondary);
+      padding: 8px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+    .activity-pill:hover {
+      border-color: rgba(85, 204, 255, 0.28);
+      background: rgba(85, 204, 255, 0.05);
+    }
+    .activity-pill.active {
+      border-color: var(--accent);
+      background: rgba(85, 204, 255, 0.09);
+      color: var(--text-primary);
+    }
+    .activity-pill-title {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: inherit;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .activity-pill-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      width: min(280px, calc(100vw - 48px));
+      padding: 10px 12px;
+      transform: translateX(-50%) translateY(-6px);
+      background: linear-gradient(180deg, rgba(12, 16, 22, 0.98), rgba(10, 13, 18, 0.96));
+      border: 1px solid rgba(85, 204, 255, 0.22);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+      color: var(--text-secondary);
+      font-size: 11px;
+      line-height: 1.55;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+      z-index: 4;
+    }
+    .activity-pill:hover .activity-pill-tooltip,
+    .activity-pill:focus-visible .activity-pill-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
     }
     .warnings-panel {
       margin: 18px auto 0;
@@ -642,6 +812,124 @@
       line-height: 1.5;
     }
 
+    /* ─── RAM Header Meta ─── */
+    .ram-header-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 9px;
+    }
+    .ram-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+    .ram-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+    .ram-helper-anchor {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .ram-helper-icon,
+    .ram-helper-link {
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: help;
+    }
+    .ram-helper-icon {
+      width: 18px;
+      height: 18px;
+      border: 1px solid rgba(85, 204, 255, 0.28);
+      border-radius: 9999px;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ram-helper-link {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .ram-helper-tooltip {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: min(460px, calc(100vw - 48px));
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(12, 16, 22, 0.98), rgba(10, 13, 18, 0.96));
+      border: 1px solid rgba(85, 204, 255, 0.22);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.55;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(6px);
+      transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+      pointer-events: none;
+      z-index: 4;
+    }
+    .ram-helper-anchor.is-tech .ram-helper-tooltip {
+      left: auto;
+      right: 0;
+    }
+    .ram-helper-anchor:hover .ram-helper-tooltip,
+    .ram-helper-anchor:focus-within .ram-helper-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .ram-helper-tooltip-title {
+      display: block;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .ram-helper-tooltip-copy {
+      margin: 0;
+    }
+    .ram-helper-equation {
+      display: block;
+      margin: 0 0 10px;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.7;
+    }
+    .ram-helper-equation .math-op {
+      font-size: 1.2em;
+      vertical-align: middle;
+    }
+    .ram-helper-equation sup,
+    .ram-helper-equation sub {
+      font-size: 0.82em;
+    }
+
     /* ─── Recent Updates Feed ─── */
     .update-item {
       display: flex;
@@ -751,9 +1039,12 @@
 
     /* ─── Builder top controls ─── */
     .builder-top-inner {
-      width: 50%;
+      width: min(1080px, 100%);
       margin: 0 auto;
       padding: 10px 24px;
+    }
+    .builder-top-inner-wide {
+      width: min(1440px, 100%);
     }
     .ram-header {
       position: sticky;
@@ -813,6 +1104,10 @@
         </li>
         <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
           <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
+          <span><strong style="color:var(--text-primary); font-weight:600;">Mod-Aware Planning</strong> — RAM budgeting reflects heavy mod usage.</span>
+        </li>
+        <li style="display:flex; align-items:baseline; gap:8px; font-size:13px; color:var(--text-secondary);">
+          <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:10px;">✦</span>
           <span><strong style="color:var(--text-primary); font-weight:600;">Complete Transparency</strong> — No mystery background files.</span>
         </li>
       </ul>
@@ -821,33 +1116,67 @@
     </div>
   </div>
 
-  <div class="builder-top-inner">
-    <div class="config-panel">
-      <p class="config-title">Configuration Panel</p>
-      <div class="config-grid">
-        <div>
-          <label for="firmware-target" class="config-label">Firmware Target</label>
-          <select id="firmware-target" class="config-select">
-            <option value="pre-20">Firmware 18.0.0 and below (Base RAM ceiling: 40 MB)</option>
-            <option value="20-plus" selected>Firmware 19.0.0+ (Base RAM ceiling: 32 MB)</option>
-          </select>
-        </div>
-        <label for="heavy-mods-toggle" class="config-checkbox-row">
-          <input id="heavy-mods-toggle" type="checkbox">
-          <span class="config-checkbox-copy">
-            <strong>I plan to use heavy game mods (e.g., Smash Bros, TotK, Fire Emblem)</strong>
-            <span>Atmosphere requires an extra 12-16MB dynamically to load thousands of custom files via LayeredFS.</span>
-          </span>
-        </label>
+  <div class="builder-top-inner builder-top-inner-wide">
+    <section class="builder-step builder-step-frame-less">
+      <h2 class="builder-step-heading">Step 1: Choose Your Firmware</h2>
+      <input id="firmware-target" class="firmware-hidden-input" type="hidden" value="20-plus">
+      <div class="bundle-grid firmware-grid" id="firmwareGrid" role="radiogroup" aria-label="Choose your firmware reality">
+        <button type="button" class="bundle-card firmware-card" data-firmware="pre-20" aria-pressed="false">
+          <p class="bundle-card-title">Firmware 18.0.0 and below</p>
+          <span class="firmware-card-tooltip" role="tooltip">Cannot boot the newest games without manual patching. Unlocks a massive 40MB RAM ceiling. Choose this to run video streaming, network bridges, and complex overlays all at the same time.</span>
+        </button>
+        <button type="button" class="bundle-card firmware-card active" data-firmware="20-plus" aria-pressed="true">
+          <p class="bundle-card-title">Firmware 19.0.0 to 20.x</p>
+          <span class="firmware-card-tooltip" role="tooltip">Plays games released before late 2025. Features a 32MB RAM ceiling, but handles heavy game mods safely without the 8MB penalty. A stable choice for moderate background app usage.</span>
+        </button>
+        <button type="button" class="bundle-card firmware-card" data-firmware="21-plus" aria-pressed="false">
+          <p class="bundle-card-title">Firmware 21.0.0+ (latest)</p>
+          <span class="firmware-card-tooltip" role="tooltip">Plays all current games and updates natively. Imposes a strict 32MB RAM ceiling. If you use heavy game mods, the system steals an 8MB reserve, restricting you to only 1 or 2 lightweight background apps.</span>
+        </button>
       </div>
-    </div>
+      <div class="activity-mode">
+        <input id="heavy-mods-toggle" class="activity-hidden-input" type="checkbox">
+        <span class="activity-mode-label">Primary Activity:</span>
+        <div class="activity-pill-group" role="radiogroup" aria-label="Primary activity">
+          <button type="button" class="activity-pill active" data-activity-mode="standard" aria-pressed="true">
+            <span class="activity-pill-title">Standard</span>
+            <span class="activity-pill-tooltip" role="tooltip">Disables the 8MB reserve penalty and keeps the runtime focused on normal game launching.</span>
+          </button>
+          <button type="button" class="activity-pill" data-activity-mode="heavy" aria-pressed="false">
+            <span class="activity-pill-title">Heavy Game Modding</span>
+            <span class="activity-pill-tooltip" role="tooltip">Enables the 8MB reserve behavior on Firmware 21.0.0+ for LayeredFS-heavy mod stacks.</span>
+          </button>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ─── Sticky RAM Header ─── -->
   <div class="ram-header">
     <div class="builder-top-inner">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px;">
-        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.22em;">RAM Budget</span>
+      <div class="ram-header-top">
+        <div class="ram-meta">
+          <span class="ram-label">RAM Budget</span>
+          <span class="ram-helper-anchor">
+            <button type="button" class="ram-helper-icon" aria-label="RAM budget info">i</button>
+            <span class="ram-helper-tooltip" role="tooltip">
+              <span class="ram-helper-tooltip-title">RAM Budget</span>
+              <p class="ram-helper-tooltip-copy">Horizon OS strictly limits how much memory background apps can use. Exceeding this budget will cause your console to crash when launching games.</p>
+            </span>
+          </span>
+          <span class="ram-helper-anchor is-tech">
+            <button type="button" class="ram-helper-link" aria-label="Technical details">Technical Details</button>
+            <span class="ram-helper-tooltip" role="tooltip">
+              <span class="ram-helper-tooltip-title">Equation</span>
+              <div class="ram-helper-equation" aria-label="Sum from i equals 1 to n of M sub sysmodule sub i is less than or equal to M sub available minus M sub ams reserve">
+                <span class="math-op">&sum;</span><sup>n</sup><sub>i=1</sub>
+                M<sub>sysmodule<sub>i</sub></sub> &le; M<sub>available</sub> - M<sub>ams,reserve</sub>
+              </div>
+              <span class="ram-helper-tooltip-title">Explanation</span>
+              <p class="ram-helper-tooltip-copy">Firmware 21.0.0+ introduced a 10MB deficit to the Applet Pool. To compensate, the core interception layer relies on the memlet helper module to dynamically steal an 8192 KB reserve from the System Pool to compile LayeredFS game modifications. If background daemons consume this space, the system will suffer a Data abort (0x101) upon game launch.</p>
+            </span>
+          </span>
+        </div>
         <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
           <span id="ramUsed" style="color:var(--text-primary); font-weight:700;">0 KB</span>
           <span style="color:var(--muted); font-weight:400;"> / <span id="ramMax">32 MB</span></span>
@@ -868,64 +1197,62 @@
 
     <main class="left-panel">
 
-      <!-- ─── Quick Start Bundles ─── -->
-      <div style="margin-bottom:18px;">
-        <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:0 0 22px;">
-          1. Pick a Quickstart Bundle
-        </h2>
+      <section class="builder-step builder-step-step2">
+        <h2 class="builder-step-heading">Step 2: Pick a Quickstart Bundle</h2>
         <div class="bundle-grid" id="bundleGrid">
-          <button class="bundle-card" data-bundle="minimalist" onclick="applyBundle('minimalist')">
+          <button type="button" class="bundle-card quickstart-card" data-bundle="minimalist" onclick="applyBundle('minimalist')">
             <p class="bundle-card-title">Minimalist</p>
             <p class="bundle-card-desc">Just the bare metal essentials to boot CFW.</p>
           </button>
-          <button class="bundle-card" data-bundle="recommended" onclick="applyBundle('recommended')">
+          <button type="button" class="bundle-card quickstart-card" data-bundle="recommended" onclick="applyBundle('recommended')">
             <p class="bundle-card-title">Balanced (Recommended)</p>
             <p class="bundle-card-desc">The 2026 standard daily driver setup.</p>
           </button>
-          <button class="bundle-card" data-bundle="power-user" onclick="applyBundle('power-user')">
+          <button type="button" class="bundle-card quickstart-card" data-bundle="power-user" onclick="applyBundle('power-user')">
             <p class="bundle-card-title">Power User</p>
             <p class="bundle-card-desc">The kitchen sink. Overclocks, overlays, and streaming.</p>
           </button>
         </div>
-      </div>
+      </section>
 
-      <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:0 0 32px;">
-        2. Customize the Apps You Want
-      </h2>
+      <section class="builder-step">
+        <h2 class="builder-step-heading">Step 3: Customize the Apps You Want</h2>
 
-      <!-- Module categories (injected by JS) -->
-      <div id="catalogLoading" class="catalog-loading is-hidden" role="status" aria-live="polite">
-        <div id="catalogSpinner" class="catalog-loading-spinner"></div>
-        <p id="catalogLoadingText" class="catalog-loading-text">Waking up the server... this may take up to a minute.</p>
-      </div>
-      <div id="moduleList"></div>
-      <h2 style="text-align:center; font-size:27px; font-weight:800; letter-spacing:-0.02em; color:var(--text-primary); margin:48px 0 0;">
-        3. Download Your File
-      </h2>
-      <div id="warnings-panel" class="warnings-panel" hidden>
-        <p class="warnings-title">Compatibility Warnings</p>
-        <div id="warnings-list" class="warnings-list">
-          <p class="warnings-copy">Potential module conflicts or memory pressure warnings will appear here.</p>
+        <!-- Module categories (injected by JS) -->
+        <div id="catalogLoading" class="catalog-loading is-hidden" role="status" aria-live="polite">
+          <div id="catalogSpinner" class="catalog-loading-spinner"></div>
+          <p id="catalogLoadingText" class="catalog-loading-text">Waking up the server... this may take up to a minute.</p>
         </div>
-      </div>
-      <div style="display:flex; justify-content:center; margin:26px 0 0;">
-        <button id="buildBtn" class="build-btn" disabled>get your SwitchHack</button>
-        <div id="buildProgressPanel" class="build-progress-panel" hidden aria-live="polite">
-          <div class="build-progress-header">
-            <span class="build-progress-label">Building package</span>
-            <span id="buildProgressValue" class="build-progress-value">0%</span>
+        <div id="moduleList"></div>
+      </section>
+
+      <section class="builder-step">
+        <h2 class="builder-step-heading" style="margin: 48px 0 0;">Step 4: Download Your File</h2>
+        <div id="warnings-panel" class="warnings-panel" hidden>
+          <p class="warnings-title">Compatibility Warnings</p>
+          <div id="warnings-list" class="warnings-list">
+            <p class="warnings-copy">Potential module conflicts or memory pressure warnings will appear here.</p>
           </div>
-          <div class="build-progress-track" aria-hidden="true">
-            <div id="buildProgressFill" class="build-progress-fill"></div>
-          </div>
-          <p id="buildProgressMessage" class="build-progress-message">Preparing your build...</p>
         </div>
-      </div>
-      <div style="display:flex; justify-content:center;">
-        <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(113,113,122,0.4); margin:8px 0 0;">
-          ZIP archive · FAT32 ready
-        </p>
-      </div>
+        <div style="display:flex; justify-content:center; margin:26px 0 0;">
+          <button id="buildBtn" class="build-btn" disabled>get your SwitchHack</button>
+          <div id="buildProgressPanel" class="build-progress-panel" hidden aria-live="polite">
+            <div class="build-progress-header">
+              <span class="build-progress-label">Building package</span>
+              <span id="buildProgressValue" class="build-progress-value">0%</span>
+            </div>
+            <div class="build-progress-track" aria-hidden="true">
+              <div id="buildProgressFill" class="build-progress-fill"></div>
+            </div>
+            <p id="buildProgressMessage" class="build-progress-message">Preparing your build...</p>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:center;">
+          <p style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(113,113,122,0.4); margin:8px 0 0;">
+            ZIP archive · FAT32 ready
+          </p>
+        </div>
+      </section>
     </main>
 
   </div>
@@ -951,19 +1278,28 @@
   <script>
     /* ── State ── */
     const selected = new Set();
-    const FIRMWARE_BASE_RAM_KB = { 'pre-20': 40960, '20-plus': 32768 };
-    const HEAVY_MODS_OVERHEAD_KB = 16384;
+    const FIRMWARE_BASE_RAM_KB = { 'pre-20': 40960, '20-plus': 32768, '21-plus': 32768 };
+    const HEAVY_MODS_OVERHEAD_21_KB = 8192;
     const API_BASE = 'https://switchhack-backend.onrender.com';
     const RATE_LIMIT_MESSAGE = 'Rate limit reached. Please wait a minute before trying again.';
     const GENERIC_SERVER_MESSAGE = 'Server error. Please try again.';
     const BUILD_BUTTON_DEFAULT_LABEL = 'get your SwitchHack';
     const BUILD_POLL_INTERVAL_MS = 1500;
+    const BUILD_INTERPOLATION_DELAY_MS = 2000;
+    const BUILD_INTERPOLATION_INTERVAL_MS = 500;
+    const BUILD_INTERPOLATION_STEP = 0.1;
+    const BUILD_INTERPOLATION_HEADROOM = 15;
+    const BUILD_INTERPOLATION_MAX = 99.5;
     window.MODULE_CATALOG = window.MODULE_CATALOG || [];
     let isBuilding = false;
     let buildProgress = 0;
     let buildMessage = 'Preparing your build...';
     let jobId = null;
     let buildPollTimer = null;
+    let buildInterpolationTimer = null;
+    let lastBuildStatusAt = 0;
+    let lastBackendProgress = 0;
+    let loadingDotFrame = 0;
 
     /* ─────────────────────────────────────────
        Helpers
@@ -1088,12 +1424,67 @@
       tooltip.classList.add('is-visible');
     }
 
-    function getCurrentRamCeilingKb() {
+    function getFirmwareTargetValue() {
       const firmwareTarget = document.getElementById('firmware-target');
+      return firmwareTarget ? firmwareTarget.value : '20-plus';
+    }
+
+    function syncFirmwareCards() {
+      const firmwareKey = getFirmwareTargetValue();
+      document.querySelectorAll('.firmware-card').forEach(card => {
+        const isActive = card.dataset.firmware === firmwareKey;
+        card.classList.toggle('active', isActive);
+        card.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function setFirmwareTarget(firmwareKey) {
+      const firmwareTarget = document.getElementById('firmware-target');
+      if (!firmwareTarget || !Object.prototype.hasOwnProperty.call(FIRMWARE_BASE_RAM_KB, firmwareKey)) return;
+      if (firmwareTarget.value === firmwareKey) {
+        syncFirmwareCards();
+        updateSidebar();
+        return;
+      }
+      firmwareTarget.value = firmwareKey;
+      firmwareTarget.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function syncActivityMode() {
       const heavyModsToggle = document.getElementById('heavy-mods-toggle');
-      const firmwareKey = firmwareTarget ? firmwareTarget.value : '20-plus';
+      const isHeavyMode = !!(heavyModsToggle && heavyModsToggle.checked);
+      document.querySelectorAll('.activity-pill').forEach(pill => {
+        const isActive = (pill.dataset.activityMode === 'heavy') === isHeavyMode;
+        pill.classList.toggle('active', isActive);
+        pill.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function setActivityMode(mode) {
+      const heavyModsToggle = document.getElementById('heavy-mods-toggle');
+      if (!heavyModsToggle) return;
+      const nextChecked = mode === 'heavy';
+      if (heavyModsToggle.checked === nextChecked) {
+        syncActivityMode();
+        updateSidebar();
+        return;
+      }
+      heavyModsToggle.checked = nextChecked;
+      heavyModsToggle.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function getCurrentRamCeilingKb() {
+      const heavyModsToggle = document.getElementById('heavy-mods-toggle');
+      const firmwareKey = getFirmwareTargetValue();
       const baseKb = FIRMWARE_BASE_RAM_KB[firmwareKey] || FIRMWARE_BASE_RAM_KB['20-plus'];
-      const heavyReserveKb = heavyModsToggle && heavyModsToggle.checked ? HEAVY_MODS_OVERHEAD_KB : 0;
+      
+      let heavyReserveKb = 0;
+      // The System Pool is ONLY penalized for heavy mods on 21.0.0+ via memlet.
+      // On older firmwares, this theft happens safely in the Applet Pool.
+      if (heavyModsToggle && heavyModsToggle.checked && firmwareKey === '21-plus') {
+        heavyReserveKb = HEAVY_MODS_OVERHEAD_21_KB;
+      }
+      
       return Math.max(baseKb - heavyReserveKb, 0);
     }
 
@@ -1124,7 +1515,7 @@
     function normalizeBuildProgress(value) {
       const numericValue = Number(value);
       if (!Number.isFinite(numericValue)) return 0;
-      return Math.max(0, Math.min(100, Math.round(numericValue)));
+      return Math.max(0, Math.min(100, Math.round(numericValue * 10) / 10));
     }
 
     function getBuildErrorMessage(error) {
@@ -1142,6 +1533,42 @@
       }
     }
 
+    function clearBuildInterpolationTimer() {
+      if (buildInterpolationTimer !== null) {
+        clearInterval(buildInterpolationTimer);
+        buildInterpolationTimer = null;
+      }
+    }
+
+    function getAnimatedBuildMessage() {
+      if (!buildMessage) return 'Preparing your build...';
+      const trimmedMessage = String(buildMessage).replace(/\.*$/, '');
+      const dots = '.'.repeat((loadingDotFrame % 3) + 1);
+      return `${trimmedMessage}${dots}`;
+    }
+
+    function maybeInterpolateBuildProgress() {
+      if (!isBuilding) return;
+      loadingDotFrame = (loadingDotFrame + 1) % 3;
+      if ((Date.now() - lastBuildStatusAt) >= BUILD_INTERPOLATION_DELAY_MS) {
+        const nextProgress = Math.min(
+          BUILD_INTERPOLATION_MAX,
+          lastBackendProgress + BUILD_INTERPOLATION_HEADROOM,
+          buildProgress + BUILD_INTERPOLATION_STEP
+        );
+
+        if (nextProgress > buildProgress) {
+          buildProgress = normalizeBuildProgress(nextProgress);
+        }
+      }
+      renderBuildUI();
+    }
+
+    function startBuildInterpolationTimer() {
+      if (buildInterpolationTimer !== null) return;
+      buildInterpolationTimer = window.setInterval(maybeInterpolateBuildProgress, BUILD_INTERPOLATION_INTERVAL_MS);
+    }
+
     function applyBuildLockState() {
       const firmwareTargetEl = document.getElementById('firmware-target');
       const heavyModsToggleEl = document.getElementById('heavy-mods-toggle');
@@ -1149,7 +1576,7 @@
       if (firmwareTargetEl) firmwareTargetEl.disabled = isBuilding;
       if (heavyModsToggleEl) heavyModsToggleEl.disabled = isBuilding;
 
-      document.querySelectorAll('.bundle-card').forEach(card => {
+      document.querySelectorAll('.quickstart-card, .firmware-card, .activity-pill').forEach(card => {
         card.disabled = isBuilding;
       });
 
@@ -1178,9 +1605,9 @@
       progressPanel.hidden = !isBuilding;
       buildBtn.disabled = isBuilding || !hasModulesSelected;
 
-      progressValue.textContent = `${buildProgress}%`;
+      progressValue.textContent = `${Math.round(buildProgress)}%`;
       progressFill.style.width = `${buildProgress}%`;
-      progressMessageEl.textContent = buildMessage || 'Preparing your build...';
+      progressMessageEl.textContent = isBuilding ? getAnimatedBuildMessage() : (buildMessage || 'Preparing your build...');
 
       applyBuildLockState();
     }
@@ -1198,55 +1625,20 @@
       if (Object.prototype.hasOwnProperty.call(nextState, 'jobId')) {
         jobId = nextState.jobId;
       }
+      if (isBuilding) {
+        startBuildInterpolationTimer();
+        lastBuildStatusAt = Date.now();
+        lastBackendProgress = buildProgress;
+      } else {
+        clearBuildPollTimer();
+        clearBuildInterpolationTimer();
+        lastBuildStatusAt = 0;
+        lastBackendProgress = 0;
+        loadingDotFrame = 0;
+      }
       renderBuildUI();
     }
 
-    async function pollBuildStatus() {
-      if (!jobId) return;
-
-      try {
-        const activeJobId = jobId;
-        const response = await fetch(`${API_BASE}/api/v1/build/${encodeURIComponent(activeJobId)}/status`);
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data && data.message ? data.message : `build-status:${response.status}`);
-        }
-
-        setBuildState({
-          buildProgress: data.progress,
-          buildMessage: data.message || 'Building your package...',
-        });
-
-        if (data.status === 'complete') {
-          clearBuildPollTimer();
-          setBuildState({
-            isBuilding: false,
-            buildProgress: 0,
-            buildMessage: 'Preparing your build...',
-            jobId: null,
-          });
-          window.location.href = `${API_BASE}/api/v1/build/${encodeURIComponent(activeJobId)}/download`;
-          return;
-        }
-
-        if (data.status === 'error') {
-          throw new Error(data && data.message ? data.message : GENERIC_SERVER_MESSAGE);
-        }
-
-        buildPollTimer = window.setTimeout(pollBuildStatus, BUILD_POLL_INTERVAL_MS);
-      } catch (err) {
-        clearBuildPollTimer();
-        console.error('[builder] build status failed:', err);
-        setBuildState({
-          isBuilding: false,
-          buildProgress: 0,
-          buildMessage: 'Preparing your build...',
-          jobId: null,
-        });
-        showApiToast(getBuildErrorMessage(err));
-      }
-    }
 
     /* ─────────────────────────────────────────
        Public API — wire to your backend here
@@ -1438,8 +1830,8 @@
         .filter(m => m.tags.includes('required') || m.tags.includes('recommended'))
         .forEach(m => addModuleWithDependencies(m.id));
       syncDependencyLocks();
-      document.querySelectorAll('.bundle-card').forEach(card => card.classList.remove('active'));
-      const defaultBundle = document.querySelector('.bundle-card[data-bundle="recommended"]');
+      document.querySelectorAll('.quickstart-card').forEach(card => card.classList.remove('active'));
+      const defaultBundle = document.querySelector('.quickstart-card[data-bundle="recommended"]');
       if (defaultBundle) defaultBundle.classList.add('active');
       updateSidebar();
     }
@@ -1632,8 +2024,8 @@
       syncDependencyLocks();
 
       // Highlight the active card
-      document.querySelectorAll('.bundle-card').forEach(card => card.classList.remove('active'));
-      const activeCard = document.querySelector(`.bundle-card[data-bundle="${CSS.escape(bundleTag)}"]`);
+      document.querySelectorAll('.quickstart-card').forEach(card => card.classList.remove('active'));
+      const activeCard = document.querySelector(`.quickstart-card[data-bundle="${CSS.escape(bundleTag)}"]`);
       if (activeCard) activeCard.classList.add('active');
 
       updateSidebar();
@@ -1646,8 +2038,28 @@
     ───────────────────────────────────────── */
 
     document.getElementById('buildBtn').addEventListener('click', doBuild);
-    document.getElementById('firmware-target').addEventListener('change', updateSidebar);
-    document.getElementById('heavy-mods-toggle').addEventListener('change', updateSidebar);
+    document.getElementById('firmware-target').addEventListener('change', () => {
+      syncFirmwareCards();
+      updateSidebar();
+    });
+    document.getElementById('heavy-mods-toggle').addEventListener('change', () => {
+      syncActivityMode();
+      updateSidebar();
+    });
+    document.querySelectorAll('.firmware-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (isBuilding) return;
+        setFirmwareTarget(card.dataset.firmware);
+      });
+    });
+    document.querySelectorAll('.activity-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        if (isBuilding) return;
+        setActivityMode(pill.dataset.activityMode);
+      });
+    });
+    syncFirmwareCards();
+    syncActivityMode();
     window.addEventListener('resize', () => {
       if (activeTooltipRow) positionFloatingTooltip();
     });
@@ -1662,22 +2074,21 @@
 
     async function doBuild() {
       if (isBuilding) return;
-      const modules = getSelectedModules(); // Array of full module objects
 
-      // Extract just the string IDs for your Python backend
-      const moduleIds = modules.map(m => m.id);
+      const moduleIds = getSelectedModules().map(m => m.id);
       const heavyModsEnabled = document.getElementById('heavy-mods-toggle').checked;
-      const firmwareTarget = document.getElementById('firmware-target').value;
+      const firmwareTarget = getFirmwareTargetValue();
 
       clearBuildPollTimer();
       setBuildState({
         isBuilding: true,
-        buildProgress: 0,
-        buildMessage: 'Submitting your build job...',
+        buildProgress: 5,
+        buildMessage: 'Requesting your build...',
         jobId: null,
       });
 
       try {
+        // 1. POST to backend — expects { core_url, heavy_urls }
         const response = await fetch(`${API_BASE}/api/v1/build/start`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1688,27 +2099,71 @@
           }),
         });
         const data = await response.json();
-
         if (!response.ok) {
           throw new Error(data && data.message ? data.message : `build-start:${response.status}`);
         }
 
-        const nextJobId = data && data.job_id;
-        if (!nextJobId) {
-          throw new Error('build-start:missing-job-id');
+        const { core_url, heavy_urls = [] } = data;
+        if (!core_url) throw new Error('build-start:missing-core-url');
+
+        const allUrls = [core_url, ...heavy_urls];
+        const totalUrls = allUrls.length;
+
+        // 2. Create master ZIP writer
+        setBuildState({ buildProgress: 10, buildMessage: 'Preparing ZIP archive...' });
+        const zipWriter = new zip.ZipWriter(new zip.BlobWriter('application/zip'));
+
+        // 3. Helper — fetch a remote ZIP and stream every entry into zipWriter
+        async function mergeRemoteZip(url, index) {
+          setBuildState({
+            buildProgress: 10 + Math.round((index / totalUrls) * 80),
+            buildMessage: `Downloading file ${index + 1} of ${totalUrls}...`,
+          });
+
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`fetch-zip:${res.status} ${url}`);
+          const blob = await res.blob();
+
+          const reader = new zip.ZipReader(new zip.BlobReader(blob));
+          const entries = await reader.getEntries();
+
+          for (const entry of entries) {
+            if (!entry.directory) {
+              const entryData = await entry.getData(new zip.BlobWriter());
+              await zipWriter.add(entry.filename, new zip.BlobReader(entryData));
+            }
+          }
+
+          await reader.close();
         }
 
-        setBuildState({
-          isBuilding: true,
-          buildProgress: data.progress,
-          buildMessage: data.message || 'Build job queued. Preparing your package...',
-          jobId: String(nextJobId),
-        });
+        // 4. Merge core + all heavy ZIPs
+        for (let i = 0; i < allUrls.length; i++) {
+          await mergeRemoteZip(allUrls[i], i);
+        }
 
-        buildPollTimer = window.setTimeout(pollBuildStatus, BUILD_POLL_INTERVAL_MS);
+        // 5. Finalise and trigger download
+        setBuildState({ buildProgress: 95, buildMessage: 'Finalising SwitchHack.zip...' });
+        const finalBlob = await zipWriter.close();
+
+        const objectUrl = URL.createObjectURL(finalBlob);
+        const a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = 'SwitchHack.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(objectUrl);
+
+        setBuildState({
+          isBuilding: false,
+          buildProgress: 0,
+          buildMessage: 'Preparing your build...',
+          jobId: null,
+        });
       } catch (err) {
         clearBuildPollTimer();
-        console.error('[builder] build start failed:', err);
+        console.error('[builder] build failed:', err);
         setBuildState({
           isBuilding: false,
           buildProgress: 0,
