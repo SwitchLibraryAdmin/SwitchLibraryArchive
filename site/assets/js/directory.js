@@ -72,11 +72,6 @@ const REPOS = [
     name: 'sys-patch', category: 'core', tags: ['rec'],
     desc: 'Patches signature checks on the fly. Replaces sigpatches files.',
   },
-  {
-    owner: 'mentalblank', repo: 'PYXIS',
-    name: 'PYXIS', category: 'core',
-    desc: 'Automated all-in-one CFW and homebrew deployment package.',
-  },
 
   // Overlays
   {
@@ -204,11 +199,6 @@ const REPOS = [
     owner: 'fortheusers', repo: 'hb-appstore',
     name: 'HB Appstore', category: 'apps', tags: ['rec'],
     desc: 'Browse and install homebrew apps directly on your Switch.',
-  },
-  {
-    owner: 'HamletDuFromage', repo: 'AIO-switch-updater',
-    name: 'AIO Switch Updater', category: 'core',
-    desc: 'Update Atmosphere, Hekate, sigpatches, and cheats all in one place.',
   },
   {
     owner: 'exelix11', repo: 'SwitchThemeInjector',
