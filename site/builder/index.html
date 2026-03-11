@@ -867,8 +867,14 @@
       display: inline-flex;
       align-items: center;
     }
-    .ram-helper-icon,
-    .ram-helper-link {
+    .ram-helper-anchor.ram-max-anchor {
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: none;
+      cursor: default;
+    }
+    .ram-helper-icon {
       border: none;
       background: transparent;
       padding: 0;
@@ -887,14 +893,6 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-    }
-    .ram-helper-link {
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
     }
     .ram-helper-tooltip {
       position: absolute;
@@ -915,7 +913,7 @@
       pointer-events: none;
       z-index: 4;
     }
-    .ram-helper-anchor.is-tech .ram-helper-tooltip {
+    .ram-helper-anchor.ram-max-anchor .ram-helper-tooltip {
       left: auto;
       right: 0;
     }
@@ -1325,22 +1323,10 @@
                   <p class="ram-helper-tooltip-copy">Horizon OS strictly limits how much memory background apps can use. Exceeding this budget will cause your console to crash when launching games.</p>
                 </span>
               </span>
-              <span class="ram-helper-anchor is-tech">
-                <button type="button" class="ram-helper-link" aria-label="Technical details">Technical Details</button>
-                <span class="ram-helper-tooltip" role="tooltip">
-                  <span class="ram-helper-tooltip-title">Equation</span>
-                  <div class="ram-helper-equation" aria-label="Sum from i equals 1 to n of M sub sysmodule sub i is less than or equal to M sub available minus M sub ams reserve">
-                    <span class="math-op">&sum;</span><sup>n</sup><sub>i=1</sub>
-                    M<sub>sysmodule<sub>i</sub></sub> &le; M<sub>available</sub> - M<sub>ams,reserve</sub>
-                  </div>
-                  <span class="ram-helper-tooltip-title">Explanation</span>
-                  <p class="ram-helper-tooltip-copy">Firmware 21.0.0+ introduced a 10MB deficit to the Applet Pool. To compensate, the core interception layer relies on the memlet helper module to dynamically steal an 8192 KB reserve from the System Pool to compile LayeredFS game modifications. If background daemons consume this space, the system will suffer a Data abort (0x101) upon game launch.</p>
-                </span>
-              </span>
             </div>
             <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">
               <span id="ramUsed" style="color:var(--text-primary); font-weight:700;">0 KB</span>
-              <span style="color:var(--muted); font-weight:400;"> / <span id="ramMax">32 MB</span></span>
+              <span style="color:var(--muted); font-weight:400;"> / <span class="ram-helper-anchor ram-max-anchor"><span id="ramMax">32 MB</span><span class="ram-helper-tooltip" role="tooltip"><span class="ram-helper-tooltip-title">Equation</span><div class="ram-helper-equation" aria-label="Sum from i equals 1 to n of M sub sysmodule sub i is less than or equal to M sub available minus M sub ams reserve"><span class="math-op">&sum;</span><sup>n</sup><sub>i=1</sub> M<sub>sysmodule<sub>i</sub></sub> &le; M<sub>available</sub> - M<sub>ams,reserve</sub></div><span class="ram-helper-tooltip-title">Explanation</span><p class="ram-helper-tooltip-copy">Firmware 21.0.0+ introduced a 10MB deficit to the Applet Pool. To compensate, the core interception layer relies on the memlet helper module to dynamically steal an 8192 KB reserve from the System Pool to compile LayeredFS game modifications. If background daemons consume this space, the system will suffer a Data abort (0x101) upon game launch.</p></span></span></span>
             </span>
           </div>
           <div style="height:5px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;">
